@@ -1,0 +1,9 @@
+api_version = "2026-04"
+
+[[extensions]]
+name = "Fabric Shop Extras"
+handle = "fabric-shop-extras"
+
+uid = "c3a1e7f2-84b9-4d5e-a6c0-1f2d3e4b5a6c"
+
+type = "theme"

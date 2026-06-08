@@ -1,0 +1,116 @@
+{% comment %}
+  Product Description Tags Block
+  Renders two tag-chip rows below the product description on the PrintLab PDP.
+
+  Row 1 "Tagged"  — topic: (cat/sage), theme: (style/amber), free-form subjects (subj/linen)
+  Row 2 "Best for" — suits_use: + occasion: (use/bone)
+
+  System tags (_fp-*, scale:, _fp-color-*) are silently skipped.
+  Chips are non-interactive display elements (no links).
+{% endcomment %}
+
+{{ 'product-description-tags.css' | asset_url | stylesheet_tag }}
+
+{% assign cat_tags   = '' %}
+{% assign style_tags = '' %}
+{% assign subj_tags  = '' %}
+{% assign use_tags   = '' %}
+
+{% for tag in product.tags %}
+  {% if tag contains 'topic:' %}
+    {% assign val = tag | remove_first: 'topic:' | strip %}
+    {% if val != '' %}
+      {% assign cat_tags = cat_tags | append: val | append: '|||' %}
+    {% endif %}
+
+  {% elsif tag contains 'theme:' %}
+    {% assign val = tag | remove_first: 'theme:' | strip %}
+    {% if val != '' %}
+      {% assign style_tags = style_tags | append: val | append: '|||' %}
+    {% endif %}
+
+  {% elsif tag contains 'suits_use:' %}
+    {% assign val = tag | remove_first: 'suits_use:' | strip %}
+    {% if val != '' %}
+      {% assign use_tags = use_tags | append: val | append: '|||' %}
+    {% endif %}
+
+  {% elsif tag contains 'occasion:' %}
+    {% assign val = tag | remove_first: 'occasion:' | strip %}
+    {% if val != '' %}
+      {% assign use_tags = use_tags | append: val | append: '|||' %}
+    {% endif %}
+
+  {% elsif tag contains '_fp-' or tag contains 'scale:' %}
+    {% comment %} skip system tags {% endcomment %}
+
+  {% else %}
+    {% assign val = tag | strip %}
+    {% if val != '' %}
+      {% assign subj_tags = subj_tags | append: val | append: '|||' %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% assign cat_arr   = cat_tags   | split: '|||' %}
+{% assign style_arr = style_tags | split: '|||' %}
+{% assign subj_arr  = subj_tags  | split: '|||' %}
+{% assign use_arr   = use_tags   | split: '|||' %}
+
+{% assign has_tagged  = false %}
+{% assign has_bestfor = false %}
+
+{% for t in cat_arr   %}{% if t != '' %}{% assign has_tagged  = true %}{% break %}{% endif %}{% endfor %}
+{% for t in style_arr %}{% if t != '' %}{% assign has_tagged  = true %}{% break %}{% endif %}{% endfor %}
+{% for t in subj_arr  %}{% if t != '' %}{% assign has_tagged  = true %}{% break %}{% endif %}{% endfor %}
+{% for t in use_arr   %}{% if t != '' %}{% assign has_bestfor = true %}{% break %}{% endif %}{% endfor %}
+
+{% if has_tagged or has_bestfor %}
+<div class="fp-tag-section">
+
+  {% if has_tagged %}
+  <div class="fp-tag-row">
+    <span class="fp-tag-row-label">Tagged</span>
+
+    {% for t in cat_arr %}
+      {% if t != '' %}
+        <span class="fp-tag-pill fp-tag-pill--cat">{{ t }}</span>
+      {% endif %}
+    {% endfor %}
+
+    {% for t in style_arr %}
+      {% if t != '' %}
+        <span class="fp-tag-pill fp-tag-pill--style">{{ t }}</span>
+      {% endif %}
+    {% endfor %}
+
+    {% for t in subj_arr %}
+      {% if t != '' %}
+        <span class="fp-tag-pill fp-tag-pill--subj">{{ t }}</span>
+      {% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if has_bestfor %}
+  <div class="fp-tag-row">
+    <span class="fp-tag-row-label">Best for</span>
+
+    {% for t in use_arr %}
+      {% if t != '' %}
+        <span class="fp-tag-pill fp-tag-pill--use">{{ t }}</span>
+      {% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
+
+</div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Product Tag Chips",
+  "target": "section",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,62 @@
+.fp-tag-section {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-border, #E8E3D8);
+}
+
+.fp-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.fp-tag-row + .fp-tag-row {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--color-border, #E8E3D8);
+}
+
+.fp-tag-row-label {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-foreground-secondary, #9A9285);
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.fp-tag-pill {
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--color-background-secondary, #FFFFFF);
+  border: 1px solid var(--color-border-strong, #D4CCBC);
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--color-foreground, #1A1814);
+  white-space: nowrap;
+}
+
+/* topic: tags — sage tint */
+.fp-tag-pill--cat {
+  background: #EEF1EC;
+  border-color: rgba(92, 115, 85, 0.3);
+}
+
+/* theme: tags — amber tint */
+.fp-tag-pill--style {
+  background: #F4ECDA;
+  border-color: rgba(168, 122, 46, 0.3);
+}
+
+/* free-form subject tags — linen */
+.fp-tag-pill--subj {
+  background: #FFFFFF;
+  border-color: #D4CCBC;
+}
+
+/* suits_use: + occasion: tags — bone */
+.fp-tag-pill--use {
+  background: #FAF8F3;
+  border-color: #D4CCBC;
+}
