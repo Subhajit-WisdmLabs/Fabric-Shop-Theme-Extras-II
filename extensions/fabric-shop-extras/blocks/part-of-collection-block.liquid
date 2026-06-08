@@ -20,10 +20,20 @@
       var col = data.collection;
       if (!col) return; // product has no partner collection — stay hidden
 
-      var coverHtml = col.coverImageUrl
-        ? '<img class="poc-cover-img" src="' + col.coverImageUrl + '" alt="' + escHtml(col.title) + '" loading="lazy">'
-        : '';
-      var coverClass = col.coverImageUrl ? 'poc-cover' : 'poc-cover poc-cover--placeholder';
+      var coverHtml = '';
+      var coverClass = 'poc-cover';
+
+      if (col.coverType === 'auto_mosaic' && col.previewImages && col.previewImages.length > 1) {
+        coverHtml = '<div class="poc-mosaic">';
+        for (var i = 0; i < Math.min(4, col.previewImages.length); i++) {
+          coverHtml += '<div class="poc-mosaic-cell" style="background-image:url(' + col.previewImages[i] + ')"></div>';
+        }
+        coverHtml += '</div>';
+      } else if (col.coverImageUrl) {
+        coverHtml = '<img class="poc-cover-img" src="' + col.coverImageUrl + '" alt="' + escHtml(col.title) + '" loading="lazy">';
+      } else {
+        coverClass = 'poc-cover poc-cover--placeholder';
+      }
 
       var designerMeta = col.designer ? ' · by ' + escHtml(col.designer.name) : '';
       var descHtml = col.description

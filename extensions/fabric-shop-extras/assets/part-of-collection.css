@@ -39,6 +39,21 @@
   background: linear-gradient(135deg, #F4ECDA, #EEF1EC);
 }
 
+.poc-mosaic {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px;
+}
+
+.poc-mosaic-cell {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 /* ── Text side ───────────────────────────────────────────────────────────── */
 
 .poc-eyebrow {
