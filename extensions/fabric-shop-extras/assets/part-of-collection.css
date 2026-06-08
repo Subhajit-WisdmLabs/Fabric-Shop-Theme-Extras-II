@@ -22,7 +22,7 @@
 }
 
 .poc-cover {
-  aspect-ratio: 1.5 / 1;
+  height: 460px;
   border-radius: 2px;
   overflow: hidden;
   background: var(--color-background-secondary, #F0EDE6);
@@ -39,20 +39,30 @@
   background: linear-gradient(135deg, #F4ECDA, #EEF1EC);
 }
 
+/* Staggered zigzag mosaic — mirrors eom-mosaic layout */
 .poc-mosaic {
-  width: 100%;
-  height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 2px;
+  grid-template-rows: 35fr 30fr 35fr;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  overflow: hidden;
 }
 
-.poc-mosaic-cell {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+.poc-mosaic__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
 }
+
+.poc-mosaic__img:nth-child(1) { grid-column: 1; grid-row: 1 / 3; }
+.poc-mosaic__img:nth-child(2) { grid-column: 2; grid-row: 1; }
+.poc-mosaic__img:nth-child(3) { grid-column: 2; grid-row: 2 / 4; }
+.poc-mosaic__img:nth-child(4) { grid-column: 1; grid-row: 3; }
 
 /* ── Text side ───────────────────────────────────────────────────────────── */
 
@@ -133,6 +143,13 @@
   color: #666;
 }
 
+/* Reduce title size/weight inside poc grid only */
+.poc-grid .cg-card-title {
+  font-size: 13px;
+  font-weight: 300;
+  white-space: normal;
+}
+
 /* ── Responsive ──────────────────────────────────────────────────────────── */
 
 @media (max-width: 1024px) {
@@ -143,6 +160,7 @@
 @media (max-width: 768px) {
   .poc-section { padding: 64px 24px; }
   .poc-head { grid-template-columns: 1fr; gap: 28px; }
+  .poc-cover { height: 300px; }
   .poc-name { font-size: 28px; }
   .poc-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
 }
