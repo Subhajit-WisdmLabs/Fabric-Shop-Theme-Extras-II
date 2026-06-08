@@ -126,57 +126,11 @@
   gap: 18px;
 }
 
-.poc-card {
-  background: var(--color-background-secondary, #FFFFFF);
-  border: 1px solid var(--color-border, #E8E3D8);
-  border-radius: 2px;
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.poc-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(26, 24, 20, 0.07);
-}
-
-.poc-card-thumb {
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  background: var(--color-background, #FAF8F3);
-}
-
-.poc-card-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.poc-card-thumb--placeholder {
-  background: linear-gradient(135deg, #F0EDE6, #E8E3D8);
-}
-
-.poc-card-meta {
-  padding: 14px 16px 16px;
-}
-
-.poc-card-title {
-  font-family: var(--font-heading-family, Georgia, serif);
-  font-weight: 500;
-  font-size: 17px;
-  line-height: 1.2;
-  letter-spacing: -0.012em;
-  margin-bottom: 6px;
-  color: var(--color-foreground, #1A1814);
-}
-
+/* Price line under card title */
 .poc-card-price {
-  font-size: 11px;
-  color: var(--color-foreground-secondary, #6B6560);
-  letter-spacing: 0.04em;
+  margin: 3px 0 0;
+  font-size: 13px;
+  color: #666;
 }
 
 /* ── Responsive ──────────────────────────────────────────────────────────── */
@@ -188,10 +142,7 @@
 
 @media (max-width: 768px) {
   .poc-section { padding: 64px 24px; }
-  .poc-head {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
+  .poc-head { grid-template-columns: 1fr; gap: 28px; }
   .poc-name { font-size: 28px; }
   .poc-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
 }

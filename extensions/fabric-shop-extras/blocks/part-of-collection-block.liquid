@@ -49,15 +49,16 @@
           var thumbHtml = p.imageUrl
             ? '<img src="' + p.imageUrl + '" alt="' + escHtml(p.title) + '" loading="lazy">'
             : '';
-          var thumbClass = p.imageUrl ? 'poc-card-thumb' : 'poc-card-thumb poc-card-thumb--placeholder';
           var priceHtml = p.minPrice
-            ? '<div class="poc-card-price">from ' + formatPrice(p.minPrice, p.currencyCode) + '</div>'
+            ? '<p class="poc-card-price">from ' + formatPrice(p.minPrice, p.currencyCode) + '</p>'
             : '';
           gridHtml +=
-            '<a class="poc-card" href="/products/' + escHtml(p.handle) + '">' +
-              '<div class="' + thumbClass + '">' + thumbHtml + '</div>' +
-              '<div class="poc-card-meta">' +
-                '<div class="poc-card-title">' + escHtml(p.title) + '</div>' +
+            '<a class="cg-card" href="/products/' + escHtml(p.handle) + '"' +
+              ' data-product-id="' + escHtml(p.numericId) + '"' +
+              ' data-like-count="0">' +
+              '<div class="cg-card-image">' + thumbHtml + '</div>' +
+              '<div class="cg-card-info">' +
+                '<h3 class="cg-card-title">' + escHtml(p.title) + '</h3>' +
                 priceHtml +
               '</div>' +
             '</a>';
@@ -83,6 +84,11 @@
         '</section>';
 
       root.style.display = '';
+
+      // Trigger like-wishlist.js to inject hearts + hover action bar
+      if (typeof window.__fpReinjectCards === 'function') {
+        window.__fpReinjectCards();
+      }
     })
     .catch(function () { /* stay hidden on error */ });
 
