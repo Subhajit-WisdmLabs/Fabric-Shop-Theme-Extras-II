@@ -151,7 +151,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Fabric-Shop-Heading', Georgia, serif;
+  font-family: 'Fabric-Shop-Body', Georgia, serif;
   font-style: italic;
   font-size: 11px;
   color: var(--color-sage, #5C7355);
