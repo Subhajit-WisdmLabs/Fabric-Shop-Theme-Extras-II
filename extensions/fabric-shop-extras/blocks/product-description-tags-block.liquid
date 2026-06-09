@@ -42,7 +42,7 @@
     {% endif %}
 
   {% elsif tag contains 'subject:' %}
-    {% assign val = tag | remove_first: 'subject:' | strip %}
+    {% assign val = tag | remove_first: 'subject:' | strip | capitalize %}
     {% if val != '' %}
       {% assign subj_tags = subj_tags | append: val | append: '|||' %}
     {% endif %}
