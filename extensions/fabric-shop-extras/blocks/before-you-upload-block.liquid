@@ -1,0 +1,219 @@
+{{ 'before-you-upload.css' | asset_url | stylesheet_tag }}
+
+<section class="byu-section">
+  <div class="byu-inner">
+
+    {%- if block.settings.eyebrow != blank -%}
+      <div class="byu-eyebrow">{{- block.settings.eyebrow -}}</div>
+    {%- endif -%}
+
+    {%- if block.settings.heading != blank -%}
+      <div class="byu-heading">{{- block.settings.heading -}}</div>
+    {%- endif -%}
+
+    <div class="byu-grid">
+
+      <!-- Spec table -->
+      <div class="byu-spec">
+        {%- assign row_ids = '1,2,3,4,5' | split: ',' -%}
+        {%- for i in row_ids -%}
+          {%- assign key_id = 'row_' | append: i | append: '_key' -%}
+          {%- assign val_id = 'row_' | append: i | append: '_value' -%}
+          {%- assign row_key = block.settings[key_id] -%}
+          {%- assign row_val = block.settings[val_id] -%}
+          {%- if row_key != blank or row_val != blank -%}
+            <div class="byu-spec-row">
+              <span class="byu-key">{{- row_key -}}</span>
+              <span class="byu-val">{{- row_val -}}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <!-- Aside -->
+      <div class="byu-aside">
+        {%- if block.settings.aside_heading != blank -%}
+          <h3 class="byu-aside-heading">{{- block.settings.aside_heading -}}</h3>
+        {%- endif -%}
+
+        {%- if block.settings.aside_body != blank -%}
+          <div class="byu-aside-body">{{- block.settings.aside_body -}}</div>
+        {%- endif -%}
+
+        {%- if block.settings.repeat_guide_url != blank -%}
+          <a class="byu-aside-link" href="{{ block.settings.repeat_guide_url }}">See the full repeat guide →</a>
+        {%- endif -%}
+
+        <!-- Repeat tile icons -->
+        <div class="byu-repeats">
+
+          <!-- Tile: single tile -->
+          <div class="byu-rep">
+            <div class="byu-rep-vis byu-rep-vis--grid byu-rep-vis--tile">
+              <div class="byu-cell">R</div>
+            </div>
+            <span class="byu-rep-name">Tile</span>
+          </div>
+
+          <!-- Simple: 2×2 no offset -->
+          <div class="byu-rep">
+            <div class="byu-rep-vis byu-rep-vis--grid byu-rep-vis--simple">
+              <div class="byu-cell">R</div>
+              <div class="byu-cell">R</div>
+              <div class="byu-cell">R</div>
+              <div class="byu-cell">R</div>
+            </div>
+            <span class="byu-rep-name">Simple</span>
+          </div>
+
+          <!-- Mirror: 2×2 with axis flips -->
+          <div class="byu-rep">
+            <div class="byu-rep-vis byu-rep-vis--grid byu-rep-vis--mirror">
+              <div class="byu-cell">R</div>
+              <div class="byu-cell byu-cell--fx">R</div>
+              <div class="byu-cell byu-cell--fy">R</div>
+              <div class="byu-cell byu-cell--fxy">R</div>
+            </div>
+            <span class="byu-rep-name">Mirror</span>
+          </div>
+
+          <!-- Half-brick: SVG — odd rows offset right by ½ tile, showing clipped partials at edges -->
+          <div class="byu-rep">
+            <div class="byu-rep-vis">
+              <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0"   y="1"  width="18" height="18" fill="#EEF1EC" stroke="rgba(92,115,85,0.3)" stroke-width="0.5"/>
+                <rect x="20"  y="1"  width="18" height="18" fill="#EEF1EC" stroke="rgba(92,115,85,0.3)" stroke-width="0.5"/>
+                <rect x="-10" y="21" width="18" height="18" fill="#EEF1EC" stroke="rgba(92,115,85,0.3)" stroke-width="0.5"/>
+                <rect x="10"  y="21" width="18" height="18" fill="#EEF1EC" stroke="rgba(92,115,85,0.3)" stroke-width="0.5"/>
+                <rect x="30"  y="21" width="18" height="18" fill="#EEF1EC" stroke="rgba(92,115,85,0.3)" stroke-width="0.5"/>
+              </svg>
+            </div>
+            <span class="byu-rep-name">Half-brick</span>
+          </div>
+
+          <!-- Vertical: SVG — odd columns offset down by ½ tile, showing clipped partials at edges -->
+          <div class="byu-rep">
+            <div class="byu-rep-vis">
+              <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <rect x="1"  y="0"   width="18" height="18" fill="#EEF1EC" stroke="rgba(92,115,85,0.3)" stroke-width="0.5"/>
+                <rect x="1"  y="20"  width="18" height="18" fill="#EEF1EC" stroke="rgba(92,115,85,0.3)" stroke-width="0.5"/>
+                <rect x="21" y="-10" width="18" height="18" fill="#EEF1EC" stroke="rgba(92,115,85,0.3)" stroke-width="0.5"/>
+                <rect x="21" y="10"  width="18" height="18" fill="#EEF1EC" stroke="rgba(92,115,85,0.3)" stroke-width="0.5"/>
+                <rect x="21" y="30"  width="18" height="18" fill="#EEF1EC" stroke="rgba(92,115,85,0.3)" stroke-width="0.5"/>
+              </svg>
+            </div>
+            <span class="byu-rep-name">Vertical</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Before You Upload",
+  "target": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Before you upload"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>What makes a <em>clean print</em>.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Spec table rows"
+    },
+    {
+      "type": "text",
+      "id": "row_1_key",
+      "label": "Row 1 — Label",
+      "default": "Accepted formats"
+    },
+    {
+      "type": "text",
+      "id": "row_1_value",
+      "label": "Row 1 — Value",
+      "default": "JPG · PNG · TIFF — flattened, no layers"
+    },
+    {
+      "type": "text",
+      "id": "row_2_key",
+      "label": "Row 2 — Label",
+      "default": "Resolution"
+    },
+    {
+      "type": "text",
+      "id": "row_2_value",
+      "label": "Row 2 — Value",
+      "default": "300 PPI recommended · 150 minimum"
+    },
+    {
+      "type": "text",
+      "id": "row_3_key",
+      "label": "Row 3 — Label",
+      "default": "Colour"
+    },
+    {
+      "type": "text",
+      "id": "row_3_value",
+      "label": "Row 3 — Value",
+      "default": "sRGB — other profiles may shift on fabric"
+    },
+    {
+      "type": "text",
+      "id": "row_4_key",
+      "label": "Row 4 — Label",
+      "default": "Maximum size"
+    },
+    {
+      "type": "text",
+      "id": "row_4_value",
+      "label": "Row 4 — Value",
+      "default": "30 MB to upload · larger by email"
+    },
+    {
+      "type": "text",
+      "id": "row_5_key",
+      "label": "Row 5 — Label",
+      "default": "Print width"
+    },
+    {
+      "type": "text",
+      "id": "row_5_value",
+      "label": "Row 5 — Value",
+      "default": "Up to your chosen fabric's printable width"
+    },
+    {
+      "type": "header",
+      "content": "Aside — repeat guide"
+    },
+    {
+      "type": "text",
+      "id": "aside_heading",
+      "label": "Aside heading",
+      "default": "Setting a repeat?"
+    },
+    {
+      "type": "richtext",
+      "id": "aside_body",
+      "label": "Aside body",
+      "default": "<p>The repeat is how one tile fills the metre. Choose a layout in the configurator, or leave it on Simple. One thing to know: a repeat must tile cleanly in the file itself — we print what you send, and don't rework repeats on your behalf.</p>"
+    },
+    {
+      "type": "url",
+      "id": "repeat_guide_url",
+      "label": "Repeat guide link URL"
+    }
+  ]
+}
+{% endschema %}
