@@ -33,7 +33,7 @@
 .sb-title {
   font-family: var(--font-heading-family, Georgia, serif);
   font-size: 56px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.08;
   letter-spacing: -0.02em;
   margin: 0 0 24px;
@@ -72,11 +72,14 @@
   cursor: pointer;
   text-decoration: none;
   transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  color: var(--sb-text);
+  background: var(--sb-bg);
+  border-color: var(--sb-border);
 }
 
 .sb-btn:hover {
-  background: var(--sb-hover-bg);
   color: var(--sb-hover-text);
+  background: var(--sb-hover-bg);
   border-color: var(--sb-hover-border);
 }
 
