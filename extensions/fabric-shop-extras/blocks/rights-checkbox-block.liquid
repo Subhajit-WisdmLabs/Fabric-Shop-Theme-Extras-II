@@ -9,10 +9,11 @@
 
 <script>
 (function () {
-  var blockId = {{ block.id | json }};
-  var row     = document.getElementById('rcb-row-'   + blockId);
-  var card    = document.getElementById('rcb-block-' + blockId);
-  var checked = false;
+  var blockId     = {{ block.id | json }};
+  var row         = document.getElementById('rcb-row-'   + blockId);
+  var card        = document.getElementById('rcb-block-' + blockId);
+  var checked     = false;
+  var designReady = false; // true only after cfu:design-loaded fires
 
   function getAtcButton() {
     var form = document.querySelector('form[action*="/cart/add"]');
@@ -24,14 +25,20 @@
       row.classList.add('rcb-checked');
       card.classList.add('rcb-confirmed');
       row.setAttribute('aria-checked', 'true');
-      var btn = getAtcButton();
-      if (btn) btn.disabled = false;
+      // Only un-disable when a design has actually been loaded
+      if (designReady) {
+        var btn = getAtcButton();
+        if (btn) btn.disabled = false;
+      }
     } else {
       row.classList.remove('rcb-checked');
       card.classList.remove('rcb-confirmed');
       row.setAttribute('aria-checked', 'false');
-      var btn = getAtcButton();
-      if (btn) btn.disabled = true;
+      // Gate the button only once a design is present
+      if (designReady) {
+        var btn = getAtcButton();
+        if (btn) btn.disabled = true;
+      }
     }
   }
 
@@ -45,16 +52,27 @@
     if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); }
   });
 
-  document.addEventListener('DOMContentLoaded', function () {
-    var btn = getAtcButton();
-    if (btn) btn.disabled = true;
+  // custom-fabric.js fires this when a design image is selected/uploaded
+  document.addEventListener('cfu:design-loaded', function () {
+    designReady = true;
+    // Design is now present — gate the button unless checkbox is already checked
+    if (!checked) {
+      var btn = getAtcButton();
+      if (btn) btn.disabled = true;
+    }
   });
 
-  // Fallback: disable immediately if DOM is already ready
-  if (document.readyState !== 'loading') {
+  // Fires when the user removes/resets the design
+  document.addEventListener('cfu:design-reset', function () {
+    designReady = false;
+    checked = false;
+    row.classList.remove('rcb-checked');
+    card.classList.remove('rcb-confirmed');
+    row.setAttribute('aria-checked', 'false');
+    // Release disabled — CSS gate (cfu--design-needed) takes over again
     var btn = getAtcButton();
-    if (btn) btn.disabled = true;
-  }
+    if (btn) btn.disabled = false;
+  });
 })();
 </script>
 
