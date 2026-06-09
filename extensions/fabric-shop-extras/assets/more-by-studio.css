@@ -16,7 +16,7 @@
 }
 
 .mbs-skeleton .mbs-card-image.mbs-skel-block {
-  border-radius: 2px 2px 0 0;
+  border-radius: 6px 6px 0 0;
   aspect-ratio: 1 / 1;
   width: 100%;
 }
@@ -25,14 +25,14 @@
 .mbs-skel-line--title    { height: 32px; width: 65%;   margin-bottom: 8px; }
 .mbs-skel-line--title-s  { width: 40%; }
 .mbs-skel-line--cta      { height: 13px; width: 140px; }
-.mbs-skel-line--name     { height: 16px; width: 80%;   margin-bottom: 6px; }
+.mbs-skel-line--name     { height: 18px; width: 80%;   margin-bottom: 6px; }
 .mbs-skel-line--studio   { height: 11px; width: 55%;   margin-bottom: 6px; }
 .mbs-skel-line--meta     { height: 10px; width: 70%; }
 
 .mbs-skeleton .mbs-skel-card {
   background: #fff;
   border: 1px solid #E8E3D8;
-  border-radius: 2px;
+  border-radius: 6px;
   overflow: hidden;
 }
 
@@ -128,7 +128,7 @@
 .mbs-card-wrap {
   background: #fff;
   border: 1px solid #E8E3D8;
-  border-radius: 2px;
+  border-radius: 6px;
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
@@ -148,7 +148,7 @@
   width: 100%;
   aspect-ratio: 1 / 1;
   overflow: hidden;
-  border-radius: 2px 2px 0 0;
+  border-radius: 6px 6px 0 0;
 }
 
 .mbs-card-image img {
@@ -159,29 +159,32 @@
 }
 
 .mbs-card-meta {
-  padding: 14px 16px 16px;
+  padding: 12px 14px 14px;
 }
 
 .mbs-card-name {
   font-family: var(--font-heading-family, Georgia, serif);
-  font-size: 18px;
-  font-weight: 400;
+  font-size: 22px;
+  font-weight: 500;
   line-height: 1.2;
-  letter-spacing: -0.012em;
   color: var(--color-foreground, #1A1814);
-  margin: 0 0 4px;
+  margin: 0 0 6px;
+  white-space: normal;
 }
 
 .mbs-card-studio {
-  font-size: 11.5px;
-  color: var(--color-foreground-secondary, #5C564A);
-  margin-bottom: 10px;
+  font-size: 12px;
+  color: var(--color-foreground-secondary, #9A9285);
+  margin-bottom: 6px;
 }
 
 .mbs-card-bottom {
-  font-size: 10.5px;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--color-foreground-secondary, #9A9285);
 }
 

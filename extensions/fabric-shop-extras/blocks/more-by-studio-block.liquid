@@ -67,12 +67,14 @@
         ? '<img src="' + escHtml(p.imageUrl) + '" alt="' + escHtml(p.title) + '" loading="lazy">'
         : '';
 
-      var bottomParts = [];
-      if (p.scale)      bottomParts.push(escHtml(p.scale));
-      if (p.repeatSize) bottomParts.push(escHtml(p.repeatSize));
-      var bottomHtml = bottomParts.length
-        ? '<div class="mbs-card-bottom">' + bottomParts.join(' &middot; ') + '</div>'
-        : '';
+      var bottomHtml = '';
+      if (p.scale || p.repeatSize) {
+        bottomHtml = '<div class="mbs-card-bottom">';
+        if (p.scale)      bottomHtml += '<span>' + escHtml(p.scale) + '</span>';
+        if (p.scale && p.repeatSize) bottomHtml += '<span style="opacity:0.5">&middot;</span>';
+        if (p.repeatSize) bottomHtml += '<span>' + escHtml(p.repeatSize) + '</span>';
+        bottomHtml += '</div>';
+      }
 
       gridHtml +=
         '<div class="mbs-card-wrap">' +
