@@ -35,15 +35,30 @@
       {%- endif -%}
     </div>
 
-    <!-- Right: decorative tile grid -->
-    <div class="cub-art" aria-hidden="true">
-      <div class="cub-tile cub-tile--filled-1"></div>
-      <div class="cub-tile cub-tile--empty" style="color:{{ block.settings.accent_color }};">YOUR</div>
-      <div class="cub-tile cub-tile--filled-2"></div>
-      <div class="cub-tile cub-tile--empty" style="color:{{ block.settings.accent_color }};">FILE</div>
-      <div class="cub-tile cub-tile--filled-3"></div>
-      <div class="cub-tile cub-tile--empty" style="color:{{ block.settings.accent_color }};">HERE</div>
-    </div>
+    <!-- Right: image or fallback tile grid -->
+    {%- if block.settings.image != blank -%}
+      <div class="cub-image-wrap">
+        {{
+          block.settings.image
+          | image_url: width: 800
+          | image_tag:
+            loading: 'lazy',
+            class: 'cub-image',
+            widths: '400, 600, 800',
+            sizes: '(max-width: 900px) 100vw, 45vw',
+            alt: block.settings.image.alt | escape
+        }}
+      </div>
+    {%- else -%}
+      <div class="cub-art" aria-hidden="true">
+        <div class="cub-tile cub-tile--filled-1"></div>
+        <div class="cub-tile cub-tile--empty" style="color:{{ block.settings.accent_color }};">YOUR</div>
+        <div class="cub-tile cub-tile--filled-2"></div>
+        <div class="cub-tile cub-tile--empty" style="color:{{ block.settings.accent_color }};">FILE</div>
+        <div class="cub-tile cub-tile--filled-3"></div>
+        <div class="cub-tile cub-tile--empty" style="color:{{ block.settings.accent_color }};">HERE</div>
+      </div>
+    {%- endif -%}
 
   </div>
 </div>
@@ -89,6 +104,16 @@
       "type": "url",
       "id": "cta_url",
       "label": "CTA URL"
+    },
+    {
+      "type": "header",
+      "content": "Right-side image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Replaces the decorative tile grid. Recommended: square or portrait, min 800px wide."
     },
     {
       "type": "header",

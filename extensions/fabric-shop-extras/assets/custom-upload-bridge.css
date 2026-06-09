@@ -103,6 +103,21 @@
   border: 1px solid rgba(168, 122, 46, 0.6);
 }
 
+/* ── Right column — image ────────────────────────────────────── */
+
+.cub-image-wrap {
+  border-radius: 4px;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.cub-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
 /* ── Responsive ──────────────────────────────────────────────── */
 
 @media (max-width: 900px) {
