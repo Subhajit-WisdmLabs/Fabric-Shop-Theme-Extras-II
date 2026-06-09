@@ -1,0 +1,97 @@
+/* ── Yard Brand Close ────────────────────────────────────── */
+
+.ybc-section {
+  padding: 96px 56px 88px;
+  border-radius: 4px;
+  margin-top: 56px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.ybc-section::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--ybc-accent, #A87A2E) 50%, transparent 100%);
+  opacity: 0.6;
+}
+
+.ybc-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.ybc-eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 0 0 28px;
+  padding-left: 22px;
+  position: relative;
+  display: inline-block;
+}
+
+.ybc-eyebrow::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  width: 14px; height: 1px;
+  background: currentColor;
+}
+
+.ybc-title {
+  font-family: 'Ageia', 'Cormorant Garamond', Georgia, serif;
+  font-weight: 400;
+  font-size: 58px;
+  line-height: 1.05;
+  letter-spacing: -0.022em;
+  margin: 0 0 28px;
+}
+
+.ybc-title em {
+  font-style: italic;
+}
+
+.ybc-body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.65;
+  margin: 0 auto 36px;
+  max-width: 560px;
+}
+
+.ybc-cta {
+  display: inline-block;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ybc-cta-color, #A8BFA0);
+  border-bottom: 1px solid var(--ybc-cta-color, #A8BFA0);
+  padding-bottom: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.ybc-cta:hover {
+  color: var(--ybc-cta-hover, #FAF8F3);
+  border-bottom-color: var(--ybc-cta-hover, #FAF8F3);
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .ybc-section { padding: 64px 32px 56px; border-radius: 3px; margin-top: 40px; }
+  .ybc-title { font-size: 42px; }
+}
+
+@media (max-width: 480px) {
+  .ybc-section { padding: 52px 24px 44px; margin-top: 28px; }
+  .ybc-title { font-size: 32px; }
+}
