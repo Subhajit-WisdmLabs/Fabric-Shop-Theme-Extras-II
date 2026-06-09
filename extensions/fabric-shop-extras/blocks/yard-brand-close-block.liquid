@@ -1,0 +1,133 @@
+{{ 'yard-brand-close.css' | asset_url | stylesheet_tag }}
+
+<section class="ybc-section" style="background:{{ block.settings.bg_color }};--ybc-accent:{{ block.settings.accent_color }};--ybc-cta-color:{{ block.settings.cta_color }};--ybc-cta-hover:{{ block.settings.cta_hover_color }};">
+  <div class="ybc-inner">
+
+    {%- if block.settings.eyebrow != blank -%}
+      <p class="ybc-eyebrow" style="color:{{ block.settings.accent_color }};">
+        {{- block.settings.eyebrow | escape -}}
+      </p>
+    {%- endif -%}
+
+    <h2 class="ybc-title" style="color:{{ block.settings.heading_color }};">
+      {%- if block.settings.heading_italic != blank -%}
+        <em style="color:{{ block.settings.heading_italic_color }};">{{ block.settings.heading_italic | escape }}</em>
+      {%- endif -%}
+      {{- block.settings.heading_rest | escape -}}
+    </h2>
+
+    {%- if block.settings.body_copy != blank -%}
+      <p class="ybc-body" style="color:{{ block.settings.body_color }};">
+        {{- block.settings.body_copy -}}
+      </p>
+    {%- endif -%}
+
+    {%- if block.settings.cta_label != blank -%}
+      <a class="ybc-cta"
+        {% if block.settings.cta_url != blank %}href="{{ block.settings.cta_url }}"{% endif %}>
+        {{- block.settings.cta_label | escape -}}
+      </a>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Yard Brand Close",
+  "target": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Dark closing section routing visitors from The Yard to the About / story page. \"Twenty years inside the trade.\""
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Behind the fabric"
+    },
+    {
+      "type": "text",
+      "id": "heading_italic",
+      "label": "Heading — italic opening",
+      "default": "Twenty years",
+      "info": "Rendered in italic with the accent colour. Appears first in the heading."
+    },
+    {
+      "type": "text",
+      "id": "heading_rest",
+      "label": "Heading — roman continuation",
+      "default": " inside the trade.",
+      "info": "Include a leading space so it flows after the italic text."
+    },
+    {
+      "type": "textarea",
+      "id": "body_copy",
+      "label": "Body copy",
+      "default": "The same mills, the same quality work, the same trade — supplying makers, brands, and wholesalers across Europe and Asia for two decades. Now open to anyone making."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "Read the story →"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA URL"
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#1A1814"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent (eyebrow & bottom line)",
+      "default": "#A87A2E"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#FAF8F3"
+    },
+    {
+      "type": "color",
+      "id": "heading_italic_color",
+      "label": "Heading italic",
+      "default": "#A8BFA0"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body text",
+      "default": "#CDCBC6"
+    },
+    {
+      "type": "color",
+      "id": "cta_color",
+      "label": "CTA",
+      "default": "#A8BFA0"
+    },
+    {
+      "type": "color",
+      "id": "cta_hover_color",
+      "label": "CTA hover",
+      "default": "#FAF8F3"
+    }
+  ]
+}
+{% endschema %}
