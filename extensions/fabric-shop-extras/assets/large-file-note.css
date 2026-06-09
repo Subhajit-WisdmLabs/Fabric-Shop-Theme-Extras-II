@@ -16,7 +16,6 @@
   border: 1px solid rgba(166, 80, 46, 0.25);
   border-radius: 3px;
   padding: 20px 22px;
-  max-width: 680px;
 }
 
 .lfn-head {
@@ -91,5 +90,4 @@
 
 @media (max-width: 768px) {
   .lfn-inner { padding: 40px 24px; }
-  .lfn-card { max-width: 100%; }
 }
