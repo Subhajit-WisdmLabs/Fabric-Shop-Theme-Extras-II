@@ -13,7 +13,10 @@
   var row         = document.getElementById('rcb-row-'   + blockId);
   var card        = document.getElementById('rcb-block-' + blockId);
   var checked     = false;
-  var designReady = false; // true only after cfu:design-loaded fires
+  var designReady = false;
+
+  // Checkbox starts disabled — unlocked only after image is uploaded
+  row.classList.add('rcb-disabled');
 
   function getAtcButton() {
     var form = document.querySelector('form[action*="/cart/add"]');
@@ -55,7 +58,7 @@
   // custom-fabric.js fires this when a design image is selected/uploaded
   document.addEventListener('cfu:design-loaded', function () {
     designReady = true;
-    // Design is now present — gate the button unless checkbox is already checked
+    row.classList.remove('rcb-disabled');
     if (!checked) {
       var btn = getAtcButton();
       if (btn) btn.disabled = true;
@@ -66,10 +69,10 @@
   document.addEventListener('cfu:design-reset', function () {
     designReady = false;
     checked = false;
+    row.classList.add('rcb-disabled');
     row.classList.remove('rcb-checked');
     card.classList.remove('rcb-confirmed');
     row.setAttribute('aria-checked', 'false');
-    // Release disabled — CSS gate (cfu--design-needed) takes over again
     var btn = getAtcButton();
     if (btn) btn.disabled = false;
   });
