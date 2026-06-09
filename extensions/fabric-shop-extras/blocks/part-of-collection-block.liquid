@@ -52,11 +52,11 @@
             ? '<img src="' + p.imageUrl + '" alt="' + escHtml(p.title) + '" loading="lazy">'
             : '';
           var metaHtml = '';
-          if (p.scale || p.tileRepeat) {
+          if (p.scale || p.tileScale) {
             metaHtml = '<div class="poc-card-meta">';
             if (p.scale) metaHtml += '<span class="poc-card-scale">' + escHtml(p.scale) + '</span>';
-            if (p.scale && p.tileRepeat) metaHtml += '<span class="poc-card-meta-sep">·</span>';
-            if (p.tileRepeat) metaHtml += '<span class="poc-card-repeat">' + escHtml(p.tileRepeat) + '</span>';
+            if (p.scale && p.tileScale) metaHtml += '<span class="poc-card-meta-sep">·</span>';
+            if (p.tileScale) metaHtml += '<span class="poc-card-tile-scale">' + escHtml(p.tileScale) + '</span>';
             metaHtml += '</div>';
           }
           gridHtml +=
