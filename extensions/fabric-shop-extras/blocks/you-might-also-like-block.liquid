@@ -1,0 +1,162 @@
+{{ 'you-might-also-like.css' | asset_url | stylesheet_tag }}
+
+<div id="ymal-root"
+     data-product-gid="{{ product.id | prepend: 'gid://shopify/Product/' }}"
+     data-product-title="{{ product.title | escape }}"
+     data-product-vendor="{{ product.vendor | escape }}"
+     data-product-tags="{{ product.tags | join: ',' | escape }}"
+     data-proxy-base="/apps/fabric-shop/api">
+  <section class="ymal-section ymal-skeleton">
+    <div class="ymal-inner">
+      <div class="ymal-head">
+        <div class="ymal-head-text">
+          <div class="ymal-skel-line ymal-skel-line--eyebrow"></div>
+          <div class="ymal-skel-line ymal-skel-line--title"></div>
+          <div class="ymal-skel-line ymal-skel-line--title ymal-skel-line--title-short"></div>
+        </div>
+        <div class="ymal-skel-line ymal-skel-line--cta-link"></div>
+      </div>
+      <div class="ymal-grid">
+        {%- for i in (1..4) -%}
+        <div class="ymal-card ymal-skel-card">
+          <div class="ymal-card-image ymal-skel-block"></div>
+          <div class="ymal-card-info">
+            <div class="ymal-skel-line ymal-skel-line--card-title"></div>
+            <div class="ymal-skel-line ymal-skel-line--card-vendor"></div>
+            <div class="ymal-skel-line ymal-skel-line--card-meta"></div>
+          </div>
+        </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  var CACHE_TTL = 30 * 60 * 1000;
+  var root = document.getElementById('ymal-root');
+  if (!root) return;
+
+  var productGid    = root.dataset.productGid;
+  var productTitle  = root.dataset.productTitle;
+  var productVendor = root.dataset.productVendor;
+  var productTags   = root.dataset.productTags;
+  var proxyBase     = root.dataset.proxyBase;
+  var cacheKey      = 'ymal:' + productGid;
+
+  function titleCase(str) {
+    return str.replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+  }
+
+  function render(data) {
+    if (!data.products || !data.products.length) {
+      root.style.display = 'none';
+      return;
+    }
+
+    var primaryLabel = data.primaryTagLabel ? titleCase(data.primaryTagLabel) : null;
+    var browseHref   = data.browseHref || '/collections/all';
+
+    var headHtml =
+      '<div class="ymal-head">' +
+        '<div class="ymal-head-text">' +
+          '<div class="ymal-eyebrow">You might also like</div>' +
+          '<h2 class="ymal-title">More like <em>' + escHtml(productTitle) + '</em>.</h2>' +
+        '</div>' +
+        (primaryLabel
+          ? '<a class="ymal-head-link" href="' + escHtml(browseHref) + '">Browse ' + escHtml(primaryLabel) + ' &rarr;</a>'
+          : '') +
+      '</div>';
+
+    var gridHtml = '<div class="ymal-grid">';
+    data.products.forEach(function (p) {
+      var thumbHtml = p.imageUrl
+        ? '<img src="' + escHtml(p.imageUrl) + '" alt="' + escHtml(p.title) + '" loading="lazy">'
+        : '';
+
+      var vendorHtml = p.vendorSlug
+        ? '<div class="ymal-card-vendor">by <a href="/pages/partners?handle=' + encodeURIComponent(p.vendorSlug) + '" class="ymal-vendor-link">' + escHtml(p.vendor) + '</a></div>'
+        : (p.vendor ? '<div class="ymal-card-vendor">by ' + escHtml(p.vendor) + '</div>' : '');
+
+      var metaHtml = '';
+      if (p.scale || p.repeatSize) {
+        metaHtml = '<div class="ymal-card-meta">';
+        if (p.scale) metaHtml += '<span class="ymal-card-scale">' + escHtml(p.scale) + '</span>';
+        if (p.scale && p.repeatSize) metaHtml += '<span class="ymal-card-meta-sep">&middot;</span>';
+        if (p.repeatSize) metaHtml += '<span class="ymal-card-repeat-size">' + escHtml(p.repeatSize) + '</span>';
+        metaHtml += '</div>';
+      }
+
+      gridHtml +=
+        '<a class="cg-card ymal-card" href="/products/' + escHtml(p.handle) + '"' +
+          ' data-product-id="' + escHtml(p.numericId) + '"' +
+          ' data-like-count="0">' +
+          '<div class="cg-card-image ymal-card-image">' + thumbHtml + '</div>' +
+          '<div class="ymal-card-info">' +
+            '<h2 class="ymal-card-title">' + escHtml(p.title) + '</h2>' +
+            vendorHtml +
+            metaHtml +
+          '</div>' +
+        '</a>';
+    });
+    gridHtml += '</div>';
+
+    root.innerHTML =
+      '<section class="ymal-section">' +
+        '<div class="ymal-inner">' +
+          headHtml +
+          gridHtml +
+        '</div>' +
+      '</section>';
+
+    if (typeof window.__fpReinjectCards === 'function') {
+      window.__fpReinjectCards();
+    }
+  }
+
+  // Check browser cache first
+  try {
+    var cached = sessionStorage.getItem(cacheKey);
+    if (cached) {
+      var parsed = JSON.parse(cached);
+      if (parsed.expiresAt > Date.now()) {
+        render(parsed.data);
+        return;
+      }
+      sessionStorage.removeItem(cacheKey);
+    }
+  } catch (e) { /* unavailable */ }
+
+  var apiUrl = proxyBase + '/related-products'
+    + '?product_gid=' + encodeURIComponent(productGid)
+    + '&tags='        + encodeURIComponent(productTags)
+    + '&vendor='      + encodeURIComponent(productVendor);
+
+  fetch(apiUrl)
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      try {
+        sessionStorage.setItem(cacheKey, JSON.stringify({ data: data, expiresAt: Date.now() + CACHE_TTL }));
+      } catch (e) { /* storage full */ }
+      render(data);
+    })
+    .catch(function () { root.style.display = 'none'; });
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "You Might Also Like",
+  "target": "section",
+  "settings": []
+}
+{% endschema %}
