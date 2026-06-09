@@ -5,7 +5,10 @@
      data-product-title="{{ product.title | escape }}"
      data-product-vendor="{{ product.vendor | escape }}"
      data-product-tags="{{ product.tags | join: ',' | escape }}"
-     data-proxy-base="/apps/fabric-shop/api">
+     data-proxy-base="/apps/fabric-shop/api"
+     {%- if block.settings.browse_base_url != blank -%}
+     data-browse-base="{{ block.settings.browse_base_url | escape }}"
+     {%- endif -%}>
   <section class="ymal-section ymal-skeleton">
     <div class="ymal-inner">
       <div class="ymal-head">
@@ -43,6 +46,7 @@
   var productVendor = root.dataset.productVendor;
   var productTags   = root.dataset.productTags;
   var proxyBase     = root.dataset.proxyBase;
+  var browseBase    = root.dataset.browseBase || '';
   var cacheKey      = 'ymal:' + productGid;
 
   function titleCase(str) {
@@ -57,6 +61,10 @@
 
     var primaryLabel = data.primaryTagLabel ? titleCase(data.primaryTagLabel) : null;
     var browseHref   = data.browseHref || '/collections/all';
+    if (browseBase && primaryLabel) {
+      var sep = browseBase.indexOf('?') !== -1 ? '&' : '?';
+      browseHref = browseBase + sep + 'topic=' + encodeURIComponent(primaryLabel);
+    }
 
     var headHtml =
       '<div class="ymal-head">' +
@@ -161,6 +169,13 @@
 {
   "name": "You Might Also Like",
   "target": "section",
-  "settings": []
+  "settings": [
+    {
+      "type": "url",
+      "id": "browse_base_url",
+      "label": "Browse link base URL",
+      "info": "The topic or theme is appended as ?topic=Florals. Leave blank to fall back to the default collection URL."
+    }
+  ]
 }
 {% endschema %}
