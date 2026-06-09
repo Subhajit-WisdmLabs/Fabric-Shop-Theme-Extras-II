@@ -2,102 +2,149 @@
 
 <div id="poc-root"
      data-product-gid="{{ product.id | prepend: 'gid://shopify/Product/' }}"
-     data-proxy-base="/apps/fabric-shop/api"
-     style="display:none">
+     data-proxy-base="/apps/fabric-shop/api">
+  <section class="poc-section poc-skeleton">
+    <div class="poc-inner">
+      <div class="poc-head">
+        <div class="poc-cover poc-skel-block"></div>
+        <div class="poc-text">
+          <div class="poc-skel-line poc-skel-line--eyebrow"></div>
+          <div class="poc-skel-line poc-skel-line--title"></div>
+          <div class="poc-skel-line poc-skel-line--title poc-skel-line--title-short"></div>
+          <div class="poc-skel-line poc-skel-line--meta"></div>
+          <div class="poc-skel-line poc-skel-line--body"></div>
+          <div class="poc-skel-line poc-skel-line--body"></div>
+          <div class="poc-skel-line poc-skel-line--body poc-skel-line--body-short"></div>
+          <div class="poc-skel-line poc-skel-line--cta"></div>
+        </div>
+      </div>
+      <div class="poc-grid">
+        {%- for i in (1..4) -%}
+        <div class="poc-card poc-skel-card">
+          <div class="poc-card-image poc-skel-block"></div>
+          <div class="poc-card-info">
+            <div class="poc-skel-line poc-skel-line--card-title"></div>
+            <div class="poc-skel-line poc-skel-line--card-meta"></div>
+          </div>
+        </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
 </div>
 
 <script>
 (function () {
+  var CACHE_TTL = 30 * 60 * 1000; // 30 minutes
   var root = document.getElementById('poc-root');
   if (!root) return;
 
   var productGid = root.dataset.productGid;
   var proxyBase  = root.dataset.proxyBase;
+  var cacheKey   = 'poc:' + productGid;
 
+  function render(data) {
+    var col = data.collection;
+    if (!col) { root.style.display = 'none'; return; }
+
+    var coverHtml = '';
+    var coverClass = 'poc-cover';
+
+    if (col.coverType === 'auto_mosaic' && col.previewImages && col.previewImages.length > 1) {
+      coverHtml = '<div class="poc-mosaic">';
+      col.previewImages.slice(0, 4).forEach(function (url) {
+        coverHtml += '<img class="poc-mosaic__img" src="' + url + '" alt="" loading="lazy">';
+      });
+      coverHtml += '</div>';
+    } else if (col.coverImageUrl) {
+      coverHtml = '<img class="poc-cover-img" src="' + escHtml(col.coverImageUrl) + '" alt="' + escHtml(col.title) + '" loading="lazy">';
+    } else {
+      coverClass = 'poc-cover poc-cover--placeholder';
+    }
+
+    var designerMeta = col.designer ? ' · by ' + escHtml(col.designer.name) : '';
+    var descHtml = col.description
+      ? '<p class="poc-description">' + escHtml(col.description) + '</p>'
+      : '';
+
+    var ctaHref = col.designer
+      ? '/pages/partners?handle=' + encodeURIComponent(col.designer.slug) + '&tab=collection&slug=' + encodeURIComponent(col.handle)
+      : '/collections/' + escHtml(col.handle);
+
+    var gridHtml = '';
+    if (col.otherProducts && col.otherProducts.length) {
+      gridHtml = '<div class="poc-grid">';
+      col.otherProducts.forEach(function (p) {
+        var thumbHtml = p.imageUrl
+          ? '<img src="' + escHtml(p.imageUrl) + '" alt="' + escHtml(p.title) + '" loading="lazy">'
+          : '';
+        var metaHtml = '';
+        if (p.scale || p.tileScale) {
+          metaHtml = '<div class="poc-card-meta">';
+          if (p.scale) metaHtml += '<span class="poc-card-scale">' + escHtml(p.scale) + '</span>';
+          if (p.scale && p.tileScale) metaHtml += '<span class="poc-card-meta-sep">·</span>';
+          if (p.tileScale) metaHtml += '<span class="poc-card-tile-scale">' + escHtml(p.tileScale) + '</span>';
+          metaHtml += '</div>';
+        }
+        gridHtml +=
+          '<a class="cg-card poc-card" href="/products/' + escHtml(p.handle) + '"' +
+            ' data-product-id="' + escHtml(p.numericId) + '"' +
+            ' data-like-count="0">' +
+            '<div class="cg-card-image poc-card-image">' + thumbHtml + '</div>' +
+            '<div class="poc-card-info">' +
+              '<h2 class="poc-card-title">' + escHtml(p.title) + '</h2>' +
+              metaHtml +
+            '</div>' +
+          '</a>';
+      });
+      gridHtml += '</div>';
+    }
+
+    root.innerHTML =
+      '<section class="poc-section">' +
+        '<div class="poc-inner">' +
+          '<div class="poc-head">' +
+            '<div class="' + coverClass + '">' + coverHtml + '</div>' +
+            '<div class="poc-text">' +
+              '<div class="poc-eyebrow">Part of a collection</div>' +
+              '<h2 class="poc-name">' + escHtml(col.title) + '</h2>' +
+              '<div class="poc-meta">' + escHtml(String(col.productsCount)) + ' designs' + designerMeta + '</div>' +
+              descHtml +
+              '<a class="poc-cta" href="' + ctaHref + '">View the full collection →</a>' +
+            '</div>' +
+          '</div>' +
+          gridHtml +
+        '</div>' +
+      '</section>';
+
+    if (typeof window.__fpReinjectCards === 'function') {
+      window.__fpReinjectCards();
+    }
+  }
+
+  // Check browser cache first
+  try {
+    var cached = sessionStorage.getItem(cacheKey);
+    if (cached) {
+      var parsed = JSON.parse(cached);
+      if (parsed.expiresAt > Date.now()) {
+        render(parsed.data);
+        return;
+      }
+      sessionStorage.removeItem(cacheKey);
+    }
+  } catch (e) { /* sessionStorage unavailable */ }
+
+  // Fetch from API
   fetch(proxyBase + '/product-collection?product_gid=' + encodeURIComponent(productGid))
     .then(function (r) { return r.json(); })
     .then(function (data) {
-      var col = data.collection;
-      if (!col) return; // product has no partner collection — stay hidden
-
-      var coverHtml = '';
-      var coverClass = 'poc-cover';
-
-      if (col.coverType === 'auto_mosaic' && col.previewImages && col.previewImages.length > 1) {
-        coverHtml = '<div class="poc-mosaic">';
-        col.previewImages.slice(0, 4).forEach(function (url) {
-          coverHtml += '<img class="poc-mosaic__img" src="' + url + '" alt="" loading="lazy">';
-        });
-        coverHtml += '</div>';
-      } else if (col.coverImageUrl) {
-        coverHtml = '<img class="poc-cover-img" src="' + col.coverImageUrl + '" alt="' + escHtml(col.title) + '" loading="lazy">';
-      } else {
-        coverClass = 'poc-cover poc-cover--placeholder';
-      }
-
-      var designerMeta = col.designer ? ' · by ' + escHtml(col.designer.name) : '';
-      var descHtml = col.description
-        ? '<p class="poc-description">' + escHtml(col.description) + '</p>'
-        : '';
-
-      var ctaHref = col.designer
-        ? '/pages/partners?handle=' + encodeURIComponent(col.designer.slug) + '&tab=collection&slug=' + encodeURIComponent(col.handle)
-        : '/collections/' + escHtml(col.handle);
-
-      var gridHtml = '';
-      if (col.otherProducts && col.otherProducts.length) {
-        gridHtml = '<div class="poc-grid">';
-        col.otherProducts.forEach(function (p) {
-          var thumbHtml = p.imageUrl
-            ? '<img src="' + p.imageUrl + '" alt="' + escHtml(p.title) + '" loading="lazy">'
-            : '';
-          var metaHtml = '';
-          if (p.scale || p.tileScale) {
-            metaHtml = '<div class="poc-card-meta">';
-            if (p.scale) metaHtml += '<span class="poc-card-scale">' + escHtml(p.scale) + '</span>';
-            if (p.scale && p.tileScale) metaHtml += '<span class="poc-card-meta-sep">·</span>';
-            if (p.tileScale) metaHtml += '<span class="poc-card-tile-scale">' + escHtml(p.tileScale) + '</span>';
-            metaHtml += '</div>';
-          }
-          gridHtml +=
-            '<a class="cg-card poc-card" href="/products/' + escHtml(p.handle) + '"' +
-              ' data-product-id="' + escHtml(p.numericId) + '"' +
-              ' data-like-count="0">' +
-              '<div class="cg-card-image poc-card-image">' + thumbHtml + '</div>' +
-              '<div class="poc-card-info">' +
-                '<h2 class="poc-card-title">' + escHtml(p.title) + '</h2>' +
-                metaHtml +
-              '</div>' +
-            '</a>';
-        });
-        gridHtml += '</div>';
-      }
-
-      root.innerHTML =
-        '<section class="poc-section">' +
-          '<div class="poc-inner">' +
-            '<div class="poc-head">' +
-              '<div class="' + coverClass + '">' + coverHtml + '</div>' +
-              '<div class="poc-text">' +
-                '<div class="poc-eyebrow">Part of a collection</div>' +
-                '<h2 class="poc-name">' + escHtml(col.title) + '</h2>' +
-                '<div class="poc-meta">' + col.productsCount + ' designs' + designerMeta + '</div>' +
-                descHtml +
-                '<a class="poc-cta" href="' + ctaHref + '">View the full collection →</a>' +
-              '</div>' +
-            '</div>' +
-            gridHtml +
-          '</div>' +
-        '</section>';
-
-      root.style.display = '';
-
-      // Trigger like-wishlist.js to inject hearts + hover action bar
-      if (typeof window.__fpReinjectCards === 'function') {
-        window.__fpReinjectCards();
-      }
+      try {
+        sessionStorage.setItem(cacheKey, JSON.stringify({ data: data, expiresAt: Date.now() + CACHE_TTL }));
+      } catch (e) { /* storage full or blocked */ }
+      render(data);
     })
-    .catch(function () { /* stay hidden on error */ });
+    .catch(function () { root.style.display = 'none'; });
 
   function escHtml(str) {
     return String(str)
@@ -105,14 +152,6 @@
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
-  }
-
-  function formatPrice(amount, currency) {
-    try {
-      return new Intl.NumberFormat(undefined, { style: 'currency', currency: currency, minimumFractionDigits: 2 }).format(parseFloat(amount));
-    } catch (e) {
-      return currency + ' ' + parseFloat(amount).toFixed(2);
-    }
   }
 })();
 </script>

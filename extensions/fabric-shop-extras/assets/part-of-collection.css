@@ -1,5 +1,49 @@
 /* ── part-of-collection.css ─────────────────────────────────────────────── */
 
+/* ── Skeleton shimmer ────────────────────────────────────────────────────── */
+
+@keyframes poc-shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position:  600px 0; }
+}
+
+.poc-skeleton .poc-skel-block,
+.poc-skeleton .poc-skel-line {
+  background: linear-gradient(90deg, #EEEBE4 25%, #F5F2EC 50%, #EEEBE4 75%);
+  background-size: 1200px 100%;
+  animation: poc-shimmer 1.6s infinite linear;
+  border-radius: 4px;
+}
+
+.poc-skeleton .poc-cover.poc-skel-block {
+  border-radius: 2px;
+}
+
+.poc-skeleton .poc-card-image.poc-skel-block {
+  border-radius: 6px 6px 0 0;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+}
+
+/* Skeleton line sizes */
+.poc-skel-line--eyebrow      { height: 10px; width: 100px; margin-bottom: 18px; }
+.poc-skel-line--title        { height: 38px; width: 85%;   margin-bottom: 10px; }
+.poc-skel-line--title-short  { width: 60%; }
+.poc-skel-line--meta         { height: 10px; width: 130px; margin-bottom: 22px; }
+.poc-skel-line--body         { height: 13px; width: 100%;  margin-bottom: 8px; }
+.poc-skel-line--body-short   { width: 70%; margin-bottom: 28px; }
+.poc-skel-line--cta          { height: 42px; width: 180px; border-radius: 3px; }
+.poc-skel-line--card-title   { height: 18px; width: 80%;   margin-bottom: 8px; }
+.poc-skel-line--card-meta    { height: 10px; width: 55%; }
+
+/* Skeleton card shell */
+.poc-skeleton .poc-skel-card {
+  background: #fff;
+  border: 1px solid #E8E3D8;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
 .poc-section {
   background: var(--color-background, #FAF8F3);
   padding: 88px 28px;
