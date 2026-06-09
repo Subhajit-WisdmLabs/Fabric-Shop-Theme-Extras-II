@@ -18,7 +18,7 @@
       </div>
       <div class="ymal-grid">
         {%- for i in (1..4) -%}
-        <div class="ymal-card ymal-skel-card">
+        <div class="ymal-card-wrap ymal-skel-card">
           <div class="ymal-card-image ymal-skel-block"></div>
           <div class="ymal-card-info">
             <div class="ymal-skel-line ymal-skel-line--card-title"></div>
@@ -89,16 +89,20 @@
       }
 
       gridHtml +=
-        '<a class="cg-card ymal-card" href="/products/' + escHtml(p.handle) + '"' +
-          ' data-product-id="' + escHtml(p.numericId) + '"' +
-          ' data-like-count="0">' +
-          '<div class="cg-card-image ymal-card-image">' + thumbHtml + '</div>' +
-          '<div class="ymal-card-info">' +
-            '<h2 class="ymal-card-title">' + escHtml(p.title) + '</h2>' +
-            vendorHtml +
-            metaHtml +
-          '</div>' +
-        '</a>';
+        '<div class="ymal-card-wrap">' +
+          '<a class="cg-card ymal-card" href="/products/' + escHtml(p.handle) + '"' +
+            ' data-product-id="' + escHtml(p.numericId) + '"' +
+            ' data-like-count="0">' +
+            '<div class="cg-card-image ymal-card-image">' + thumbHtml + '</div>' +
+          '</a>' +
+          '<a class="ymal-card-title-link" href="/products/' + escHtml(p.handle) + '">' +
+            '<div class="ymal-card-info">' +
+              '<h2 class="ymal-card-title">' + escHtml(p.title) + '</h2>' +
+              vendorHtml +
+              metaHtml +
+            '</div>' +
+          '</a>' +
+        '</div>';
     });
     gridHtml += '</div>';
 
