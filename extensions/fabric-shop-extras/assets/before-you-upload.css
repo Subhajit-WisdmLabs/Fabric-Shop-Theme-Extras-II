@@ -154,13 +154,11 @@
   border: 0.5px solid rgba(92, 115, 85, 0.2);
 }
 
-.byu-cell,
-.byu-rep-r {
+.byu-cell {
   font-family: 'Fabric-Shop-Body', Georgia, serif;
   font-style: italic;
   font-size: 18px;
   color: var(--color-sage, #5C7355);
-  fill: var(--color-sage, #5C7355);
 }
 
 .byu-rep-vis--tile {
@@ -182,11 +180,54 @@
 .byu-cell--fy  { transform: scaleY(-1); }
 .byu-cell--fxy { transform: scale(-1, -1); }
 
-/* SVG icons: Halfbrick, Vertical */
-.byu-rep-vis svg {
+/* Halfbrick: row 2 offset right by half a tile */
+.byu-rep-vis--halfbrick {
+  position: relative;
+}
+
+.byu-hb-row {
+  position: absolute;
+  height: 50%;
+  display: grid;
+}
+
+.byu-hb-row--1 {
+  top: 0;
+  left: 0;
   width: 100%;
+  grid-template-columns: 1fr 1fr;
+}
+
+.byu-hb-row--2 {
+  top: 50%;
+  left: -25%;
+  width: 150%;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Vertical: col 2 offset down by half a tile */
+.byu-rep-vis--vertical {
+  position: relative;
+}
+
+.byu-vt-col {
+  position: absolute;
+  width: 50%;
+  display: grid;
+}
+
+.byu-vt-col--1 {
+  top: 0;
+  left: 0;
   height: 100%;
-  display: block;
+  grid-template-rows: 1fr 1fr;
+}
+
+.byu-vt-col--2 {
+  top: -25%;
+  left: 50%;
+  height: 150%;
+  grid-template-rows: repeat(3, 1fr);
 }
 
 .byu-rep-name {
