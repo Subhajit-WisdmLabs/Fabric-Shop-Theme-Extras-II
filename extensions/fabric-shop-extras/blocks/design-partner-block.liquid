@@ -8,8 +8,22 @@
        --dp-cta-bg: {{ block.settings.cta_bg_color }};
        --dp-cta-hover-text: {{ block.settings.cta_hover_text_color }};
        --dp-cta-hover-bg: {{ block.settings.cta_hover_bg_color }};
-       display: none;
      ">
+
+  {%- comment -%}Skeleton — visible while fetch is in-flight{%- endcomment -%}
+  <section class="dp-section dp-skeleton" aria-hidden="true">
+    <div class="dp-inner">
+      <div class="dp-portrait dp-skel-circle"></div>
+      <div class="dp-text">
+        <div class="dp-skel-line dp-skel-line--short"></div>
+        <div class="dp-skel-line dp-skel-line--name"></div>
+        <div class="dp-skel-line dp-skel-line--bio"></div>
+        <div class="dp-skel-line dp-skel-line--bio dp-skel-line--bio-2"></div>
+      </div>
+      <div class="dp-skel-btn"></div>
+    </div>
+  </section>
+
 </div>
 
 <script>
@@ -24,9 +38,11 @@
     .then(function (r) { return r.json(); })
     .then(function (data) {
       var d = data.designer;
-      if (!d) return; // no designer record — stay hidden
 
-      // Portrait: image if available, else initials fallback
+      // No designer — hide entirely
+      if (!d) { root.style.display = 'none'; return; }
+
+      // Portrait: image if available, else CSS initials fallback
       var portraitHtml;
       if (d.portraitUrl) {
         portraitHtml = '<img src="' + escHtml(d.portraitUrl) + '" alt="' + escHtml(d.name) + '" loading="lazy">';
@@ -61,10 +77,8 @@
             ctaHtml +
           '</div>' +
         '</section>';
-
-      root.style.display = '';
     })
-    .catch(function () { /* stay hidden on error */ });
+    .catch(function () { root.style.display = 'none'; });
 
   function escHtml(str) {
     return String(str)
