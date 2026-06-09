@@ -136,17 +136,49 @@
   gap: 18px;
 }
 
-/* Price line under card title */
-.poc-card-price {
-  margin: 3px 0 0;
-  font-size: 13px;
-  color: #666;
+/* Card shell */
+.poc-grid .poc-card {
+  display: block;
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid #E8E3D8;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Reduce title size/weight inside poc grid only */
-.poc-grid .cg-card-title {
-  font-size: 13px;
-  font-weight: 300;
+.poc-grid .poc-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Image wrapper — border-radius clips the image top corners */
+.poc-card-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 6px 6px 0 0;
+}
+
+.poc-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Info area below image */
+.poc-card-info {
+  padding: 12px 14px 14px;
+}
+
+.poc-card-title {
+  font-family: var(--font-heading-family, Georgia, serif);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--color-foreground, #1A1814);
+  margin: 0;
   white-space: normal;
 }
 

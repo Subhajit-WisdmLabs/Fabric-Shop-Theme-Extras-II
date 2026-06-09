@@ -51,17 +51,13 @@
           var thumbHtml = p.imageUrl
             ? '<img src="' + p.imageUrl + '" alt="' + escHtml(p.title) + '" loading="lazy">'
             : '';
-          var priceHtml = p.minPrice
-            ? '<p class="poc-card-price">from ' + formatPrice(p.minPrice, p.currencyCode) + '</p>'
-            : '';
           gridHtml +=
-            '<a class="cg-card" href="/products/' + escHtml(p.handle) + '"' +
+            '<a class="cg-card poc-card" href="/products/' + escHtml(p.handle) + '"' +
               ' data-product-id="' + escHtml(p.numericId) + '"' +
               ' data-like-count="0">' +
-              '<div class="cg-card-image">' + thumbHtml + '</div>' +
-              '<div class="cg-card-info">' +
-                '<h3 class="cg-card-title">' + escHtml(p.title) + '</h3>' +
-                priceHtml +
+              '<div class="cg-card-image poc-card-image">' + thumbHtml + '</div>' +
+              '<div class="poc-card-info">' +
+                '<h2 class="poc-card-title">' + escHtml(p.title) + '</h2>' +
               '</div>' +
             '</a>';
         });
