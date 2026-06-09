@@ -1,6 +1,6 @@
 {{ 'before-you-upload.css' | asset_url | stylesheet_tag }}
 
-<section class="byu-section">
+<section class="byu-section" {% if block.settings.background_color != blank %}style="background: {{ block.settings.background_color }};"{% endif %}>
   <div class="byu-inner">
 
     {%- if block.settings.eyebrow != blank -%}
@@ -117,6 +117,12 @@
   "name": "Before You Upload",
   "target": "section",
   "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background colour",
+      "default": "#FAF8F3"
+    },
     {
       "type": "text",
       "id": "eyebrow",
