@@ -51,6 +51,14 @@
           var thumbHtml = p.imageUrl
             ? '<img src="' + p.imageUrl + '" alt="' + escHtml(p.title) + '" loading="lazy">'
             : '';
+          var metaHtml = '';
+          if (p.scale || p.tileRepeat) {
+            metaHtml = '<div class="poc-card-meta">';
+            if (p.scale) metaHtml += '<span class="poc-card-scale">' + escHtml(p.scale) + '</span>';
+            if (p.scale && p.tileRepeat) metaHtml += '<span class="poc-card-meta-sep">·</span>';
+            if (p.tileRepeat) metaHtml += '<span class="poc-card-repeat">' + escHtml(p.tileRepeat) + '</span>';
+            metaHtml += '</div>';
+          }
           gridHtml +=
             '<a class="cg-card poc-card" href="/products/' + escHtml(p.handle) + '"' +
               ' data-product-id="' + escHtml(p.numericId) + '"' +
@@ -58,6 +66,7 @@
               '<div class="cg-card-image poc-card-image">' + thumbHtml + '</div>' +
               '<div class="poc-card-info">' +
                 '<h2 class="poc-card-title">' + escHtml(p.title) + '</h2>' +
+                metaHtml +
               '</div>' +
             '</a>';
         });
