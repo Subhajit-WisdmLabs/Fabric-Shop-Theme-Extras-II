@@ -79,11 +79,11 @@
           ? '<img src="' + escHtml(p.imageUrl) + '" alt="' + escHtml(p.title) + '" loading="lazy">'
           : '';
         var metaHtml = '';
-        if (p.scale || p.tileScale) {
+        if (p.scale || p.repeatSize) {
           metaHtml = '<div class="poc-card-meta">';
           if (p.scale) metaHtml += '<span class="poc-card-scale">' + escHtml(p.scale) + '</span>';
-          if (p.scale && p.tileScale) metaHtml += '<span class="poc-card-meta-sep">·</span>';
-          if (p.tileScale) metaHtml += '<span class="poc-card-tile-scale">' + escHtml(p.tileScale) + '</span>';
+          if (p.scale && p.repeatSize) metaHtml += '<span class="poc-card-meta-sep">·</span>';
+          if (p.repeatSize) metaHtml += '<span class="poc-card-repeat-size">' + escHtml(p.repeatSize) + '</span>';
           metaHtml += '</div>';
         }
         gridHtml +=
