@@ -1,0 +1,88 @@
+/* ── about-custom.css ────────────────────────────────────────────────────── */
+
+.ac-section {
+  background: var(--color-background, #FAF8F3);
+  border-top: 1px solid var(--color-border, #E8E3D8);
+}
+
+.ac-inner {
+  max-width: calc(var(--page-width, 1320px) + var(--gutter, 64px) * 2);
+  margin: 0 auto;
+  padding: 88px var(--gutter, 64px);
+}
+
+.ac-content {
+  max-width: 720px;
+}
+
+.ac-eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-foreground-muted, #9A9285);
+  margin-bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ac-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 22px;
+  height: 1px;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.ac-heading {
+  font-family: 'Fabric-Shop-Heading', var(--font-heading-family, Georgia, serif);
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1.1;
+  letter-spacing: -0.018em;
+  color: var(--color-foreground, #1A1814);
+  margin: 0 0 18px;
+}
+
+.ac-heading em {
+  font-style: italic;
+  color: var(--color-sage, #5C7355);
+}
+
+.ac-body {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-foreground-secondary, #5C564A);
+}
+
+.ac-body p {
+  margin: 0 0 14px;
+}
+
+.ac-body p:last-child {
+  margin-bottom: 0;
+}
+
+.ac-body strong {
+  color: var(--color-foreground, #1A1814);
+  font-weight: 500;
+}
+
+.ac-body a {
+  color: var(--color-foreground, #1A1814);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .ac-inner { padding-left: 40px; padding-right: 40px; }
+}
+
+@media (max-width: 768px) {
+  .ac-inner { padding: 64px 24px; }
+  .ac-heading { font-size: 26px; }
+}
