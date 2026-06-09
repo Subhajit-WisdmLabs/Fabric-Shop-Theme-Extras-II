@@ -1,0 +1,95 @@
+/* ── large-file-note.css ─────────────────────────────────────────────────── */
+
+.lfn-section {
+  background: var(--color-background, #FAF8F3);
+  border-top: 1px solid var(--color-border, #E8E3D8);
+}
+
+.lfn-inner {
+  max-width: calc(var(--page-width, 1320px) + var(--gutter, 64px) * 2);
+  margin: 0 auto;
+  padding: 56px var(--gutter, 64px);
+}
+
+.lfn-card {
+  background: #F4E4DA;
+  border: 1px solid rgba(166, 80, 46, 0.25);
+  border-radius: 3px;
+  padding: 20px 22px;
+  max-width: 680px;
+}
+
+.lfn-head {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #A6502E;
+  margin-bottom: 8px;
+}
+
+.lfn-body {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--color-foreground-secondary, #5C564A);
+  margin: 0 0 12px;
+}
+
+.lfn-email-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  border: 1px solid rgba(166, 80, 46, 0.22);
+  border-radius: 2px;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+}
+
+.lfn-addr {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  color: var(--color-foreground, #1A1814);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lfn-copy {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #FAF8F3;
+  background: #A6502E;
+  border: none;
+  border-radius: 2px;
+  padding: 6px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+
+.lfn-copy:hover {
+  background: #8a4226;
+}
+
+.lfn-followup {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--color-foreground-secondary, #5C564A);
+  margin: 0;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .lfn-inner { padding-left: 40px; padding-right: 40px; }
+}
+
+@media (max-width: 768px) {
+  .lfn-inner { padding: 40px 24px; }
+  .lfn-card { max-width: 100%; }
+}

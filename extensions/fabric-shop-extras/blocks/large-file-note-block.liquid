@@ -1,0 +1,100 @@
+{{ 'large-file-note.css' | asset_url | stylesheet_tag }}
+
+<section class="lfn-section">
+  <div class="lfn-inner">
+    <div class="lfn-card">
+
+      {%- if block.settings.heading != blank -%}
+        <div class="lfn-head">{{- block.settings.heading -}}</div>
+      {%- endif -%}
+
+      {%- if block.settings.body_text != blank -%}
+        <p class="lfn-body">{{- block.settings.body_text -}}</p>
+      {%- endif -%}
+
+      {%- if block.settings.email != blank -%}
+        <div class="lfn-email-row">
+          <span class="lfn-addr">{{- block.settings.email -}}</span>
+          <button class="lfn-copy" type="button" data-email="{{ block.settings.email | escape }}">Copy</button>
+        </div>
+      {%- endif -%}
+
+      {%- if block.settings.followup_text != blank -%}
+        <p class="lfn-followup">{{- block.settings.followup_text -}}</p>
+      {%- endif -%}
+
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var btn = document.currentScript.previousElementSibling;
+  while (btn && btn.tagName !== 'SECTION') btn = btn.previousElementSibling;
+  if (!btn) return;
+  var copyBtn = btn.querySelector('.lfn-copy');
+  if (!copyBtn) return;
+
+  copyBtn.addEventListener('click', function () {
+    var email = copyBtn.dataset.email;
+    var original = copyBtn.textContent;
+
+    function confirm() {
+      copyBtn.textContent = 'Copied!';
+      setTimeout(function () { copyBtn.textContent = original; }, 2000);
+    }
+
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(email).then(confirm).catch(function () {
+        fallback(email, confirm);
+      });
+    } else {
+      fallback(email, confirm);
+    }
+  });
+
+  function fallback(text, cb) {
+    var el = document.createElement('input');
+    el.value = text;
+    el.style.position = 'fixed';
+    el.style.opacity = '0';
+    document.body.appendChild(el);
+    el.select();
+    try { document.execCommand('copy'); cb(); } catch (e) {}
+    document.body.removeChild(el);
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Large File Note",
+  "target": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Large file, or a ready motif?"
+    },
+    {
+      "type": "textarea",
+      "id": "body_text",
+      "label": "Body text",
+      "default": "If your file is over 30 MB, or your artwork is already print-ready, you don't need to order here — or even choose a fabric first. Email it to us with a few words on what you're after, and we'll set the order up for you by hand."
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email address",
+      "default": "customdesigns@thefabricshop.au"
+    },
+    {
+      "type": "textarea",
+      "id": "followup_text",
+      "label": "Follow-up text",
+      "default": "Tell us the fabric and quantity if you know them. We reply within 48 hours."
+    }
+  ]
+}
+{% endschema %}
