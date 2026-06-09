@@ -47,6 +47,8 @@
   align-items: center;
   gap: 8px;
   padding: 14px 24px;
+  background: var(--cub-cta-bg, #1A1814);
+  color: var(--cub-cta-fg, #FAF8F3);
   border: none;
   border-radius: 3px;
   font-family: inherit;
@@ -55,6 +57,11 @@
   text-decoration: none;
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease;
+}
+
+.cub-cta:hover {
+  background: var(--cub-cta-hover-bg, #A87A2E);
+  color: var(--cub-cta-hover-fg, #FAF8F3);
 }
 
 .cub-cta svg { flex-shrink: 0; }

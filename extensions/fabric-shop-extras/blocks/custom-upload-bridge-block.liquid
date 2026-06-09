@@ -24,7 +24,7 @@
       {%- if block.settings.cta_label != blank -%}
         <a
           class="cub-cta"
-          style="background:{{ block.settings.cta_bg_color }};color:{{ block.settings.cta_text_color }};"
+          style="--cub-cta-bg:{{ block.settings.cta_bg_color }};--cub-cta-fg:{{ block.settings.cta_text_color }};--cub-cta-hover-bg:{{ block.settings.cta_hover_bg_color }};--cub-cta-hover-fg:{{ block.settings.cta_hover_text_color }};"
           {% if block.settings.cta_url != blank %}href="{{ block.settings.cta_url }}"{% endif %}
         >
           {{- block.settings.cta_label -}}
@@ -153,6 +153,18 @@
       "type": "color",
       "id": "cta_text_color",
       "label": "CTA text",
+      "default": "#FAF8F3"
+    },
+    {
+      "type": "color",
+      "id": "cta_hover_bg_color",
+      "label": "CTA hover background",
+      "default": "#A87A2E"
+    },
+    {
+      "type": "color",
+      "id": "cta_hover_text_color",
+      "label": "CTA hover text",
       "default": "#FAF8F3"
     }
   ]
