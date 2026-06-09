@@ -1,0 +1,83 @@
+{{ 'closing-signature.css' | asset_url | stylesheet_tag }}
+
+<section class="cs-section" style="background:{{ block.settings.bg_color }};">
+
+  <p class="cs-title" style="color:{{ block.settings.heading_color }};">
+    {{- block.settings.heading_line1 | escape -}}
+    {%- if block.settings.heading_line2 != blank -%}
+      <br /><em style="color:{{ block.settings.italic_color }};">{{ block.settings.heading_line2 | escape }}</em>
+    {%- endif -%}
+  </p>
+
+  {%- if block.settings.attribution != blank -%}
+    <p class="cs-attribution" style="color:{{ block.settings.attribution_color }};">
+      {{- block.settings.attribution | escape -}}
+    </p>
+  {%- endif -%}
+
+</section>
+
+{% schema %}
+{
+  "name": "Closing Signature",
+  "target": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Full-width brand signature band. Dark background with a large serif statement and optional mono attribution line."
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading_line1",
+      "label": "Heading — line 1",
+      "default": "The fabric your idea deserves."
+    },
+    {
+      "type": "text",
+      "id": "heading_line2",
+      "label": "Heading — line 2 (italic)",
+      "default": "By the metre, on demand.",
+      "info": "Rendered in italic on a new line. Leave blank to show a single-line heading."
+    },
+    {
+      "type": "text",
+      "id": "attribution",
+      "label": "Attribution",
+      "default": "— PrintLab · The Fabric Shop",
+      "info": "Small mono line below the heading. Leave blank to hide."
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#1A1814"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#FAF8F3"
+    },
+    {
+      "type": "color",
+      "id": "italic_color",
+      "label": "Italic accent (line 2)",
+      "default": "#A8BFA0"
+    },
+    {
+      "type": "color",
+      "id": "attribution_color",
+      "label": "Attribution",
+      "default": "#726D64"
+    }
+  ]
+}
+{% endschema %}

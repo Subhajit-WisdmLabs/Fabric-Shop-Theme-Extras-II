@@ -1,0 +1,41 @@
+/* ── Closing Signature block ─────────────────────────────────── */
+
+.cs-section {
+  padding: 120px 32px 96px;
+  text-align: center;
+}
+
+.cs-title {
+  font-family: 'Ageia', 'Cormorant Garamond', Georgia, serif;
+  font-weight: 500;
+  font-size: 52px;
+  line-height: 1.18;
+  letter-spacing: -0.022em;
+  margin: 0 auto 28px;
+  max-width: 900px;
+}
+
+.cs-title em {
+  font-style: italic;
+  font-weight: 500;
+}
+
+.cs-attribution {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .cs-section { padding: 80px 24px 64px; }
+  .cs-title { font-size: 36px; }
+}
+
+@media (max-width: 480px) {
+  .cs-section { padding: 60px 20px 48px; }
+  .cs-title { font-size: 28px; }
+}
