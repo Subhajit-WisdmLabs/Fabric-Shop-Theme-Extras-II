@@ -1,0 +1,151 @@
+{{ 'more-by-studio.css' | asset_url | stylesheet_tag }}
+
+<div id="mbs-root"
+     data-product-gid="{{ product.id | prepend: 'gid://shopify/Product/' }}"
+     data-product-vendor="{{ product.vendor | escape }}"
+     data-proxy-base="/apps/fabric-shop/api">
+  <section class="mbs-section mbs-skeleton">
+    <div class="mbs-inner">
+      <div class="mbs-head">
+        <div class="mbs-head-text">
+          <div class="mbs-skel-line mbs-skel-line--eyebrow"></div>
+          <div class="mbs-skel-line mbs-skel-line--title"></div>
+          <div class="mbs-skel-line mbs-skel-line--title mbs-skel-line--title-s"></div>
+        </div>
+        <div class="mbs-skel-line mbs-skel-line--cta"></div>
+      </div>
+      <div class="mbs-grid">
+        {%- for i in (1..4) -%}
+        <div class="mbs-skel-card">
+          <div class="mbs-card-image mbs-skel-block"></div>
+          <div class="mbs-card-meta">
+            <div class="mbs-skel-line mbs-skel-line--name"></div>
+            <div class="mbs-skel-line mbs-skel-line--studio"></div>
+            <div class="mbs-skel-line mbs-skel-line--meta"></div>
+          </div>
+        </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  var CACHE_TTL = 30 * 60 * 1000;
+  var root = document.getElementById('mbs-root');
+  if (!root) return;
+
+  var productGid    = root.dataset.productGid;
+  var productVendor = root.dataset.productVendor;
+  var proxyBase     = root.dataset.proxyBase;
+  var cacheKey      = 'mbs:' + productGid;
+
+  function render(data) {
+    if (!data.products || data.products.length < 2) {
+      root.style.display = 'none';
+      return;
+    }
+
+    var studioName = data.studioName || productVendor;
+    var studioUrl  = data.studioUrl  || null;
+
+    var headHtml =
+      '<div class="mbs-head">' +
+        '<div class="mbs-head-text">' +
+          '<div class="mbs-eyebrow">From the same studio</div>' +
+          '<h2 class="mbs-title">More by <em>' + escHtml(studioName) + '</em>.</h2>' +
+        '</div>' +
+        (studioUrl
+          ? '<a class="mbs-head-link" href="' + escHtml(studioUrl) + '">Visit their studio &rarr;</a>'
+          : '') +
+      '</div>';
+
+    var gridHtml = '<div class="mbs-grid">';
+    data.products.forEach(function (p) {
+      var thumbHtml = p.imageUrl
+        ? '<img src="' + escHtml(p.imageUrl) + '" alt="' + escHtml(p.title) + '" loading="lazy">'
+        : '';
+
+      var bottomParts = [];
+      if (p.scale)      bottomParts.push(escHtml(p.scale));
+      if (p.repeatSize) bottomParts.push(escHtml(p.repeatSize));
+      var bottomHtml = bottomParts.length
+        ? '<div class="mbs-card-bottom">' + bottomParts.join(' &middot; ') + '</div>'
+        : '';
+
+      gridHtml +=
+        '<div class="mbs-card-wrap">' +
+          '<a class="cg-card mbs-card" href="/products/' + escHtml(p.handle) + '"' +
+            ' data-product-id="' + escHtml(p.numericId) + '"' +
+            ' data-like-count="0">' +
+            '<div class="cg-card-image mbs-card-image">' + thumbHtml + '</div>' +
+          '</a>' +
+          '<div class="mbs-card-meta">' +
+            '<a href="/products/' + escHtml(p.handle) + '" style="text-decoration:none;color:inherit;">' +
+              '<div class="mbs-card-name">' + escHtml(p.title) + '</div>' +
+            '</a>' +
+            '<div class="mbs-card-studio">' + escHtml(studioName) + '</div>' +
+            bottomHtml +
+          '</div>' +
+        '</div>';
+    });
+    gridHtml += '</div>';
+
+    root.innerHTML =
+      '<section class="mbs-section">' +
+        '<div class="mbs-inner">' +
+          headHtml +
+          gridHtml +
+        '</div>' +
+      '</section>';
+
+    if (typeof window.__fpReinjectCards === 'function') {
+      window.__fpReinjectCards();
+    }
+  }
+
+  // Check browser cache first
+  try {
+    var cached = sessionStorage.getItem(cacheKey);
+    if (cached) {
+      var parsed = JSON.parse(cached);
+      if (parsed.expiresAt > Date.now()) {
+        render(parsed.data);
+        return;
+      }
+      sessionStorage.removeItem(cacheKey);
+    }
+  } catch (e) { /* unavailable */ }
+
+  var apiUrl = proxyBase + '/more-by-studio'
+    + '?vendor='      + encodeURIComponent(productVendor)
+    + '&product_gid=' + encodeURIComponent(productGid);
+
+  fetch(apiUrl)
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      try {
+        sessionStorage.setItem(cacheKey, JSON.stringify({ data: data, expiresAt: Date.now() + CACHE_TTL }));
+      } catch (e) { /* storage full */ }
+      render(data);
+    })
+    .catch(function () { root.style.display = 'none'; });
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "More by the Same Studio",
+  "target": "section",
+  "settings": []
+}
+{% endschema %}
