@@ -18,9 +18,12 @@
   // Checkbox starts disabled — unlocked only after image is uploaded
   row.classList.add('rcb-disabled');
 
-  function getAtcButton() {
-    var form = document.querySelector('form[action*="/cart/add"]');
-    return form ? form.querySelector('button[type="submit"], [name="add"]') : null;
+  function setGate(on) {
+    if (on) {
+      document.body.classList.add('rcb--needs-confirm');
+    } else {
+      document.body.classList.remove('rcb--needs-confirm');
+    }
   }
 
   function applyState() {
@@ -28,20 +31,12 @@
       row.classList.add('rcb-checked');
       card.classList.add('rcb-confirmed');
       row.setAttribute('aria-checked', 'true');
-      // Only un-disable when a design has actually been loaded
-      if (designReady) {
-        var btn = getAtcButton();
-        if (btn) btn.disabled = false;
-      }
+      if (designReady) setGate(false);
     } else {
       row.classList.remove('rcb-checked');
       card.classList.remove('rcb-confirmed');
       row.setAttribute('aria-checked', 'false');
-      // Gate the button only once a design is present
-      if (designReady) {
-        var btn = getAtcButton();
-        if (btn) btn.disabled = true;
-      }
+      if (designReady) setGate(true);
     }
   }
 
@@ -55,14 +50,28 @@
     if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); }
   });
 
+  // Hard backstop: block form submit in capture phase if gate is active
+  document.addEventListener('DOMContentLoaded', function () {
+    var form = document.querySelector('form[action*="/cart/add"]');
+    if (form && !form._rcbGuardAttached) {
+      form._rcbGuardAttached = true;
+      form.addEventListener('submit', function (e) {
+        if (designReady && !checked) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          card.style.animation = 'none';
+          card.offsetHeight; // reflow
+          card.style.animation = 'rcb-shake 0.3s ease';
+        }
+      }, true);
+    }
+  });
+
   // custom-fabric.js fires this when a design image is selected/uploaded
   document.addEventListener('cfu:design-loaded', function () {
     designReady = true;
     row.classList.remove('rcb-disabled');
-    if (!checked) {
-      var btn = getAtcButton();
-      if (btn) btn.disabled = true;
-    }
+    if (!checked) setGate(true);
   });
 
   // Fires when the user removes/resets the design
@@ -73,8 +82,7 @@
     row.classList.remove('rcb-checked');
     card.classList.remove('rcb-confirmed');
     row.setAttribute('aria-checked', 'false');
-    var btn = getAtcButton();
-    if (btn) btn.disabled = false;
+    setGate(false);
   });
 })();
 </script>

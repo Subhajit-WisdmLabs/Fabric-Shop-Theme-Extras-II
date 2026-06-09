@@ -1,5 +1,11 @@
 /* ── rights-checkbox.css ─────────────────────────────────────────────────── */
 
+@keyframes rcb-shake {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-4px); }
+  75%       { transform: translateX(4px); }
+}
+
 .rcb-block {
   margin-top: 14px;
   padding: 14px;
@@ -68,4 +74,13 @@
   color: var(--color-foreground, #1A1814);
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+/* Gate the ATC button via body class — mirrors cfu--design-needed pattern,
+   immune to theme JS that may re-enable the button after cfu:design-loaded */
+body.rcb--needs-confirm form[action*="/cart/add"] button[type="submit"],
+body.rcb--needs-confirm form[action*="/cart/add"] [name="add"] {
+  opacity: 0.4 !important;
+  pointer-events: none !important;
+  cursor: not-allowed !important;
 }
