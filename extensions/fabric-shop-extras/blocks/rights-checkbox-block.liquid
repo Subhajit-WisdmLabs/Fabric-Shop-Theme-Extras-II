@@ -1,0 +1,74 @@
+{{ 'rights-checkbox.css' | asset_url | stylesheet_tag }}
+
+<div class="rcb-block" id="rcb-block-{{ block.id }}">
+  <div class="rcb-row" id="rcb-row-{{ block.id }}" role="checkbox" aria-checked="false" tabindex="0">
+    <div class="rcb-checkbox"></div>
+    <div class="rcb-label">{{ block.settings.checkbox_label }}</div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var blockId = {{ block.id | json }};
+  var row     = document.getElementById('rcb-row-'   + blockId);
+  var card    = document.getElementById('rcb-block-' + blockId);
+  var checked = false;
+
+  function getAtcButton() {
+    var form = document.querySelector('form[action*="/cart/add"]');
+    return form ? form.querySelector('button[type="submit"], [name="add"]') : null;
+  }
+
+  function applyState() {
+    if (checked) {
+      row.classList.add('rcb-checked');
+      card.classList.add('rcb-confirmed');
+      row.setAttribute('aria-checked', 'true');
+      var btn = getAtcButton();
+      if (btn) btn.disabled = false;
+    } else {
+      row.classList.remove('rcb-checked');
+      card.classList.remove('rcb-confirmed');
+      row.setAttribute('aria-checked', 'false');
+      var btn = getAtcButton();
+      if (btn) btn.disabled = true;
+    }
+  }
+
+  function toggle() {
+    checked = !checked;
+    applyState();
+  }
+
+  row.addEventListener('click', toggle);
+  row.addEventListener('keydown', function (e) {
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); }
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var btn = getAtcButton();
+    if (btn) btn.disabled = true;
+  });
+
+  // Fallback: disable immediately if DOM is already ready
+  if (document.readyState !== 'loading') {
+    var btn = getAtcButton();
+    if (btn) btn.disabled = true;
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Rights Checkbox",
+  "target": "section",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "checkbox_label",
+      "label": "Checkbox label",
+      "default": "<p>I have the right to use this design, and I agree to the <a href=\"#\">PrintLab Design Submission Agreement</a>.</p>"
+    }
+  ]
+}
+{% endschema %}

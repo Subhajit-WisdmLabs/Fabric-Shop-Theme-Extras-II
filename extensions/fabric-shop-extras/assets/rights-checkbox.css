@@ -1,0 +1,64 @@
+/* ── rights-checkbox.css ─────────────────────────────────────────────────── */
+
+.rcb-block {
+  margin-top: 14px;
+  padding: 14px;
+  background: var(--color-background, #FAF8F3);
+  border: 1px solid var(--color-border-strong, #D4CCBC);
+  border-radius: 3px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.rcb-block.rcb-confirmed {
+  background: #EEF1EC;
+  border-color: rgba(92, 115, 85, 0.4);
+}
+
+.rcb-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  padding: 4px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.rcb-checkbox {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--color-foreground-secondary, #9A9285);
+  border-radius: 2px;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.rcb-row.rcb-checked .rcb-checkbox {
+  background: var(--color-foreground, #1A1814);
+  border-color: var(--color-foreground, #1A1814);
+}
+
+.rcb-row.rcb-checked .rcb-checkbox::after {
+  content: '✓';
+  color: #FAF8F3;
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.rcb-label {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--color-foreground, #1A1814);
+}
+
+.rcb-label a {
+  color: var(--color-foreground, #1A1814);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
