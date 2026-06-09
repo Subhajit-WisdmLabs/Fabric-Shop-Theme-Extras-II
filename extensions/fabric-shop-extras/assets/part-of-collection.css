@@ -46,13 +46,13 @@
 
 .poc-section {
   background: var(--color-background, #FAF8F3);
-  padding: 88px 28px;
   border-top: 1px solid var(--color-border, #E8E3D8);
 }
 
 .poc-inner {
-  max-width: 1280px;
+  max-width: calc(var(--page-width, 1320px) + var(--gutter, 64px) * 2);
   margin: 0 auto;
+  padding: 88px var(--gutter, 64px);
 }
 
 /* ── Header row: image + text ────────────────────────────────────────────── */
@@ -244,12 +244,12 @@
 /* ── Responsive ──────────────────────────────────────────────────────────── */
 
 @media (max-width: 1024px) {
-  .poc-section { padding-left: 40px; padding-right: 40px; }
+  .poc-inner { padding-left: 40px; padding-right: 40px; }
   .poc-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
-  .poc-section { padding: 64px 24px; }
+  .poc-inner { padding: 64px 24px; }
   .poc-head { grid-template-columns: 1fr; gap: 28px; }
   .poc-cover { height: 300px; }
   .poc-name { font-size: 28px; }
