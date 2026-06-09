@@ -95,13 +95,13 @@
             ' data-like-count="0">' +
             '<div class="cg-card-image ymal-card-image">' + thumbHtml + '</div>' +
           '</a>' +
-          '<a class="ymal-card-title-link" href="/products/' + escHtml(p.handle) + '">' +
-            '<div class="ymal-card-info">' +
+          '<div class="ymal-card-info">' +
+            '<a class="ymal-card-title-link" href="/products/' + escHtml(p.handle) + '">' +
               '<h2 class="ymal-card-title">' + escHtml(p.title) + '</h2>' +
-              vendorHtml +
-              metaHtml +
-            '</div>' +
-          '</a>' +
+            '</a>' +
+            vendorHtml +
+            metaHtml +
+          '</div>' +
         '</div>';
     });
     gridHtml += '</div>';
