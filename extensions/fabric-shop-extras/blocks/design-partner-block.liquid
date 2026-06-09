@@ -1,0 +1,122 @@
+{{ 'design-partner.css' | asset_url | stylesheet_tag }}
+
+<div id="dp-root"
+     data-product-gid="{{ product.id | prepend: 'gid://shopify/Product/' }}"
+     data-proxy-base="/apps/fabric-shop/api"
+     style="
+       --dp-cta-text: {{ block.settings.cta_text_color }};
+       --dp-cta-bg: {{ block.settings.cta_bg_color }};
+       --dp-cta-hover-text: {{ block.settings.cta_hover_text_color }};
+       --dp-cta-hover-bg: {{ block.settings.cta_hover_bg_color }};
+       display: none;
+     ">
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById('dp-root');
+  if (!root) return;
+
+  var productGid = root.dataset.productGid;
+  var proxyBase  = root.dataset.proxyBase;
+
+  fetch(proxyBase + '/design-partner?product_gid=' + encodeURIComponent(productGid))
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      var d = data.designer;
+      if (!d) return; // no designer record — stay hidden
+
+      // Portrait: image if available, else initials fallback
+      var portraitHtml;
+      if (d.portraitUrl) {
+        portraitHtml = '<img src="' + escHtml(d.portraitUrl) + '" alt="' + escHtml(d.name) + '" loading="lazy">';
+      } else {
+        var initials = d.name
+          .split(/\s+/)
+          .slice(0, 2)
+          .map(function (w) { return w[0]; })
+          .join('');
+        portraitHtml = escHtml(initials);
+      }
+
+      // Bio
+      var bioHtml = d.bio
+        ? '<p class="dp-bio">' + escHtml(d.bio) + '</p>'
+        : '';
+
+      // CTA
+      var ctaHtml = d.studioUrl
+        ? '<a class="dp-cta" href="' + escHtml(d.studioUrl) + '">{{ block.settings.cta_label | escape }}</a>'
+        : '';
+
+      root.innerHTML =
+        '<section class="dp-section">' +
+          '<div class="dp-inner">' +
+            '<div class="dp-portrait">' + portraitHtml + '</div>' +
+            '<div class="dp-text">' +
+              '<div class="dp-eyebrow">{{ block.settings.eyebrow_label | escape }}</div>' +
+              '<h2 class="dp-name">' + escHtml(d.name) + '</h2>' +
+              bioHtml +
+            '</div>' +
+            ctaHtml +
+          '</div>' +
+        '</section>';
+
+      root.style.display = '';
+    })
+    .catch(function () { /* stay hidden on error */ });
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Design Partner",
+  "target": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow_label",
+      "label": "Eyebrow label",
+      "default": "Design Partner"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA button text",
+      "default": "Visit their studio →"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color",
+      "label": "CTA text color",
+      "default": "#1A1814"
+    },
+    {
+      "type": "color",
+      "id": "cta_bg_color",
+      "label": "CTA background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "cta_hover_text_color",
+      "label": "CTA hover text color",
+      "default": "#FAF8F3"
+    },
+    {
+      "type": "color",
+      "id": "cta_hover_bg_color",
+      "label": "CTA hover background color",
+      "default": "#1A1814"
+    }
+  ]
+}
+{% endschema %}
