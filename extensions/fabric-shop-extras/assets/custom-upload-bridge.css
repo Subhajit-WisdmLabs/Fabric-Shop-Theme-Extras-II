@@ -1,0 +1,140 @@
+/* ── Custom Upload Bridge ────────────────────────────────────── */
+
+.cub-wrap {
+  border-top: 1px solid #E8E3D8;
+  border-bottom: 1px solid #E8E3D8;
+  padding: 64px 36px;
+}
+
+.cub-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+/* ── Left column ─────────────────────────────────────────────── */
+
+.cub-eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 14px;
+}
+
+.cub-title {
+  font-family: 'Ageia', 'Cormorant Garamond', Georgia, serif;
+  font-weight: 500;
+  font-size: 38px;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  margin: 0 0 14px;
+  max-width: 540px;
+}
+
+.cub-sub {
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 520px;
+  margin: 0 0 26px;
+}
+
+.cub-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  background: var(--cub-cta-bg, #1A1814);
+  color: var(--cub-cta-fg, #FAF8F3);
+  border: none;
+  border-radius: 3px;
+  font-family: inherit;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.cub-cta:hover {
+  background: var(--cub-cta-hover-bg, #A87A2E);
+  color: var(--cub-cta-hover-fg, #FAF8F3);
+}
+
+.cub-cta svg { flex-shrink: 0; }
+
+/* ── Right column — tile art ─────────────────────────────────── */
+
+.cub-art {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  transform: rotate(-1.5deg);
+}
+
+.cub-tile {
+  aspect-ratio: 1;
+  border-radius: 2px;
+  box-shadow: 0 4px 10px rgba(168, 122, 46, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cub-tile--empty {
+  border: 1px dashed rgba(168, 122, 46, 0.4);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.cub-tile--filled-1 {
+  background: repeating-linear-gradient(45deg, #F4ECDA 0 6px, #A87A2E 6px 8px);
+  border: 1px solid rgba(168, 122, 46, 0.6);
+}
+
+.cub-tile--filled-2 {
+  background:
+    radial-gradient(circle at 50% 50%, #A87A2E 0 4px, transparent 6px) 0 0 / 14px 14px,
+    #F4ECDA;
+  border: 1px solid rgba(168, 122, 46, 0.6);
+}
+
+.cub-tile--filled-3 {
+  background: linear-gradient(135deg, #F4ECDA 0%, #A87A2E 100%);
+  border: 1px solid rgba(168, 122, 46, 0.6);
+}
+
+/* ── Right column — image ────────────────────────────────────── */
+
+.cub-image-wrap {
+  border-radius: 4px;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.cub-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .cub-wrap { padding: 48px 24px; }
+  .cub-inner { grid-template-columns: 1fr; gap: 32px; }
+  .cub-art { max-width: 280px; }
+  .cub-title { font-size: 30px; }
+}
+
+@media (max-width: 480px) {
+  .cub-wrap { padding: 40px 20px; }
+  .cub-title { font-size: 26px; }
+}
