@@ -41,6 +41,12 @@
       {% assign use_tags = use_tags | append: val | append: '|||' %}
     {% endif %}
 
+  {% elsif tag contains 'subject:' %}
+    {% assign val = tag | remove_first: 'subject:' | strip %}
+    {% if val != '' %}
+      {% assign subj_tags = subj_tags | append: val | append: '|||' %}
+    {% endif %}
+
   {% elsif tag contains '_fp-' or tag contains 'scale:' %}
     {% comment %} skip system tags {% endcomment %}
 
