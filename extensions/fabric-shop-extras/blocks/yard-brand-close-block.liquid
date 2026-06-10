@@ -11,7 +11,7 @@
 
     <h2 class="ybc-title" style="color:{{ block.settings.heading_color }};">
       {%- if block.settings.heading_italic != blank -%}
-        <em style="color:{{ block.settings.heading_italic_color }};">{{ block.settings.heading_italic | escape }}</em>
+        <em style="color:{{ block.settings.heading_italic_color }};">{{ block.settings.heading_italic | escape }}</em><br>
       {%- endif -%}
       {{- block.settings.heading_rest | escape -}}
     </h2>
