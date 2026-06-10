@@ -1,0 +1,206 @@
+{{ 'yard-catalogue-header.css' | asset_url | stylesheet_tag }}
+
+<div class="ych-head">
+
+  {%- if block.settings.eyebrow != blank -%}
+    <div class="ych-eyebrow">{{- block.settings.eyebrow | escape -}}</div>
+  {%- endif -%}
+
+  <h1 class="ych-title">
+    {{- block.settings.heading_main | escape -}}
+    {%- if block.settings.heading_italic != blank -%}
+      <em>{{ block.settings.heading_italic | escape }}</em>
+    {%- endif -%}
+  </h1>
+
+  {%- if block.settings.sub_copy != blank -%}
+    <p class="ych-sub">{{- block.settings.sub_copy | escape -}}</p>
+  {%- endif -%}
+
+  {%- comment -%}Build stats strip from collection handles + optional custom value overrides{%- endcomment -%}
+  {%- assign strip_items = '' -%}
+  {%- for i in (1..5) -%}
+    {%- assign h   = 'stat_' | append: i | append: '_collection' -%}
+    {%- assign lbl = 'stat_' | append: i | append: '_label' -%}
+    {%- assign cv  = 'stat_' | append: i | append: '_value' -%}
+    {%- if block.settings[h] != blank or block.settings[cv] != blank -%}
+      {%- assign strip_items = strip_items | append: i | append: ',' -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- if strip_items != '' -%}
+    <div class="ych-strip">
+      {%- assign first = true -%}
+      {%- for i in (1..5) -%}
+        {%- assign h   = 'stat_' | append: i | append: '_collection' -%}
+        {%- assign lbl = 'stat_' | append: i | append: '_label' -%}
+        {%- assign cv  = 'stat_' | append: i | append: '_value' -%}
+        {%- assign handle = block.settings[h] -%}
+        {%- assign label  = block.settings[lbl] -%}
+        {%- assign custom = block.settings[cv] -%}
+        {%- if handle != blank or custom != blank -%}
+          {%- unless first -%}<div class="ych-strip-divide"></div>{%- endunless -%}
+          {%- assign first = false -%}
+          <div class="ych-stat">
+            {%- if custom != blank -%}
+              <strong>{{- custom | escape -}}</strong>
+            {%- elsif handle != blank -%}
+              {%- assign col = collections[handle] -%}
+              <strong>{{- col.products_count -}}</strong>
+            {%- endif -%}
+            {%- if label != blank -%}
+              <span>{{- label | escape -}}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+</div>
+
+{% schema %}
+{
+  "name": "Yard Catalogue Header",
+  "target": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Page header for The Yard catalogue — eyebrow, headline, sub-copy, and a strip of live collection counts."
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The Yard · the catalogue"
+    },
+    {
+      "type": "text",
+      "id": "heading_main",
+      "label": "Heading — main text",
+      "default": "Stocked fabrics,",
+      "info": "The roman part of the heading. The italic continuation appears immediately after."
+    },
+    {
+      "type": "text",
+      "id": "heading_italic",
+      "label": "Heading — italic continuation",
+      "default": " by the metre.",
+      "info": "Rendered in italic sage. Include a leading space if it follows the main text directly."
+    },
+    {
+      "type": "textarea",
+      "id": "sub_copy",
+      "label": "Sub-copy",
+      "default": "Stocked fabrics by the metre — wovens, knits, linings, and deadstock prints. Buttons, zips, and notions by the piece."
+    },
+    {
+      "type": "header",
+      "content": "Stat 1"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_collection",
+      "label": "Collection handle",
+      "info": "The count is pulled live from this collection. Leave blank to use the custom value below."
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Label",
+      "default": "Stocked fabrics"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_value",
+      "label": "Custom value (overrides collection count)",
+      "info": "Use for non-collection stats, e.g. \"3 days\". Leave blank to show the live product count."
+    },
+    {
+      "type": "header",
+      "content": "Stat 2"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_collection",
+      "label": "Collection handle"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Label",
+      "default": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_value",
+      "label": "Custom value (overrides collection count)"
+    },
+    {
+      "type": "header",
+      "content": "Stat 3"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_collection",
+      "label": "Collection handle"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Label",
+      "default": "Zips"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_value",
+      "label": "Custom value (overrides collection count)"
+    },
+    {
+      "type": "header",
+      "content": "Stat 4"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_collection",
+      "label": "Collection handle"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_label",
+      "label": "Label",
+      "default": "Notions"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_value",
+      "label": "Custom value (overrides collection count)"
+    },
+    {
+      "type": "header",
+      "content": "Stat 5"
+    },
+    {
+      "type": "text",
+      "id": "stat_5_collection",
+      "label": "Collection handle"
+    },
+    {
+      "type": "text",
+      "id": "stat_5_label",
+      "label": "Label",
+      "default": "Shipped within"
+    },
+    {
+      "type": "text",
+      "id": "stat_5_value",
+      "label": "Custom value (overrides collection count)",
+      "default": "3 days"
+    }
+  ]
+}
+{% endschema %}
