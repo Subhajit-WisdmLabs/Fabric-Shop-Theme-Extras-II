@@ -1,0 +1,50 @@
+/* ── Yard Print-Ready Band ────────────────────────────────────── */
+
+.yprb-band {
+  background: #FFFFFF;
+  border-bottom: 1px solid #E8E3D8;
+}
+
+.yprb-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 15px 36px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.yprb-pill {
+  flex: none;
+  padding: 3px 7px;
+  font-size: 9px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  background: #FAF8F3;
+  color: #5C7355;
+  border: 1px solid #5C7355;
+}
+
+.yprb-text {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #5C564A;
+}
+
+.yprb-text strong {
+  color: #1A1814;
+  font-weight: 500;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .yprb-inner { padding: 12px 24px; }
+}
+
+@media (max-width: 480px) {
+  .yprb-inner { padding: 12px 20px; gap: 8px; }
+}
