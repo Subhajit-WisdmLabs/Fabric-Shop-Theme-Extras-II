@@ -8,7 +8,6 @@
 }
 
 .ych-eyebrow {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-size: 10.5px;
   color: #A87A2E;
   letter-spacing: 0.14em;
@@ -28,7 +27,6 @@
 }
 
 .ych-title {
-  font-family: 'Ageia', 'Cormorant Garamond', Georgia, serif;
   font-weight: 500;
   font-size: 60px;
   line-height: 1.02;
@@ -45,7 +43,6 @@
 }
 
 .ych-sub {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-size: 14.5px;
   color: #5C564A;
   max-width: 640px;
@@ -67,7 +64,6 @@
 }
 
 .ych-stat strong {
-  font-family: 'Ageia', 'Cormorant Garamond', Georgia, serif;
   font-size: 26px;
   font-weight: 500;
   color: #1A1814;
@@ -76,7 +72,6 @@
 }
 
 .ych-stat span {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-size: 10.5px;
   letter-spacing: 0.06em;
   color: #9A9285;
