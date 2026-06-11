@@ -55,8 +55,14 @@
   border-color: #D4CCBC;
 }
 
-/* suits_use: + occasion: tags — bone */
+/* suits_use: tags — bone */
 .fp-tag-pill--use {
   background: #FAF8F3;
   border-color: #D4CCBC;
+}
+
+/* occasion: tags — aubergine tint */
+.fp-tag-pill--occ {
+  background: #F5ECF3;
+  border-color: rgba(94, 39, 80, 0.3);
 }
