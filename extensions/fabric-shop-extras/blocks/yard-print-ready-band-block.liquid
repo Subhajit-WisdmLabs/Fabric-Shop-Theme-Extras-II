@@ -1,0 +1,53 @@
+{{ 'yard-print-ready-band.css' | asset_url | stylesheet_tag }}
+
+<div class="yprb-band">
+  <div class="yprb-inner">
+
+    {%- if block.settings.pill_label != blank -%}
+      <span class="yprb-pill">{{- block.settings.pill_label | escape -}}</span>
+    {%- endif -%}
+
+    {%- if block.settings.lead_bold != blank or block.settings.body_text != blank -%}
+      <p class="yprb-text">
+        {%- if block.settings.lead_bold != blank -%}
+          <strong>{{- block.settings.lead_bold | escape -}}</strong>
+        {%- endif -%}
+        {%- if block.settings.body_text != blank -%}
+          {{- block.settings.body_text | escape -}}
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Yard Print-Ready Band",
+  "target": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "pill_label",
+      "label": "Pill label",
+      "default": "Print-ready"
+    },
+    {
+      "type": "text",
+      "id": "lead_bold",
+      "label": "Bold lead text",
+      "default": "Some fabrics can be printed with your design."
+    },
+    {
+      "type": "textarea",
+      "id": "body_text",
+      "label": "Body text",
+      "default": " Look for the badge — order it plain by the metre, or print any design on it in PrintLab."
+    }
+  ]
+}
+{% endschema %}
