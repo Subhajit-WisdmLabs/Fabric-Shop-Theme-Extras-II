@@ -3,10 +3,6 @@
 {%- liquid
   assign yrf_col      = collections[block.settings.collection_handle]
   assign yrf_products = yrf_col.products
-  assign yrf_fab_types = block.settings.fabric_types  | downcase | split: ','
-  assign yrf_btn_types = block.settings.button_types  | downcase | split: ','
-  assign yrf_zip_types = block.settings.zip_types     | downcase | split: ','
-  assign yrf_not_types = block.settings.notion_types  | downcase | split: ','
 -%}
 
 <div class="yrf-root" id="yrf-root"
