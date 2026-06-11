@@ -1,0 +1,626 @@
+{{ 'yard-refine.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign yrf_col      = collections[block.settings.collection_handle]
+  assign yrf_products = yrf_col.products
+  assign yrf_fab_types = block.settings.fabric_types  | downcase | split: ','
+  assign yrf_btn_types = block.settings.button_types  | downcase | split: ','
+  assign yrf_zip_types = block.settings.zip_types     | downcase | split: ','
+  assign yrf_not_types = block.settings.notion_types  | downcase | split: ','
+-%}
+
+<div class="yrf-root" id="yrf-root"
+  data-fabric-types="{{ block.settings.fabric_types  | downcase | escape }}"
+  data-button-types="{{ block.settings.button_types  | downcase | escape }}"
+  data-zip-types="{{ block.settings.zip_types        | downcase | escape }}"
+  data-notion-types="{{ block.settings.notion_types  | downcase | escape }}"
+>
+
+  <!-- ── FILTER SIDEBAR ── -->
+  <aside class="yrf-filters" id="yrf-sidebar">
+
+    <div class="yrf-filters-head">
+      <span class="yrf-filters-label">Refine</span>
+      <button class="yrf-clear-btn" id="yrf-clear" hidden>Clear all</button>
+    </div>
+
+    <div class="yrf-helper">
+      <strong>In stock now.</strong> Everything in The Yard ships within 3&nbsp;business days.*
+      <span class="yrf-helper-note">*Orders combined with a PrintLab print follow PrintLab's lead times.</span>
+    </div>
+
+    <!-- 1. Category — radio -->
+    <div class="yrf-group" id="yrf-cat-group">
+      <div class="yrf-group-head">
+        <span class="yrf-group-name">Category</span>
+        <span class="yrf-group-toggle">−</span>
+      </div>
+      <label class="yrf-opt">
+        <input type="radio" name="yrf-cat" value="all" class="yrf-radio" checked>
+        <span class="yrf-opt-label">All stocked</span>
+        <span class="yrf-opt-count" data-cat-count="all"></span>
+      </label>
+      <label class="yrf-opt">
+        <input type="radio" name="yrf-cat" value="fabric" class="yrf-radio">
+        <span class="yrf-opt-label">Fabrics</span>
+        <span class="yrf-opt-count" data-cat-count="fabric"></span>
+      </label>
+      <div class="yrf-subchips yrf-hidden" id="yrf-subchips">
+        <span class="yrf-subchip" data-tag="woven">Wovens <em data-tag-count="woven"></em></span>
+        <span class="yrf-subchip" data-tag="knit">Knits <em data-tag-count="knit"></em></span>
+        <span class="yrf-subchip" data-tag="lining">Linings <em data-tag-count="lining"></em></span>
+        <span class="yrf-subchip" data-tag="deadstock">Deadstock prints <em data-tag-count="deadstock"></em></span>
+      </div>
+      <label class="yrf-opt">
+        <input type="radio" name="yrf-cat" value="button" class="yrf-radio">
+        <span class="yrf-opt-label">Buttons</span>
+        <span class="yrf-opt-count" data-cat-count="button"></span>
+      </label>
+      <label class="yrf-opt">
+        <input type="radio" name="yrf-cat" value="zip" class="yrf-radio">
+        <span class="yrf-opt-label">Zips</span>
+        <span class="yrf-opt-count" data-cat-count="zip"></span>
+      </label>
+      <label class="yrf-opt">
+        <input type="radio" name="yrf-cat" value="notion" class="yrf-radio">
+        <span class="yrf-opt-label">Notions</span>
+        <span class="yrf-opt-count" data-cat-count="notion"></span>
+      </label>
+    </div>
+
+    <!-- 2. Fibre — checkboxes (built by JS from product data) -->
+    <div class="yrf-group" id="yrf-fibre-group">
+      <div class="yrf-group-head">
+        <span class="yrf-group-name">Fibre</span>
+        <span class="yrf-group-toggle">−</span>
+      </div>
+      <div id="yrf-fibre-opts"></div>
+    </div>
+
+    <!-- 3. Weight — chips -->
+    <div class="yrf-group" id="yrf-weight-group">
+      <div class="yrf-group-head">
+        <span class="yrf-group-name">Weight</span>
+        <span class="yrf-group-toggle">−</span>
+      </div>
+      <div class="yrf-weight-chips" id="yrf-weight-chips">
+        <span class="yrf-chip" data-weight="light">Light</span>
+        <span class="yrf-chip" data-weight="mid">Mid</span>
+        <span class="yrf-chip" data-weight="mid-heavy">Mid-heavy</span>
+        <span class="yrf-chip" data-weight="heavy">Heavy</span>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ── GRID AREA ── -->
+  <div class="yrf-grid-area">
+
+    <!-- Toolbar -->
+    <div class="yrf-toolbar">
+      <div class="yrf-count">
+        Showing <strong id="yrf-count-range">–</strong> of <strong id="yrf-count-total">–</strong>
+      </div>
+      <div class="yrf-toolbar-right">
+        <div class="yrf-sort">
+          <span>Sort:</span>
+          <select id="yrf-sort-select">
+            <option value="manual">Newest first</option>
+            <option value="best-selling">Bestselling</option>
+            <option value="price-asc">Price · low to high</option>
+            <option value="price-desc">Price · high to low</option>
+            <option value="title-asc">A–Z</option>
+          </select>
+        </div>
+        <div class="yrf-density">
+          <span>View:</span>
+          <button class="yrf-den-btn active" id="yrf-den-comfort" title="Comfortable">▦</button>
+          <button class="yrf-den-btn" id="yrf-den-dense" title="Dense">▩</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active filter chips -->
+    <div class="yrf-active-chips" id="yrf-active-chips"></div>
+
+    <!-- Grid -->
+    <div class="yrf-grid" id="yrf-grid">
+
+      {%- assign yrf_card_index = 0 -%}
+      {%- for product in yrf_products -%}
+
+        {%- comment -%}— Metafields —{%- endcomment -%}
+        {%- assign yrf_gsm           = product.metafields.fabric.gsm.value -%}
+        {%- assign yrf_width         = product.metafields.fabric.width_cm.value -%}
+        {%- assign yrf_fibre_content = product.metafields.fabric.fibre_content.value -%}
+        {%- assign yrf_fibre_list    = product.metafields.fabric.fibre.value -%}
+        {%- assign yrf_weight        = product.metafields.fabric.weight.value -%}
+        {%- assign yrf_print_ready   = product.metafields.fabric.print_ready.value -%}
+
+        {%- comment -%}— Data attributes for JS filtering —{%- endcomment -%}
+        {%- assign yrf_type_key  = product.type | downcase | replace: ' ', '-' -%}
+        {%- assign yrf_tags_str  = product.tags | join: ',' | downcase -%}
+        {%- assign yrf_fibre_str = yrf_fibre_list | join: ',' | downcase -%}
+        {%- assign yrf_weight_lc = yrf_weight | downcase -%}
+
+        {%- comment -%}— Spec line: GSM · fibre content · width cm —{%- endcomment -%}
+        {%- assign yrf_spec = '' -%}
+        {%- if yrf_gsm != blank -%}
+          {%- assign yrf_spec = yrf_gsm | append: ' GSM' -%}
+        {%- endif -%}
+        {%- if yrf_fibre_content != blank -%}
+          {%- if yrf_spec != '' -%}{%- assign yrf_spec = yrf_spec | append: ' · ' -%}{%- endif -%}
+          {%- assign yrf_spec = yrf_spec | append: yrf_fibre_content -%}
+        {%- endif -%}
+        {%- if yrf_width != blank -%}
+          {%- if yrf_spec != '' -%}{%- assign yrf_spec = yrf_spec | append: ' · ' -%}{%- endif -%}
+          {%- assign yrf_spec = yrf_spec | append: yrf_width | append: ' cm' -%}
+        {%- endif -%}
+
+        {%- comment -%}— Status badge from product tags —{%- endcomment -%}
+        {%- assign yrf_badge = '' -%}
+        {%- if yrf_tags_str contains 'new' -%}
+          {%- assign yrf_badge = 'new' -%}
+        {%- elsif yrf_tags_str contains 'restocked' -%}
+          {%- assign yrf_badge = 'restock' -%}
+        {%- elsif yrf_tags_str contains 'low-stock' -%}
+          {%- assign yrf_badge = 'low' -%}
+        {%- elsif yrf_tags_str contains 'one-of-a-kind' -%}
+          {%- assign yrf_badge = 'unique' -%}
+        {%- endif -%}
+
+        {%- comment -%}— Editorial break card inserted before the 9th product card —{%- endcomment -%}
+        {%- if yrf_card_index == 8 -%}
+          <div class="yrf-editorial" id="yrf-editorial">
+            <div>
+              <div class="yrf-editorial-eyebrow">— Printed to order, too</div>
+              <div class="yrf-editorial-title">Bring your <em>own design.</em></div>
+              <div class="yrf-editorial-body">Many of these bases take a print. Upload your artwork or choose one from our Design Partners, and we'll print it by the metre — on the fabric you pick.</div>
+            </div>
+            {%- if block.settings.printlab_url != blank -%}
+              <a class="yrf-editorial-cta" href="{{ block.settings.printlab_url }}">Explore PrintLab →</a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+        {%- assign yrf_card_index = yrf_card_index | plus: 1 -%}
+
+        <article class="yrf-card"
+          data-product-id="{{ product.id }}"
+          data-type="{{ yrf_type_key | escape }}"
+          data-tags="{{ yrf_tags_str | escape }}"
+          data-fibre="{{ yrf_fibre_str | escape }}"
+          data-weight="{{ yrf_weight_lc | escape }}"
+          data-price="{{ product.price_min }}"
+          data-title="{{ product.title | escape }}"
+          data-print-ready="{{ yrf_print_ready }}"
+        >
+          <a href="{{ product.url }}" class="yrf-card-link">
+            <div class="yrf-thumb">
+              {%- if product.featured_image -%}
+                <img
+                  src="{{ product.featured_image | image_url: width: 480 }}"
+                  alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                  loading="lazy"
+                  width="480"
+                  height="{{ 480 | divided_by: product.featured_image.aspect_ratio | round }}"
+                  class="yrf-thumb-img"
+                >
+              {%- endif -%}
+              <span class="yrf-cat-tag">{{ product.type | default: 'Product' }}</span>
+              {%- if yrf_print_ready -%}
+                <span class="yrf-print-ready">Print-ready</span>
+              {%- endif -%}
+              {%- if yrf_badge != '' -%}
+                <span class="yrf-badge yrf-badge--{{ yrf_badge }}">
+                  {%- case yrf_badge -%}
+                    {%- when 'new'    -%}New
+                    {%- when 'restock' -%}Restocked
+                    {%- when 'low'    -%}Low stock
+                    {%- when 'unique' -%}One of a kind
+                  {%- endcase -%}
+                </span>
+              {%- endif -%}
+              <button class="yrf-fav" aria-label="Save {{ product.title | escape }}" data-product-id="{{ product.id }}">♡</button>
+            </div>
+          </a>
+          <div class="yrf-meta">
+            <a href="{{ product.url }}" class="yrf-name-link">
+              <div class="yrf-name">{{ product.title }}</div>
+            </a>
+            {%- if yrf_spec != '' -%}
+              <div class="yrf-spec">{{ yrf_spec }}</div>
+            {%- endif -%}
+            <div class="yrf-price-row">
+              <span class="yrf-price">
+                {%- if product.price_varies -%}<span class="yrf-price-from">From</span>{%- endif -%}
+                {{ product.price_min | money }}
+              </span>
+            </div>
+          </div>
+        </article>
+
+      {%- endfor -%}
+
+      {%- comment -%}If fewer than 9 products, still render editorial at the end{%- endcomment -%}
+      {%- if yrf_card_index > 0 and yrf_card_index < 9 -%}
+        <div class="yrf-editorial" id="yrf-editorial">
+          <div>
+            <div class="yrf-editorial-eyebrow">— Printed to order, too</div>
+            <div class="yrf-editorial-title">Bring your <em>own design.</em></div>
+            <div class="yrf-editorial-body">Many of these bases take a print. Upload your artwork or choose one from our Design Partners, and we'll print it by the metre — on the fabric you pick.</div>
+          </div>
+          {%- if block.settings.printlab_url != blank -%}
+            <a class="yrf-editorial-cta" href="{{ block.settings.printlab_url }}">Explore PrintLab →</a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+    </div>
+
+    <!-- Footer -->
+    <div class="yrf-footer">
+      <button class="yrf-load-more" id="yrf-load-more" hidden>Load more</button>
+      <div class="yrf-footer-meta" id="yrf-footer-meta"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById('yrf-root');
+  if (!root) return;
+
+  var PAGE_SIZE = 30;
+
+  // Category type mappings from block settings
+  var fabricTypes = (root.dataset.fabricTypes || 'fabric,woven,knit,lining,deadstock').split(',').map(trim);
+  var buttonTypes = (root.dataset.buttonTypes || 'button').split(',').map(trim);
+  var zipTypes    = (root.dataset.zipTypes    || 'zip,zipper').split(',').map(trim);
+  var notionTypes = (root.dataset.notionTypes || 'notion').split(',').map(trim);
+
+  function trim(s) { return s.trim(); }
+
+  var state = { cat: 'all', subcat: null, fibres: [], weight: null, sort: 'manual', page: 1 };
+
+  var allCards  = Array.from(root.querySelectorAll('.yrf-card'));
+  var editorial = document.getElementById('yrf-editorial');
+
+  // ── Build fibre filter options from product data ──
+  var fibreMap = {};
+  allCards.forEach(function (card) {
+    (card.dataset.fibre || '').split(',').forEach(function (f) {
+      f = f.trim();
+      if (f) fibreMap[f] = (fibreMap[f] || 0) + 1;
+    });
+  });
+  var fibreContainer = document.getElementById('yrf-fibre-opts');
+  Object.keys(fibreMap).sort().forEach(function (fibre) {
+    var lbl = document.createElement('label');
+    lbl.className = 'yrf-opt';
+    lbl.innerHTML =
+      '<input type="checkbox" value="' + esc(fibre) + '" class="yrf-checkbox">' +
+      '<span class="yrf-opt-label">' + cap(fibre) + '</span>' +
+      '<span class="yrf-opt-count">' + fibreMap[fibre] + '</span>';
+    fibreContainer.appendChild(lbl);
+  });
+
+  // ── Category classify ──
+  function classify(card) {
+    var type = (card.dataset.type || '').toLowerCase();
+    var tags = (card.dataset.tags || '').toLowerCase().split(',');
+    if (fabricTypes.some(function (t) { return type === t || tags.indexOf(t) > -1; })) return 'fabric';
+    if (buttonTypes.some(function (t) { return type === t || tags.indexOf(t) > -1; })) return 'button';
+    if (zipTypes.some(function (t)    { return type === t || tags.indexOf(t) > -1; })) return 'zip';
+    if (notionTypes.some(function (t) { return type === t || tags.indexOf(t) > -1; })) return 'notion';
+    return 'other';
+  }
+
+  function matches(card) {
+    var cat    = classify(card);
+    var tags   = (card.dataset.tags   || '').split(',').map(trim);
+    var fibres = (card.dataset.fibre  || '').split(',').map(trim).filter(Boolean);
+    var weight = (card.dataset.weight || '').trim();
+    if (state.cat !== 'all' && cat !== state.cat) return false;
+    if (state.subcat && tags.indexOf(state.subcat) === -1) return false;
+    if (state.fibres.length && !state.fibres.some(function (f) { return fibres.indexOf(f) > -1; })) return false;
+    if (state.weight && weight !== state.weight) return false;
+    return true;
+  }
+
+  function sorted(cards) {
+    if (state.sort === 'manual') return cards;
+    return cards.slice().sort(function (a, b) {
+      if (state.sort === 'price-asc')  return +a.dataset.price - +b.dataset.price;
+      if (state.sort === 'price-desc') return +b.dataset.price - +a.dataset.price;
+      if (state.sort === 'title-asc')  return a.dataset.title.localeCompare(b.dataset.title);
+      return 0;
+    });
+  }
+
+  // ── Main render ──
+  function apply() {
+    var grid     = document.getElementById('yrf-grid');
+    var filtered = allCards.filter(matches);
+    var ordered  = sorted(filtered);
+    var total    = ordered.length;
+    var showing  = Math.min(state.page * PAGE_SIZE, total);
+
+    // Re-order DOM and show/hide
+    ordered.forEach(function (card, i) {
+      card.hidden = i >= showing;
+      grid.appendChild(card);
+    });
+    allCards.forEach(function (card) {
+      if (filtered.indexOf(card) === -1) {
+        card.hidden = true;
+        grid.appendChild(card);
+      }
+    });
+
+    // Re-position editorial: after 8th visible card (index 8)
+    if (editorial) {
+      var isFabricView = state.cat === 'all' || state.cat === 'fabric';
+      editorial.hidden = !isFabricView || ordered.length === 0;
+      if (!editorial.hidden) {
+        var target = ordered[8] || null;
+        grid.insertBefore(editorial, target);
+      }
+    }
+
+    // Empty state
+    var emptyEl = grid.querySelector('.yrf-empty');
+    if (filtered.length === 0) {
+      if (!emptyEl) {
+        emptyEl = document.createElement('div');
+        emptyEl.className = 'yrf-empty';
+        emptyEl.textContent = 'No products match these filters.';
+        grid.appendChild(emptyEl);
+      }
+    } else if (emptyEl) {
+      emptyEl.remove();
+    }
+
+    // Counts
+    document.getElementById('yrf-count-range').textContent = total > 0 ? '1–' + showing : '0';
+    document.getElementById('yrf-count-total').textContent = total;
+    document.getElementById('yrf-footer-meta').textContent = showing + ' of ' + total;
+
+    var loadMore = document.getElementById('yrf-load-more');
+    loadMore.hidden = showing >= total;
+    if (!loadMore.hidden) {
+      loadMore.textContent = 'Load ' + Math.min(total - showing, PAGE_SIZE) + ' more';
+    }
+
+    renderChips();
+    updateCounts();
+    document.getElementById('yrf-clear').hidden = !(state.cat !== 'all' || state.subcat || state.fibres.length || state.weight);
+  }
+
+  // ── Sidebar counts ──
+  function updateCounts() {
+    var cats = { all: allCards.length, fabric: 0, button: 0, zip: 0, notion: 0 };
+    var tagC = { woven: 0, knit: 0, lining: 0, deadstock: 0 };
+    allCards.forEach(function (card) {
+      var cat  = classify(card);
+      if (cats[cat] !== undefined) cats[cat]++;
+      var tags = (card.dataset.tags || '').split(',').map(trim);
+      Object.keys(tagC).forEach(function (t) { if (tags.indexOf(t) > -1) tagC[t]++; });
+    });
+    Object.keys(cats).forEach(function (k) {
+      var el = root.querySelector('[data-cat-count="' + k + '"]');
+      if (el) el.textContent = cats[k];
+    });
+    Object.keys(tagC).forEach(function (k) {
+      var el = root.querySelector('[data-tag-count="' + k + '"]');
+      if (el) el.textContent = tagC[k];
+    });
+  }
+
+  // ── Active filter chips ──
+  function renderChips() {
+    var c = document.getElementById('yrf-active-chips');
+    c.innerHTML = '';
+    var catLabels = { fabric: 'Fabrics', button: 'Buttons', zip: 'Zips', notion: 'Notions' };
+    if (state.cat !== 'all') {
+      var lbl = state.subcat
+        ? catLabels[state.cat] + ' · ' + cap(state.subcat) + 's'
+        : catLabels[state.cat];
+      chip(c, lbl, function () {
+        state.cat = 'all'; state.subcat = null; state.page = 1;
+        root.querySelector('.yrf-radio[value="all"]').checked = true;
+        subchipsEl.classList.add('yrf-hidden');
+        subchipsEl.querySelectorAll('.yrf-subchip').forEach(function (s) { s.classList.remove('active'); });
+        apply();
+      });
+    } else if (state.subcat) {
+      chip(c, cap(state.subcat) + 's', function () {
+        state.subcat = null; state.page = 1;
+        subchipsEl.querySelectorAll('.yrf-subchip').forEach(function (s) { s.classList.remove('active'); });
+        apply();
+      });
+    }
+    state.fibres.forEach(function (f) {
+      chip(c, cap(f), function () {
+        state.fibres = state.fibres.filter(function (x) { return x !== f; });
+        state.page = 1;
+        var cb = root.querySelector('.yrf-checkbox[value="' + f + '"]');
+        if (cb) cb.checked = false;
+        apply();
+      });
+    });
+    if (state.weight) {
+      chip(c, cap(state.weight) + ' weight', function () {
+        state.weight = null; state.page = 1;
+        root.querySelectorAll('.yrf-chip[data-weight]').forEach(function (ch) { ch.classList.remove('active'); });
+        apply();
+      });
+    }
+  }
+
+  function chip(container, label, onRemove) {
+    var el = document.createElement('span');
+    el.className = 'yrf-active-chip';
+    el.innerHTML = escHtml(label) + '<span class="yrf-active-chip-x" role="button" aria-label="Remove filter">×</span>';
+    el.querySelector('.yrf-active-chip-x').addEventListener('click', onRemove);
+    container.appendChild(el);
+  }
+
+  // ── Wire up controls ──
+  var subchipsEl = document.getElementById('yrf-subchips');
+
+  root.querySelectorAll('.yrf-radio').forEach(function (radio) {
+    radio.addEventListener('change', function () {
+      state.cat = this.value; state.subcat = null; state.page = 1;
+      subchipsEl.classList.toggle('yrf-hidden', state.cat !== 'fabric');
+      subchipsEl.querySelectorAll('.yrf-subchip').forEach(function (c) { c.classList.remove('active'); });
+      apply();
+    });
+  });
+
+  subchipsEl.querySelectorAll('.yrf-subchip').forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      var tag = this.dataset.tag;
+      if (state.subcat === tag) {
+        state.subcat = null;
+        this.classList.remove('active');
+      } else {
+        subchipsEl.querySelectorAll('.yrf-subchip').forEach(function (c) { c.classList.remove('active'); });
+        state.subcat = tag;
+        this.classList.add('active');
+      }
+      state.page = 1;
+      apply();
+    });
+  });
+
+  fibreContainer.addEventListener('change', function (e) {
+    if (!e.target.classList.contains('yrf-checkbox')) return;
+    var val = e.target.value;
+    if (e.target.checked) { if (state.fibres.indexOf(val) === -1) state.fibres.push(val); }
+    else { state.fibres = state.fibres.filter(function (f) { return f !== val; }); }
+    state.page = 1;
+    apply();
+  });
+
+  root.querySelectorAll('.yrf-chip[data-weight]').forEach(function (ch) {
+    ch.addEventListener('click', function () {
+      var w = this.dataset.weight;
+      if (state.weight === w) {
+        state.weight = null;
+        this.classList.remove('active');
+      } else {
+        root.querySelectorAll('.yrf-chip[data-weight]').forEach(function (c) { c.classList.remove('active'); });
+        state.weight = w;
+        this.classList.add('active');
+      }
+      state.page = 1;
+      apply();
+    });
+  });
+
+  document.getElementById('yrf-sort-select').addEventListener('change', function () {
+    state.sort = this.value; state.page = 1; apply();
+  });
+
+  document.getElementById('yrf-den-comfort').addEventListener('click', function () {
+    document.getElementById('yrf-grid').classList.remove('yrf-grid--dense');
+    this.classList.add('active');
+    document.getElementById('yrf-den-dense').classList.remove('active');
+  });
+  document.getElementById('yrf-den-dense').addEventListener('click', function () {
+    document.getElementById('yrf-grid').classList.add('yrf-grid--dense');
+    this.classList.add('active');
+    document.getElementById('yrf-den-comfort').classList.remove('active');
+  });
+
+  document.getElementById('yrf-load-more').addEventListener('click', function () {
+    state.page++;
+    apply();
+  });
+
+  document.getElementById('yrf-clear').addEventListener('click', function () {
+    state.cat = 'all'; state.subcat = null; state.fibres = []; state.weight = null; state.page = 1;
+    root.querySelector('.yrf-radio[value="all"]').checked = true;
+    subchipsEl.classList.add('yrf-hidden');
+    subchipsEl.querySelectorAll('.yrf-subchip').forEach(function (c) { c.classList.remove('active'); });
+    fibreContainer.querySelectorAll('.yrf-checkbox').forEach(function (c) { c.checked = false; });
+    root.querySelectorAll('.yrf-chip[data-weight]').forEach(function (c) { c.classList.remove('active'); });
+    apply();
+  });
+
+  // ── Collapse/expand filter groups ──
+  root.querySelectorAll('.yrf-group-head').forEach(function (head) {
+    head.addEventListener('click', function () {
+      var group  = this.closest('.yrf-group');
+      var toggle = this.querySelector('.yrf-group-toggle');
+      group.classList.toggle('collapsed');
+      toggle.textContent = group.classList.contains('collapsed') ? '+' : '−';
+    });
+  });
+
+  // ── Helpers ──
+  function cap(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+  function esc(s) { return String(s).replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── Initial render ──
+  apply();
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Yard · Refine & Browse",
+  "target": "section",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection_handle",
+      "label": "Collection",
+      "info": "The main Yard collection. Products are filtered client-side by type, tags, and metafields. Max 50 products are rendered per Shopify Liquid limits."
+    },
+    {
+      "type": "url",
+      "id": "printlab_url",
+      "label": "PrintLab URL",
+      "info": "URL for the mid-grid editorial card CTA (Explore PrintLab →)."
+    },
+    {
+      "type": "header",
+      "content": "Category type mapping"
+    },
+    {
+      "type": "text",
+      "id": "fabric_types",
+      "label": "Fabric product types",
+      "default": "fabric,woven,knit,lining,deadstock",
+      "info": "Comma-separated list of product types that count as Fabrics. Case-insensitive."
+    },
+    {
+      "type": "text",
+      "id": "button_types",
+      "label": "Button product types",
+      "default": "button",
+      "info": "Comma-separated product types for the Buttons category."
+    },
+    {
+      "type": "text",
+      "id": "zip_types",
+      "label": "Zip product types",
+      "default": "zip,zipper",
+      "info": "Comma-separated product types for the Zips category."
+    },
+    {
+      "type": "text",
+      "id": "notion_types",
+      "label": "Notion product types",
+      "default": "notion",
+      "info": "Comma-separated product types for the Notions category."
+    }
+  ]
+}
+{% endschema %}
