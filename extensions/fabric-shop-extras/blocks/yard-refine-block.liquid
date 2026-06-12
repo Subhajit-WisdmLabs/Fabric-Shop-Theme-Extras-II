@@ -19,7 +19,7 @@
       <span class="yrf-helper-note">*Orders combined with a PrintLab print follow PrintLab's lead times.</span>
     </div>
 
-    <!-- 1. Category — radios from the 4 admin settings; auto-generated from fabric.type when settings are blank -->
+    <!-- 1. Category — radios from the 4 admin settings; auto-generated from product.type when settings are blank -->
     <div class="yrf-group" id="yrf-cat-group">
       <div class="yrf-group-head">
         <span class="yrf-group-name">Category</span>
@@ -52,17 +52,16 @@
       {%- else -%}
         {%- assign yrf_seen_types = '' -%}
         {%- for product in yrf_products -%}
-          {%- assign yrf_ft_raw = product.metafields.fabric.type.value -%}
-          {%- assign yrf_ft_h   = yrf_ft_raw | downcase | replace: ' ', '-' -%}
-          {%- assign yrf_ft_chk = yrf_ft_h | append: '~~' -%}
-          {%- unless yrf_ft_h == blank or yrf_seen_types contains yrf_ft_chk -%}
-            {%- assign yrf_seen_types = yrf_seen_types | append: yrf_ft_chk -%}
+          {%- assign yrf_pt_h   = product.type | downcase | replace: ' ', '-' -%}
+          {%- assign yrf_pt_chk = yrf_pt_h | append: '~~' -%}
+          {%- unless yrf_pt_h == blank or yrf_pt_h == 'uncategorized' or yrf_seen_types contains yrf_pt_chk -%}
+            {%- assign yrf_seen_types = yrf_seen_types | append: yrf_pt_chk -%}
             <label class="yrf-opt">
-              <input type="radio" name="yrf-cat" value="{{ yrf_ft_h | escape }}" class="yrf-radio">
-              <span class="yrf-opt-label">{{ yrf_ft_raw | escape }}</span>
-              <span class="yrf-opt-count" data-cat-count="{{ yrf_ft_h | escape }}"></span>
+              <input type="radio" name="yrf-cat" value="{{ yrf_pt_h | escape }}" class="yrf-radio">
+              <span class="yrf-opt-label">{{ product.type | escape }}</span>
+              <span class="yrf-opt-count" data-cat-count="{{ yrf_pt_h | escape }}"></span>
             </label>
-            <div class="yrf-subchips yrf-hidden" data-subchips-for="{{ yrf_ft_h | escape }}"></div>
+            <div class="yrf-subchips yrf-hidden" data-subchips-for="{{ yrf_pt_h | escape }}"></div>
           {%- endunless -%}
         {%- endfor -%}
       {%- endif -%}
@@ -131,9 +130,9 @@
         {%- assign yrf_fibre_list    = product.metafields.fabric.fibre.value -%}
         {%- assign yrf_weight        = product.metafields.fabric.weight.value -%}
         {%- assign yrf_print_ready   = product.metafields.fabric.print_ready.value -%}
+        {%- assign yrf_subtype       = product.metafields.fabric.type.value | downcase | strip -%}
         {%- comment -%}— Data attributes for JS filtering —{%- endcomment -%}
-        {%- assign yrf_type_key  = product.metafields.fabric.type.value | downcase | replace: ' ', '-' -%}
-        {%- assign yrf_subtype   = product.type | downcase | replace: ' ', '-' -%}
+        {%- assign yrf_type_key  = product.type | downcase | replace: ' ', '-' -%}
         {%- assign yrf_tags_str  = product.tags | join: ',' | downcase -%}
         {%- assign yrf_fibre_str = yrf_fibre_list | join: ',' | downcase -%}
         {%- assign yrf_weight_lc = yrf_weight | downcase -%}
@@ -382,7 +381,7 @@
     });
 
     if (editorial) {
-      var showEd = state.cat === 'all' || state.cat.indexOf('fabric') > -1;
+      var showEd = state.cat === 'all' || state.cat === 'fabric';
       editorial.hidden = !showEd || ordered.length === 0;
       if (!editorial.hidden) {
         var target = ordered[8] || null;
