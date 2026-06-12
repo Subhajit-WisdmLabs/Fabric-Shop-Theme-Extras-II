@@ -2,6 +2,9 @@
    No font-family rules; all type inherits from the active theme. */
 
 .yrf-root {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 64px 36px;
   display: grid;
   grid-template-columns: 248px 1fr;
   gap: 32px;
@@ -213,8 +216,7 @@
 .yrf-count strong { color: var(--yrf-ink); font-weight: 500; }
 
 .yrf-toolbar-right { display: flex; gap: 10px; align-items: center; }
-.yrf-sort,
-.yrf-density {
+.yrf-sort {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -238,23 +240,6 @@
   background-size: 5px 5px;
   background-repeat: no-repeat;
 }
-.yrf-den-btn {
-  width: 28px;
-  height: 28px;
-  border: 1px solid var(--yrf-rule-s);
-  background: var(--yrf-linen);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 3px;
-}
-.yrf-den-btn.active {
-  background: var(--yrf-ink);
-  border-color: var(--yrf-ink);
-  color: var(--yrf-bone);
-}
-
 /* Active filter chips */
 .yrf-active-chips {
   display: flex;
@@ -293,7 +278,6 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 22px;
 }
-.yrf-grid--dense { grid-template-columns: repeat(5, 1fr); gap: 16px; }
 
 .yrf-card { cursor: pointer; }
 .yrf-card[hidden] { display: none !important; }
@@ -517,11 +501,9 @@
 @media (max-width: 960px) {
   .yrf-root { grid-template-columns: 200px 1fr; gap: 24px; }
   .yrf-grid { grid-template-columns: repeat(3, 1fr); }
-  .yrf-grid--dense { grid-template-columns: repeat(4, 1fr); }
 }
 @media (max-width: 720px) {
   .yrf-root { grid-template-columns: 1fr; }
   .yrf-filters { position: static; max-height: none; }
   .yrf-grid { grid-template-columns: repeat(2, 1fr); }
-  .yrf-grid--dense { grid-template-columns: repeat(3, 1fr); }
 }
