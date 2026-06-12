@@ -19,7 +19,7 @@
       <span class="yrf-helper-note">*Orders combined with a PrintLab print follow PrintLab's lead times.</span>
     </div>
 
-    <!-- 1. Category — radios auto-built from distinct product.type values in the collection -->
+    <!-- 1. Category — radios built from the 4 category settings in the block admin -->
     <div class="yrf-group" id="yrf-cat-group">
       <div class="yrf-group-head">
         <span class="yrf-group-name">Category</span>
@@ -30,18 +30,16 @@
         <span class="yrf-opt-label">All stocked</span>
         <span class="yrf-opt-count" data-cat-count="all"></span>
       </label>
-      {%- assign yrf_seen_types = '' -%}
-      {%- for product in yrf_products -%}
-        {%- assign yrf_type_h = product.type | downcase | replace: ' ', '-' -%}
-        {%- assign yrf_type_check = yrf_type_h | append: '~~' -%}
-        {%- unless yrf_type_h == blank or yrf_seen_types contains yrf_type_check -%}
-          {%- assign yrf_seen_types = yrf_seen_types | append: yrf_type_check -%}
+      {%- assign yrf_cat_settings = 'category_1,category_2,category_3,category_4' | split: ',' -%}
+      {%- for yrf_cat_key in yrf_cat_settings -%}
+        {%- assign yrf_cat_val = block.settings[yrf_cat_key] -%}
+        {%- unless yrf_cat_val == blank -%}
+          {%- assign yrf_type_h = yrf_cat_val | downcase | replace: ' ', '-' -%}
           <label class="yrf-opt">
             <input type="radio" name="yrf-cat" value="{{ yrf_type_h | escape }}" class="yrf-radio">
-            <span class="yrf-opt-label">{{ product.type | escape }}</span>
+            <span class="yrf-opt-label">{{ yrf_cat_val | escape }}</span>
             <span class="yrf-opt-count" data-cat-count="{{ yrf_type_h | escape }}"></span>
           </label>
-          <!-- Subchips for this category — populated by JS from fabric.type metafield -->
           <div class="yrf-subchips yrf-hidden" data-subchips-for="{{ yrf_type_h | escape }}"></div>
         {%- endunless -%}
       {%- endfor -%}
@@ -546,6 +544,38 @@
   "name": "Yard · Refine & Browse",
   "target": "section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Categories"
+    },
+    {
+      "type": "text",
+      "id": "category_1",
+      "label": "Category 1",
+      "placeholder": "e.g. Fabric"
+    },
+    {
+      "type": "text",
+      "id": "category_2",
+      "label": "Category 2",
+      "placeholder": "e.g. Buttons"
+    },
+    {
+      "type": "text",
+      "id": "category_3",
+      "label": "Category 3",
+      "placeholder": "e.g. Notions"
+    },
+    {
+      "type": "text",
+      "id": "category_4",
+      "label": "Category 4",
+      "placeholder": "e.g. Zips"
+    },
+    {
+      "type": "header",
+      "content": "Links"
+    },
     {
       "type": "url",
       "id": "printlab_url",
