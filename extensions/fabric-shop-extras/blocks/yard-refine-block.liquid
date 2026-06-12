@@ -31,9 +31,10 @@
         <span class="yrf-opt-label">All stocked</span>
         <span class="yrf-opt-count" data-cat-count="all"></span>
       </label>
-      {%- assign yrf_cat_vals = block.settings.cat_1_type | append: ',' | append: block.settings.cat_2_type | append: ',' | append: block.settings.cat_3_type | append: ',' | append: block.settings.cat_4_type -%}
+      {%- assign yrf_cat_str = block.settings.cat_1_type | append: ',' | append: block.settings.cat_2_type | append: ',' | append: block.settings.cat_3_type | append: ',' | append: block.settings.cat_4_type -%}
+      {%- assign yrf_cat_parts = yrf_cat_str | split: ',' -%}
       {%- assign yrf_seen_cats = '' -%}
-      {%- for yrf_cat_raw in yrf_cat_vals | split: ',' -%}
+      {%- for yrf_cat_raw in yrf_cat_parts -%}
         {%- assign yrf_cat_val = yrf_cat_raw | strip -%}
         {%- assign yrf_cat_check = yrf_cat_val | append: '~~' -%}
         {%- unless yrf_cat_val == blank or yrf_cat_val == 'none' or yrf_seen_cats contains yrf_cat_check -%}
