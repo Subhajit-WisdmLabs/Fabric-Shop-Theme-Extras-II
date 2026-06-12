@@ -1,8 +1,7 @@
 {{ 'yard-refine.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
-  assign yrf_col      = collections[block.settings.collection_handle]
-  assign yrf_products = yrf_col.products
+  assign yrf_products = collections.all.products
 -%}
 
 <div class="yrf-root" id="yrf-root">
@@ -547,12 +546,6 @@
   "name": "Yard · Refine & Browse",
   "target": "section",
   "settings": [
-    {
-      "type": "collection",
-      "id": "collection_handle",
-      "label": "Collection",
-      "info": "The main Yard collection. Products are filtered client-side — max 50 per Shopify Liquid limits."
-    },
     {
       "type": "url",
       "id": "printlab_url",
