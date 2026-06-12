@@ -20,7 +20,7 @@
       <span class="yrf-helper-note">*Orders combined with a PrintLab print follow PrintLab's lead times.</span>
     </div>
 
-    <!-- 1. Category — radios driven by the 4 product-type selects in block settings -->
+    <!-- 1. Category — radios auto-built from distinct product.type values in the collection -->
     <div class="yrf-group" id="yrf-cat-group">
       <div class="yrf-group-head">
         <span class="yrf-group-name">Category</span>
@@ -31,30 +31,19 @@
         <span class="yrf-opt-label">All stocked</span>
         <span class="yrf-opt-count" data-cat-count="all"></span>
       </label>
-      {%- assign yrf_cat_str = block.settings.cat_1_type | append: ',' | append: block.settings.cat_2_type | append: ',' | append: block.settings.cat_3_type | append: ',' | append: block.settings.cat_4_type -%}
-      {%- assign yrf_cat_parts = yrf_cat_str | split: ',' -%}
-      {%- assign yrf_seen_cats = '' -%}
-      {%- for yrf_cat_raw in yrf_cat_parts -%}
-        {%- assign yrf_cat_val = yrf_cat_raw | strip -%}
-        {%- assign yrf_cat_check = yrf_cat_val | append: '~~' -%}
-        {%- unless yrf_cat_val == blank or yrf_cat_val == 'none' or yrf_seen_cats contains yrf_cat_check -%}
-          {%- assign yrf_seen_cats = yrf_seen_cats | append: yrf_cat_check -%}
-          {%- comment -%}Use actual product.type for display label; fall back to capitalize of setting value{%- endcomment -%}
-          {%- assign yrf_cat_label = yrf_cat_val | capitalize -%}
-          {%- for product in yrf_products -%}
-            {%- assign yrf_p_type_h = product.type | downcase | replace: ' ', '-' -%}
-            {%- if yrf_p_type_h == yrf_cat_val -%}
-              {%- assign yrf_cat_label = product.type -%}
-              {%- break -%}
-            {%- endif -%}
-          {%- endfor -%}
+      {%- assign yrf_seen_types = '' -%}
+      {%- for product in yrf_products -%}
+        {%- assign yrf_type_h = product.type | downcase | replace: ' ', '-' -%}
+        {%- assign yrf_type_check = yrf_type_h | append: '~~' -%}
+        {%- unless yrf_type_h == blank or yrf_seen_types contains yrf_type_check -%}
+          {%- assign yrf_seen_types = yrf_seen_types | append: yrf_type_check -%}
           <label class="yrf-opt">
-            <input type="radio" name="yrf-cat" value="{{ yrf_cat_val | escape }}" class="yrf-radio">
-            <span class="yrf-opt-label">{{ yrf_cat_label | escape }}</span>
-            <span class="yrf-opt-count" data-cat-count="{{ yrf_cat_val | escape }}"></span>
+            <input type="radio" name="yrf-cat" value="{{ yrf_type_h | escape }}" class="yrf-radio">
+            <span class="yrf-opt-label">{{ product.type | escape }}</span>
+            <span class="yrf-opt-count" data-cat-count="{{ yrf_type_h | escape }}"></span>
           </label>
           <!-- Subchips for this category — populated by JS from fabric.type metafield -->
-          <div class="yrf-subchips yrf-hidden" data-subchips-for="{{ yrf_cat_val | escape }}"></div>
+          <div class="yrf-subchips yrf-hidden" data-subchips-for="{{ yrf_type_h | escape }}"></div>
         {%- endunless -%}
       {%- endfor -%}
     </div>
@@ -570,82 +559,6 @@
       "label": "PrintLab URL",
       "info": "URL for the mid-grid editorial card CTA (Explore PrintLab →)."
     },
-    {
-      "type": "header",
-      "content": "Categories"
-    },
-    {
-      "type": "paragraph",
-      "content": "Select up to 4 Shopify product types to show as category filters. Leave a slot as 'None' to hide it. Subtype chips under each category auto-populate from the fabric.type metafield on each product."
-    },
-    {
-      "type": "select",
-      "id": "cat_1_type",
-      "label": "Category 1",
-      "options": [
-        { "value": "none",    "label": "— None —" },
-        { "value": "fabric",  "label": "Fabric" },
-        { "value": "button",  "label": "Button" },
-        { "value": "zip",     "label": "Zip" },
-        { "value": "notion",  "label": "Notion" },
-        { "value": "lining",  "label": "Lining" },
-        { "value": "trim",    "label": "Trim" },
-        { "value": "elastic", "label": "Elastic" },
-        { "value": "thread",  "label": "Thread" }
-      ],
-      "default": "fabric"
-    },
-    {
-      "type": "select",
-      "id": "cat_2_type",
-      "label": "Category 2",
-      "options": [
-        { "value": "none",    "label": "— None —" },
-        { "value": "fabric",  "label": "Fabric" },
-        { "value": "button",  "label": "Button" },
-        { "value": "zip",     "label": "Zip" },
-        { "value": "notion",  "label": "Notion" },
-        { "value": "lining",  "label": "Lining" },
-        { "value": "trim",    "label": "Trim" },
-        { "value": "elastic", "label": "Elastic" },
-        { "value": "thread",  "label": "Thread" }
-      ],
-      "default": "button"
-    },
-    {
-      "type": "select",
-      "id": "cat_3_type",
-      "label": "Category 3",
-      "options": [
-        { "value": "none",    "label": "— None —" },
-        { "value": "fabric",  "label": "Fabric" },
-        { "value": "button",  "label": "Button" },
-        { "value": "zip",     "label": "Zip" },
-        { "value": "notion",  "label": "Notion" },
-        { "value": "lining",  "label": "Lining" },
-        { "value": "trim",    "label": "Trim" },
-        { "value": "elastic", "label": "Elastic" },
-        { "value": "thread",  "label": "Thread" }
-      ],
-      "default": "zip"
-    },
-    {
-      "type": "select",
-      "id": "cat_4_type",
-      "label": "Category 4",
-      "options": [
-        { "value": "none",    "label": "— None —" },
-        { "value": "fabric",  "label": "Fabric" },
-        { "value": "button",  "label": "Button" },
-        { "value": "zip",     "label": "Zip" },
-        { "value": "notion",  "label": "Notion" },
-        { "value": "lining",  "label": "Lining" },
-        { "value": "trim",    "label": "Trim" },
-        { "value": "elastic", "label": "Elastic" },
-        { "value": "thread",  "label": "Thread" }
-      ],
-      "default": "notion"
-    }
   ]
 }
 {% endschema %}
