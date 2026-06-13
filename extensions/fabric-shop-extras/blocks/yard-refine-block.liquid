@@ -1,7 +1,7 @@
 {{ 'yard-refine.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
-  assign yrf_products = block.settings.collection_handle.products
+  assign yrf_handle = block.settings.collection_handle.handle
 -%}
 
 <div class="yrf-root" id="yrf-root">
@@ -106,11 +106,11 @@
     <!-- Grid -->
     <div class="yrf-grid" id="yrf-grid">
 
-      {%- paginate yrf_products by 50 -%}
+      {%- paginate collections[yrf_handle].products by 50 -%}
       <span id="yrf-pagination-data" data-total-pages="{{ paginate.pages }}" data-current-page="{{ paginate.current_page }}" hidden></span>
 
       {%- assign yrf_card_index = 0 -%}
-      {%- for product in yrf_products -%}
+      {%- for product in collections[yrf_handle].products -%}
 
         {%- comment -%}— Metafields —{%- endcomment -%}
         {%- assign yrf_gsm           = product.metafields.fabric.gsm.value -%}
