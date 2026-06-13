@@ -106,6 +106,9 @@
     <!-- Grid -->
     <div class="yrf-grid" id="yrf-grid">
 
+      {%- paginate yrf_products by 50 -%}
+      <span id="yrf-pagination-data" data-total-pages="{{ paginate.pages }}" data-current-page="{{ paginate.current_page }}" hidden></span>
+
       {%- assign yrf_card_index = 0 -%}
       {%- for product in yrf_products -%}
 
@@ -149,8 +152,8 @@
           {%- assign yrf_badge = 'unique' -%}
         {%- endif -%}
 
-        {%- comment -%}— Editorial break card inserted before the 9th product card —{%- endcomment -%}
-        {%- if yrf_card_index == 8 -%}
+        {%- comment -%}— Editorial break card inserted before the 9th product card (page 1 only) —{%- endcomment -%}
+        {%- if paginate.current_page == 1 and yrf_card_index == 8 -%}
           <div class="yrf-editorial" id="yrf-editorial">
             <div>
               <div class="yrf-editorial-eyebrow">— Printed to order, too</div>
@@ -222,8 +225,8 @@
 
       {%- endfor -%}
 
-      {%- comment -%}If fewer than 9 products, still render editorial at the end{%- endcomment -%}
-      {%- if yrf_card_index > 0 and yrf_card_index < 9 -%}
+      {%- comment -%}If fewer than 9 products, still render editorial at the end (page 1 only){%- endcomment -%}
+      {%- if paginate.current_page == 1 and yrf_card_index > 0 and yrf_card_index < 9 -%}
         <div class="yrf-editorial" id="yrf-editorial">
           <div>
             <div class="yrf-editorial-eyebrow">— Printed to order, too</div>
@@ -235,6 +238,7 @@
           {%- endif -%}
         </div>
       {%- endif -%}
+      {%- endpaginate -%}
 
     </div>
 
@@ -262,9 +266,11 @@
   var editorial  = document.getElementById('yrf-editorial');
   var subchipsEl = document.getElementById('yrf-subchips');
   var subchipType = subchipsEl ? (subchipsEl.dataset.subchipType || '').toLowerCase() : '';
+  var fibreContainer = document.getElementById('yrf-fibre-opts');
 
-  // ── Build fabric.type sub-category chips (single-select) for the designated type ──
-  if (subchipsEl && subchipType) {
+  // ── Build fabric.type sub-category chips (single-select), preserving the active one ──
+  function buildSubchips() {
+    if (!subchipsEl || !subchipType) return;
     var ftypeMap = {};
     allCards.forEach(function (card) {
       if ((card.dataset.type || '').toLowerCase() !== subchipType) return;
@@ -274,34 +280,42 @@
       if (!ftypeMap[key]) ftypeMap[key] = { label: raw, count: 0 };
       ftypeMap[key].count++;
     });
+    subchipsEl.innerHTML = '';
     Object.keys(ftypeMap).sort().forEach(function (key) {
       var item = ftypeMap[key];
       var span = document.createElement('span');
       span.className = 'yrf-subchip';
+      if (state.ftype === key) span.classList.add('active');
       span.setAttribute('data-ftype', key);
       span.innerHTML = escHtml(item.label) + ' <em>' + item.count + '</em>';
       subchipsEl.appendChild(span);
     });
   }
 
-  // ── Build fibre filter options from product data ──
-  var fibreMap = {};
-  allCards.forEach(function (card) {
-    (card.dataset.fibre || '').split(',').forEach(function (f) {
-      f = f.trim();
-      if (f) fibreMap[f] = (fibreMap[f] || 0) + 1;
+  // ── Build fibre filter options from product data, preserving checked state ──
+  function buildFibreOptions() {
+    var fibreMap = {};
+    allCards.forEach(function (card) {
+      (card.dataset.fibre || '').split(',').forEach(function (f) {
+        f = f.trim();
+        if (f) fibreMap[f] = (fibreMap[f] || 0) + 1;
+      });
     });
-  });
-  var fibreContainer = document.getElementById('yrf-fibre-opts');
-  Object.keys(fibreMap).sort().forEach(function (fibre) {
-    var lbl = document.createElement('label');
-    lbl.className = 'yrf-opt';
-    lbl.innerHTML =
-      '<input type="checkbox" value="' + esc(fibre) + '" class="yrf-checkbox">' +
-      '<span class="yrf-opt-label">' + cap(fibre) + '</span>' +
-      '<span class="yrf-opt-count">' + fibreMap[fibre] + '</span>';
-    fibreContainer.appendChild(lbl);
-  });
+    fibreContainer.innerHTML = '';
+    Object.keys(fibreMap).sort().forEach(function (fibre) {
+      var checked = state.fibres.indexOf(fibre) > -1 ? ' checked' : '';
+      var lbl = document.createElement('label');
+      lbl.className = 'yrf-opt';
+      lbl.innerHTML =
+        '<input type="checkbox" value="' + esc(fibre) + '" class="yrf-checkbox"' + checked + '>' +
+        '<span class="yrf-opt-label">' + cap(fibre) + '</span>' +
+        '<span class="yrf-opt-count">' + fibreMap[fibre] + '</span>';
+      fibreContainer.appendChild(lbl);
+    });
+  }
+
+  buildSubchips();
+  buildFibreOptions();
 
   function matches(card) {
     var type   = (card.dataset.type   || '').trim();
@@ -554,8 +568,73 @@
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  // ── Initial render ──
+  // ── Background-load remaining pages so filters/sort/counts span the whole catalogue ──
+  function loadAllPages() {
+    var dataEl = document.getElementById('yrf-pagination-data');
+    var totalPages = dataEl ? parseInt(dataEl.getAttribute('data-total-pages'), 10) : 1;
+    if (!totalPages || totalPages < 2) return;
+
+    var grid    = document.getElementById('yrf-grid');
+    var footer  = document.getElementById('yrf-footer-meta');
+    var base    = location.pathname;
+    var pageNums = [];
+    for (var p = 2; p <= totalPages; p++) pageNums.push(p);
+
+    if (footer) footer.textContent = 'Loading all products…';
+
+    var CONCURRENCY = 4;
+    var results = {};   // page number -> array of card nodes
+    var nextIdx = 0;
+    var done = 0;
+
+    function fetchPage(pageNum) {
+      var sep = base.indexOf('?') > -1 ? '&' : '?';
+      return fetch(base + sep + 'page=' + pageNum, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+        .then(function (r) { return r.ok ? r.text() : ''; })
+        .then(function (html) {
+          if (!html) { results[pageNum] = []; return; }
+          var doc = new DOMParser().parseFromString(html, 'text/html');
+          var srcGrid = doc.getElementById('yrf-grid');
+          var cards = srcGrid ? Array.from(srcGrid.querySelectorAll('.yrf-card')) : [];
+          results[pageNum] = cards.map(function (c) { return document.importNode(c, true); });
+        })
+        .catch(function () { results[pageNum] = []; });
+    }
+
+    function pump() {
+      return new Promise(function (resolve) {
+        function next() {
+          if (nextIdx >= pageNums.length) return;
+          var pageNum = pageNums[nextIdx++];
+          fetchPage(pageNum).then(function () {
+            done++;
+            if (footer) footer.textContent = 'Loading all products… (' + done + '/' + pageNums.length + ')';
+            if (done >= pageNums.length) resolve();
+            else next();
+          });
+        }
+        for (var i = 0; i < Math.min(CONCURRENCY, pageNums.length); i++) next();
+      });
+    }
+
+    pump().then(function () {
+      // Append in page order to preserve the collection's manual sort
+      pageNums.forEach(function (pageNum) {
+        (results[pageNum] || []).forEach(function (card) {
+          grid.appendChild(card);
+          allCards.push(card);
+        });
+      });
+      buildSubchips();
+      buildFibreOptions();
+      syncSubchips();
+      apply();
+    });
+  }
+
+  // ── Initial render, then pull the rest of the catalogue ──
   apply();
+  loadAllPages();
 
 })();
 </script>
@@ -569,7 +648,7 @@
       "type": "collection",
       "id": "collection_handle",
       "label": "Collection",
-      "info": "Products from this collection are shown and filtered client-side by type, fibre, weight, and the fabric.type metafield. Max 50 products render per Shopify Liquid limits."
+      "info": "Products from this collection are shown and filtered client-side by type, fibre, weight, and the fabric.type metafield. All products load — the first 50 render immediately, the rest stream in via background pagination."
     },
     {
       "type": "url",
