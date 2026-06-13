@@ -1,8 +1,12 @@
 {{ 'yard-refine.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
-  assign yrf_col      = collections[block.settings.collection_handle]
-  assign yrf_products = yrf_col.products
+  assign yrf_col = block.settings.collection_handle
+  if yrf_col != blank and yrf_col.products_count > 0
+    assign yrf_products = yrf_col.products
+  else
+    assign yrf_products = collections.all.products
+  endif
 -%}
 
 <div class="yrf-root" id="yrf-root">
