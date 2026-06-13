@@ -5,12 +5,7 @@
   assign yrf_products = yrf_col.products
 -%}
 
-<div class="yrf-root" id="yrf-root"
-  data-fabric-types="{{ block.settings.fabric_types  | downcase | escape }}"
-  data-button-types="{{ block.settings.button_types  | downcase | escape }}"
-  data-zip-types="{{ block.settings.zip_types        | downcase | escape }}"
-  data-notion-types="{{ block.settings.notion_types  | downcase | escape }}"
->
+<div class="yrf-root" id="yrf-root">
 
   <!-- ── FILTER SIDEBAR ── -->
   <aside class="yrf-filters" id="yrf-sidebar">
@@ -25,43 +20,33 @@
       <span class="yrf-helper-note">*Orders combined with a PrintLab print follow PrintLab's lead times.</span>
     </div>
 
-    <!-- 1. Category — radio -->
-    <div class="yrf-group" id="yrf-cat-group">
+    <!-- 1. Product Type — radio (options come from block settings) -->
+    <div class="yrf-group" id="yrf-type-group">
       <div class="yrf-group-head">
-        <span class="yrf-group-name">Category</span>
+        <span class="yrf-group-name">{{ block.settings.type_group_label | default: 'Product type' }}</span>
         <span class="yrf-group-toggle">−</span>
       </div>
       <label class="yrf-opt">
-        <input type="radio" name="yrf-cat" value="all" class="yrf-radio" checked>
-        <span class="yrf-opt-label">All stocked</span>
-        <span class="yrf-opt-count" data-cat-count="all"></span>
+        <input type="radio" name="yrf-type" value="all" class="yrf-radio" checked>
+        <span class="yrf-opt-label">{{ block.settings.all_label | default: 'All stocked' }}</span>
+        <span class="yrf-opt-count" data-type-count="all"></span>
       </label>
-      <label class="yrf-opt">
-        <input type="radio" name="yrf-cat" value="fabric" class="yrf-radio">
-        <span class="yrf-opt-label">Fabrics</span>
-        <span class="yrf-opt-count" data-cat-count="fabric"></span>
-      </label>
-      <div class="yrf-subchips yrf-hidden" id="yrf-subchips">
-        <span class="yrf-subchip" data-tag="woven">Wovens <em data-tag-count="woven"></em></span>
-        <span class="yrf-subchip" data-tag="knit">Knits <em data-tag-count="knit"></em></span>
-        <span class="yrf-subchip" data-tag="lining">Linings <em data-tag-count="lining"></em></span>
-        <span class="yrf-subchip" data-tag="deadstock">Deadstock prints <em data-tag-count="deadstock"></em></span>
-      </div>
-      <label class="yrf-opt">
-        <input type="radio" name="yrf-cat" value="button" class="yrf-radio">
-        <span class="yrf-opt-label">Buttons</span>
-        <span class="yrf-opt-count" data-cat-count="button"></span>
-      </label>
-      <label class="yrf-opt">
-        <input type="radio" name="yrf-cat" value="zip" class="yrf-radio">
-        <span class="yrf-opt-label">Zips</span>
-        <span class="yrf-opt-count" data-cat-count="zip"></span>
-      </label>
-      <label class="yrf-opt">
-        <input type="radio" name="yrf-cat" value="notion" class="yrf-radio">
-        <span class="yrf-opt-label">Notions</span>
-        <span class="yrf-opt-count" data-cat-count="notion"></span>
-      </label>
+      {%- assign yrf_subchip_key = block.settings.subchip_type | strip | downcase | replace: ' ', '-' -%}
+      {%- assign yrf_type_opts = block.settings.product_types | split: ',' -%}
+      {%- for yrf_t in yrf_type_opts -%}
+        {%- assign yrf_t_clean = yrf_t | strip -%}
+        {%- if yrf_t_clean != blank -%}
+          {%- assign yrf_t_key = yrf_t_clean | downcase | replace: ' ', '-' -%}
+          <label class="yrf-opt">
+            <input type="radio" name="yrf-type" value="{{ yrf_t_key | escape }}" class="yrf-radio">
+            <span class="yrf-opt-label">{{ yrf_t_clean | escape }}</span>
+            <span class="yrf-opt-count" data-type-count="{{ yrf_t_key | escape }}"></span>
+          </label>
+          {%- if yrf_subchip_key != blank and yrf_t_key == yrf_subchip_key -%}
+            <div class="yrf-subchips yrf-hidden" id="yrf-subchips" data-subchip-type="{{ yrf_t_key | escape }}"></div>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
     </div>
 
     <!-- 2. Fibre — checkboxes (built by JS from product data) -->
@@ -183,6 +168,7 @@
         <article class="yrf-card"
           data-product-id="{{ product.id }}"
           data-type="{{ yrf_type_key | escape }}"
+          data-ftype="{{ product.metafields.fabric.type.value | escape }}"
           data-tags="{{ yrf_tags_str | escape }}"
           data-fibre="{{ yrf_fibre_str | escape }}"
           data-weight="{{ yrf_weight_lc | escape }}"
@@ -269,18 +255,35 @@
 
   var PAGE_SIZE = 30;
 
-  // Category type mappings from block settings
-  var fabricTypes = (root.dataset.fabricTypes || 'fabric,woven,knit,lining,deadstock').split(',').map(trim);
-  var buttonTypes = (root.dataset.buttonTypes || 'button').split(',').map(trim);
-  var zipTypes    = (root.dataset.zipTypes    || 'zip,zipper').split(',').map(trim);
-  var notionTypes = (root.dataset.notionTypes || 'notion').split(',').map(trim);
-
   function trim(s) { return s.trim(); }
 
-  var state = { cat: 'all', subcat: null, fibres: [], weight: null, sort: 'manual', page: 1 };
+  var state = { type: 'all', ftype: null, fibres: [], weight: null, sort: 'manual', page: 1 };
 
-  var allCards  = Array.from(root.querySelectorAll('.yrf-card'));
-  var editorial = document.getElementById('yrf-editorial');
+  var allCards   = Array.from(root.querySelectorAll('.yrf-card'));
+  var editorial  = document.getElementById('yrf-editorial');
+  var subchipsEl = document.getElementById('yrf-subchips');
+  var subchipType = subchipsEl ? (subchipsEl.dataset.subchipType || '').toLowerCase() : '';
+
+  // ── Build fabric.type sub-category chips (single-select) for the designated type ──
+  if (subchipsEl && subchipType) {
+    var ftypeMap = {};
+    allCards.forEach(function (card) {
+      if ((card.dataset.type || '').toLowerCase() !== subchipType) return;
+      var raw = (card.dataset.ftype || '').trim();
+      if (!raw) return;
+      var key = raw.toLowerCase();
+      if (!ftypeMap[key]) ftypeMap[key] = { label: raw, count: 0 };
+      ftypeMap[key].count++;
+    });
+    Object.keys(ftypeMap).sort().forEach(function (key) {
+      var item = ftypeMap[key];
+      var span = document.createElement('span');
+      span.className = 'yrf-subchip';
+      span.setAttribute('data-ftype', key);
+      span.innerHTML = escHtml(item.label) + ' <em>' + item.count + '</em>';
+      subchipsEl.appendChild(span);
+    });
+  }
 
   // ── Build fibre filter options from product data ──
   var fibreMap = {};
@@ -301,24 +304,12 @@
     fibreContainer.appendChild(lbl);
   });
 
-  // ── Category classify ──
-  function classify(card) {
-    var type = (card.dataset.type || '').toLowerCase();
-    var tags = (card.dataset.tags || '').toLowerCase().split(',');
-    if (fabricTypes.some(function (t) { return type === t || tags.indexOf(t) > -1; })) return 'fabric';
-    if (buttonTypes.some(function (t) { return type === t || tags.indexOf(t) > -1; })) return 'button';
-    if (zipTypes.some(function (t)    { return type === t || tags.indexOf(t) > -1; })) return 'zip';
-    if (notionTypes.some(function (t) { return type === t || tags.indexOf(t) > -1; })) return 'notion';
-    return 'other';
-  }
-
   function matches(card) {
-    var cat    = classify(card);
-    var tags   = (card.dataset.tags   || '').split(',').map(trim);
+    var type   = (card.dataset.type   || '').trim();
     var fibres = (card.dataset.fibre  || '').split(',').map(trim).filter(Boolean);
     var weight = (card.dataset.weight || '').trim();
-    if (state.cat !== 'all' && cat !== state.cat) return false;
-    if (state.subcat && tags.indexOf(state.subcat) === -1) return false;
+    if (state.type !== 'all' && type !== state.type) return false;
+    if (state.ftype && (card.dataset.ftype || '').toLowerCase() !== state.ftype) return false;
     if (state.fibres.length && !state.fibres.some(function (f) { return fibres.indexOf(f) > -1; })) return false;
     if (state.weight && weight !== state.weight) return false;
     return true;
@@ -354,10 +345,9 @@
       }
     });
 
-    // Re-position editorial: after 8th visible card (index 8)
+    // Re-position editorial: only on the "all" view, after the 8th card
     if (editorial) {
-      var isFabricView = state.cat === 'all' || state.cat === 'fabric';
-      editorial.hidden = !isFabricView || ordered.length === 0;
+      editorial.hidden = state.type !== 'all' || ordered.length === 0;
       if (!editorial.hidden) {
         var target = ordered[8] || null;
         grid.insertBefore(editorial, target);
@@ -390,26 +380,19 @@
 
     renderChips();
     updateCounts();
-    document.getElementById('yrf-clear').hidden = !(state.cat !== 'all' || state.subcat || state.fibres.length || state.weight);
+    document.getElementById('yrf-clear').hidden = !(state.type !== 'all' || state.ftype || state.fibres.length || state.weight);
   }
 
-  // ── Sidebar counts ──
+  // ── Sidebar counts (per product type + total) ──
   function updateCounts() {
-    var cats = { all: allCards.length, fabric: 0, button: 0, zip: 0, notion: 0 };
-    var tagC = { woven: 0, knit: 0, lining: 0, deadstock: 0 };
+    var counts = { all: allCards.length };
     allCards.forEach(function (card) {
-      var cat  = classify(card);
-      if (cats[cat] !== undefined) cats[cat]++;
-      var tags = (card.dataset.tags || '').split(',').map(trim);
-      Object.keys(tagC).forEach(function (t) { if (tags.indexOf(t) > -1) tagC[t]++; });
+      var t = (card.dataset.type || '').trim();
+      if (t) counts[t] = (counts[t] || 0) + 1;
     });
-    Object.keys(cats).forEach(function (k) {
-      var el = root.querySelector('[data-cat-count="' + k + '"]');
-      if (el) el.textContent = cats[k];
-    });
-    Object.keys(tagC).forEach(function (k) {
-      var el = root.querySelector('[data-tag-count="' + k + '"]');
-      if (el) el.textContent = tagC[k];
+    root.querySelectorAll('[data-type-count]').forEach(function (el) {
+      var k = el.getAttribute('data-type-count');
+      el.textContent = counts[k] || 0;
     });
   }
 
@@ -417,22 +400,24 @@
   function renderChips() {
     var c = document.getElementById('yrf-active-chips');
     c.innerHTML = '';
-    var catLabels = { fabric: 'Fabrics', button: 'Buttons', zip: 'Zips', notion: 'Notions' };
-    if (state.cat !== 'all') {
-      var lbl = state.subcat
-        ? catLabels[state.cat] + ' · ' + cap(state.subcat) + 's'
-        : catLabels[state.cat];
-      chip(c, lbl, function () {
-        state.cat = 'all'; state.subcat = null; state.page = 1;
+    if (state.type !== 'all') {
+      var radioEl = root.querySelector('.yrf-radio[value="' + state.type + '"]');
+      var label   = radioEl
+        ? radioEl.parentNode.querySelector('.yrf-opt-label').textContent
+        : state.type;
+      chip(c, label, function () {
+        state.type = 'all'; state.ftype = null; state.page = 1;
         root.querySelector('.yrf-radio[value="all"]').checked = true;
-        subchipsEl.classList.add('yrf-hidden');
-        subchipsEl.querySelectorAll('.yrf-subchip').forEach(function (s) { s.classList.remove('active'); });
+        syncSubchips();
         apply();
       });
-    } else if (state.subcat) {
-      chip(c, cap(state.subcat) + 's', function () {
-        state.subcat = null; state.page = 1;
-        subchipsEl.querySelectorAll('.yrf-subchip').forEach(function (s) { s.classList.remove('active'); });
+    }
+    if (state.ftype) {
+      var sc = subchipsEl ? subchipsEl.querySelector('.yrf-subchip[data-ftype="' + state.ftype + '"]') : null;
+      var scLabel = sc ? sc.textContent.replace(/\s*\d+\s*$/, '').trim() : state.ftype;
+      chip(c, scLabel, function () {
+        state.ftype = null; state.page = 1;
+        if (sc) sc.classList.remove('active');
         apply();
       });
     }
@@ -463,32 +448,41 @@
   }
 
   // ── Wire up controls ──
-  var subchipsEl = document.getElementById('yrf-subchips');
-
   root.querySelectorAll('.yrf-radio').forEach(function (radio) {
     radio.addEventListener('change', function () {
-      state.cat = this.value; state.subcat = null; state.page = 1;
-      subchipsEl.classList.toggle('yrf-hidden', state.cat !== 'fabric');
-      subchipsEl.querySelectorAll('.yrf-subchip').forEach(function (c) { c.classList.remove('active'); });
+      state.type = this.value; state.ftype = null; state.page = 1;
+      syncSubchips();
       apply();
     });
   });
 
-  subchipsEl.querySelectorAll('.yrf-subchip').forEach(function (chip) {
-    chip.addEventListener('click', function () {
-      var tag = this.dataset.tag;
-      if (state.subcat === tag) {
-        state.subcat = null;
-        this.classList.remove('active');
+  // Show subchips only when the designated type is active; clear active states otherwise.
+  function syncSubchips() {
+    if (!subchipsEl || !subchipType) return;
+    var show = state.type === subchipType && subchipsEl.children.length > 0;
+    subchipsEl.classList.toggle('yrf-hidden', !show);
+    if (!show) {
+      subchipsEl.querySelectorAll('.yrf-subchip').forEach(function (s) { s.classList.remove('active'); });
+    }
+  }
+
+  if (subchipsEl) {
+    subchipsEl.addEventListener('click', function (e) {
+      var chipEl = e.target.closest('.yrf-subchip');
+      if (!chipEl) return;
+      var val = chipEl.getAttribute('data-ftype');
+      if (state.ftype === val) {
+        state.ftype = null;
+        chipEl.classList.remove('active');
       } else {
-        subchipsEl.querySelectorAll('.yrf-subchip').forEach(function (c) { c.classList.remove('active'); });
-        state.subcat = tag;
-        this.classList.add('active');
+        subchipsEl.querySelectorAll('.yrf-subchip').forEach(function (s) { s.classList.remove('active'); });
+        state.ftype = val;
+        chipEl.classList.add('active');
       }
       state.page = 1;
       apply();
     });
-  });
+  }
 
   fibreContainer.addEventListener('change', function (e) {
     if (!e.target.classList.contains('yrf-checkbox')) return;
@@ -536,12 +530,11 @@
   });
 
   document.getElementById('yrf-clear').addEventListener('click', function () {
-    state.cat = 'all'; state.subcat = null; state.fibres = []; state.weight = null; state.page = 1;
+    state.type = 'all'; state.ftype = null; state.fibres = []; state.weight = null; state.page = 1;
     root.querySelector('.yrf-radio[value="all"]').checked = true;
-    subchipsEl.classList.add('yrf-hidden');
-    subchipsEl.querySelectorAll('.yrf-subchip').forEach(function (c) { c.classList.remove('active'); });
     fibreContainer.querySelectorAll('.yrf-checkbox').forEach(function (c) { c.checked = false; });
     root.querySelectorAll('.yrf-chip[data-weight]').forEach(function (c) { c.classList.remove('active'); });
+    syncSubchips();
     apply();
   });
 
@@ -587,35 +580,32 @@
     },
     {
       "type": "header",
-      "content": "Category type mapping"
+      "content": "Product type filter"
     },
     {
       "type": "text",
-      "id": "fabric_types",
-      "label": "Fabric product types",
-      "default": "fabric,woven,knit,lining,deadstock",
-      "info": "Comma-separated list of product types that count as Fabrics. Case-insensitive."
+      "id": "type_group_label",
+      "label": "Filter group heading",
+      "default": "Product type"
     },
     {
       "type": "text",
-      "id": "button_types",
-      "label": "Button product types",
-      "default": "button",
-      "info": "Comma-separated product types for the Buttons category."
+      "id": "all_label",
+      "label": "\"All\" option label",
+      "default": "All stocked"
+    },
+    {
+      "type": "textarea",
+      "id": "product_types",
+      "label": "Product types",
+      "info": "Comma-separated product types shown as filter radios, in this order. Each must match a product's Type exactly (case-insensitive). e.g. Woven, Knit, Lining, Buttons, Zips, Notions"
     },
     {
       "type": "text",
-      "id": "zip_types",
-      "label": "Zip product types",
-      "default": "zip,zipper",
-      "info": "Comma-separated product types for the Zips category."
-    },
-    {
-      "type": "text",
-      "id": "notion_types",
-      "label": "Notion product types",
-      "default": "notion",
-      "info": "Comma-separated product types for the Notions category."
+      "id": "subchip_type",
+      "label": "Sub-category type",
+      "default": "Undyed fabric",
+      "info": "When this product type is selected, sub-category chips appear, built from the fabric.type metafield values of its products. Must match one of the product types above. Leave blank to disable."
     }
   ]
 }
