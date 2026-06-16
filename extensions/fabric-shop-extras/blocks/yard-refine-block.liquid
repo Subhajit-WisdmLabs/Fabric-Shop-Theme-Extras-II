@@ -92,11 +92,6 @@
             <option value="title-asc">A–Z</option>
           </select>
         </div>
-        <div class="yrf-density">
-          <span>View:</span>
-          <button class="yrf-den-btn active" id="yrf-den-comfort" title="Comfortable">▦</button>
-          <button class="yrf-den-btn" id="yrf-den-dense" title="Dense">▩</button>
-        </div>
       </div>
     </div>
 
@@ -526,18 +521,7 @@
     state.sort = this.value; state.page = 1; apply();
   });
 
-  document.getElementById('yrf-den-comfort').addEventListener('click', function () {
-    document.getElementById('yrf-grid').classList.remove('yrf-grid--dense');
-    this.classList.add('active');
-    document.getElementById('yrf-den-dense').classList.remove('active');
-  });
-  document.getElementById('yrf-den-dense').addEventListener('click', function () {
-    document.getElementById('yrf-grid').classList.add('yrf-grid--dense');
-    this.classList.add('active');
-    document.getElementById('yrf-den-comfort').classList.remove('active');
-  });
-
-  document.getElementById('yrf-load-more').addEventListener('click', function () {
+document.getElementById('yrf-load-more').addEventListener('click', function () {
     state.page++;
     apply();
   });
