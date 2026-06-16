@@ -147,7 +147,7 @@
       if (loadBtn) loadBtn.disabled = on;
     }
 
-    var MAX_PILLS = 6;
+    var MAX_PILLS = 4;
 
     function populatePills(disciplines) {
       if (!pillsEl || state.pillsPopulated) return;
@@ -159,8 +159,7 @@
         btn.type = 'button';
         btn.className = i >= MAX_PILLS ? 'sgb-pill sgb-pill--overflow' : 'sgb-pill';
         btn.setAttribute('data-discipline', d);
-        var label = d.length > 24 ? d.slice(0, 22) + '…' : d;
-        btn.textContent = label;
+        btn.textContent = d;
         btn.title = d;
         pillsEl.appendChild(btn);
       });
