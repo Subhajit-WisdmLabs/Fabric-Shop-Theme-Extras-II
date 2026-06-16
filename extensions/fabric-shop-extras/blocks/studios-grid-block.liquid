@@ -1,30 +1,7 @@
 {{ 'studios-grid.css' | asset_url | stylesheet_tag }}
-
-{%- liquid
-  assign sgb_profile = block.settings.profile_page_url | default: '/pages/partners'
-  assign sgb_per_page = block.settings.per_page | default: 9
--%}
-
-<style>
-  #sgb-{{ block.id }} {
-    --sgb-bg:       {{ block.settings.bg_color }};
-    --sgb-card-bg:  {{ block.settings.card_bg }};
-    --sgb-ink:      {{ block.settings.ink_color }};
-    --sgb-ink-soft: {{ block.settings.ink_soft_color }};
-    --sgb-ink-mute: {{ block.settings.ink_mute_color }};
-    --sgb-accent:   {{ block.settings.accent_color }};
-    --sgb-rule:     {{ block.settings.rule_color }};
-  }
-</style>
-
-<div class="sgb-wrap"
-     id="sgb-{{ block.id }}"
-     data-sgb-block="{{ block.id }}"
-     data-proxy-base="/apps/fabric-shop/api"
-     data-profile-url="{{ sgb_profile | escape }}"
-     data-per-page="{{ sgb_per_page }}">
-
-  <!-- Filter bar -->
+{%- assign sgb_profile = block.settings.profile_page_url | default: '/pages/partners' -%}
+{%- assign sgb_per_page = block.settings.per_page | default: 9 -%}
+<div class="sgb-wrap" id="sgb-{{ block.id }}" data-sgb-block="{{ block.id }}" data-proxy-base="/apps/fabric-shop/api" data-profile-url="{{ sgb_profile | escape }}" data-per-page="{{ sgb_per_page }}">
   <div class="sgb-filter-bar" id="sgb-filter-bar-{{ block.id }}">
     <span class="sgb-filter-label">Discipline</span>
     <div class="sgb-pills" id="sgb-pills-{{ block.id }}">
@@ -38,95 +15,12 @@
       </select>
     </div>
   </div>
-
-  <!-- Count -->
-  <div class="sgb-count-row">
-    <span class="sgb-count" id="sgb-count-{{ block.id }}">Loading&hellip;</span>
-  </div>
-
-  <!-- Grid -->
+  <div class="sgb-count-row"><span class="sgb-count" id="sgb-count-{{ block.id }}">Loading&hellip;</span></div>
   <div class="sgb-grid" id="sgb-grid-{{ block.id }}"></div>
-
-  <!-- Load more -->
   <div class="sgb-load-more" id="sgb-load-more-{{ block.id }}" hidden>
     <button type="button" class="sgb-load-btn" id="sgb-load-btn-{{ block.id }}">Show more studios</button>
     <p class="sgb-load-count" id="sgb-load-count-{{ block.id }}"></p>
   </div>
-
 </div>
-
 <script src="{{ 'studios-grid.js' | asset_url }}" defer></script>
-
-{% schema %}
-{
-  "name": "Studios Grid",
-  "target": "section",
-  "settings": [
-    {
-      "type": "header",
-      "content": "Grid"
-    },
-    {
-      "type": "url",
-      "id": "profile_page_url",
-      "label": "Studio profile page URL",
-      "info": "e.g. /pages/partners — handle query param appended automatically"
-    },
-    {
-      "type": "range",
-      "id": "per_page",
-      "label": "Studios per load",
-      "min": 3,
-      "max": 24,
-      "step": 3,
-      "default": 9
-    },
-    {
-      "type": "header",
-      "content": "Colours"
-    },
-    {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Section background",
-      "default": "#FAF8F3"
-    },
-    {
-      "type": "color",
-      "id": "card_bg",
-      "label": "Card background",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "id": "ink_color",
-      "label": "Primary text",
-      "default": "#1A1814"
-    },
-    {
-      "type": "color",
-      "id": "ink_soft_color",
-      "label": "Secondary text",
-      "default": "#5C564A"
-    },
-    {
-      "type": "color",
-      "id": "ink_mute_color",
-      "label": "Muted text",
-      "default": "#9A9285"
-    },
-    {
-      "type": "color",
-      "id": "accent_color",
-      "label": "Accent (sage)",
-      "default": "#5C7355"
-    },
-    {
-      "type": "color",
-      "id": "rule_color",
-      "label": "Borders",
-      "default": "#E8E3D8"
-    }
-  ]
-}
-{% endschema %}
+{% schema %}{"name":"Studios Grid","target":"section","settings":[{"type":"url","id":"profile_page_url","label":"Studio profile page URL","info":"Handle query param appended automatically"},{"type":"range","id":"per_page","label":"Studios per load","min":3,"max":24,"step":3,"default":9}]}{% endschema %}
