@@ -282,7 +282,7 @@
 
 .yrf-card { cursor: pointer; }
 .yrf-card[hidden] { display: none !important; }
-.yrf-card-link { display: block; text-decoration: none; color: inherit; }
+.yrf-card-link { display: block; position: absolute; inset: 0; text-decoration: none; color: inherit; }
 
 .yrf-thumb {
   aspect-ratio: 1.05;
@@ -354,8 +354,10 @@
   font-size: 13px;
   color: var(--yrf-ink-soft);
   backdrop-filter: blur(4px);
+  z-index: 1;
 }
 .yrf-fav:hover { background: var(--yrf-linen); color: var(--yrf-rust); }
+.yrf-fav.active { color: var(--yrf-rust); }
 
 .yrf-meta { padding-top: 10px; }
 .yrf-name-link { text-decoration: none; color: inherit; }

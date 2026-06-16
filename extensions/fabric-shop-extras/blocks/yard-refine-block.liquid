@@ -173,8 +173,8 @@
           data-title="{{ product.title | escape }}"
           data-print-ready="{{ yrf_print_ready }}"
         >
-          <a href="{{ product.url }}" class="yrf-card-link">
-            <div class="yrf-thumb">
+          <div class="yrf-thumb">
+            <a href="{{ product.url }}" class="yrf-card-link">
               {%- if product.featured_image -%}
                 <img
                   src="{{ product.featured_image | image_url: width: 480 }}"
@@ -199,9 +199,9 @@
                   {%- endcase -%}
                 </span>
               {%- endif -%}
-              <button class="yrf-fav" aria-label="Save {{ product.title | escape }}" data-product-id="{{ product.id }}">♡</button>
-            </div>
-          </a>
+            </a>
+            <button class="yrf-fav" aria-label="Save {{ product.title | escape }}" data-product-id="{{ product.id }}">♡</button>
+          </div>
           <div class="yrf-meta">
             <a href="{{ product.url }}" class="yrf-name-link">
               <div class="yrf-name">{{ product.title }}</div>
@@ -262,6 +262,25 @@
   var subchipsEl = document.getElementById('yrf-subchips');
   var subchipType = subchipsEl ? (subchipsEl.dataset.subchipType || '').toLowerCase() : '';
   var fibreContainer = document.getElementById('yrf-fibre-opts');
+
+  // ── Wishlist / favourites ──
+  var WISHLIST_KEY = 'fp_wishlist';
+  var PROXY_BASE   = '/apps/fabric-shop/api';
+  function getWishlist() {
+    try { return JSON.parse(localStorage.getItem(WISHLIST_KEY) || '[]'); } catch(e) { return []; }
+  }
+  function setWishlist(list) {
+    try { localStorage.setItem(WISHLIST_KEY, JSON.stringify(list)); } catch(e) {}
+  }
+  function initFavBtns() {
+    var favs = getWishlist();
+    root.querySelectorAll('.yrf-fav').forEach(function(btn) {
+      var pid = String(btn.dataset.productId || '');
+      var on  = favs.indexOf(pid) > -1;
+      btn.textContent = on ? '♥' : '♡';
+      btn.classList.toggle('active', on);
+    });
+  }
 
   // ── Build fabric.type sub-category chips (single-select), preserving the active one ──
   function buildSubchips() {
@@ -535,6 +554,31 @@ document.getElementById('yrf-load-more').addEventListener('click', function () {
     apply();
   });
 
+  // ── Fav button click (delegate from grid so it works after loadAllPages appends cards) ──
+  document.getElementById('yrf-grid').addEventListener('click', function(e) {
+    var btn = e.target.closest('.yrf-fav');
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    var pid = String(btn.dataset.productId || '');
+    if (!pid) return;
+    var favs   = getWishlist();
+    var isFaved = favs.indexOf(pid) > -1;
+    if (isFaved) {
+      favs = favs.filter(function(id) { return id !== pid; });
+    } else {
+      favs.push(pid);
+    }
+    setWishlist(favs);
+    btn.textContent = isFaved ? '♡' : '♥';
+    btn.classList.toggle('active', !isFaved);
+    fetch(PROXY_BASE + '/wishlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: isFaved ? 'remove' : 'add', productId: pid })
+    }).catch(function() {});
+  });
+
   // ── Collapse/expand filter groups ──
   root.querySelectorAll('.yrf-group-head').forEach(function (head) {
     head.addEventListener('click', function () {
@@ -613,11 +657,13 @@ document.getElementById('yrf-load-more').addEventListener('click', function () {
       buildFibreOptions();
       syncSubchips();
       apply();
+      initFavBtns();
     });
   }
 
   // ── Initial render, then pull the rest of the catalogue ──
   apply();
+  initFavBtns();
   loadAllPages();
 
 })();
