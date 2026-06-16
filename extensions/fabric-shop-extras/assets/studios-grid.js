@@ -75,6 +75,7 @@
     var profileUrl = root.getAttribute('data-profile-url') || '/pages/partners';
     var perPage   = parseInt(root.getAttribute('data-per-page') || '9', 10);
 
+    var modCountEl   = document.getElementById('sgb-mod-count-' + blockId);
     var pillsEl      = document.getElementById('sgb-pills-' + blockId);
     var sortEl       = document.getElementById('sgb-sort-' + blockId);
     var countEl      = document.getElementById('sgb-count-' + blockId);
@@ -115,7 +116,9 @@
         btn.type = 'button';
         btn.className = 'sgb-pill';
         btn.setAttribute('data-discipline', d);
-        btn.textContent = d;
+        var label = d.length > 24 ? d.slice(0, 22) + '…' : d;
+        btn.textContent = label;
+        btn.title = d;
         pillsEl.appendChild(btn);
       });
     }
@@ -146,6 +149,10 @@
         state.page    = page;
         state.total   = data.total || 0;
         state.hasMore = !!data.hasMore;
+
+        if (page === 1 && !append && modCountEl) {
+          modCountEl.textContent = state.total + ' Studios · Updated weekly';
+        }
 
         var studios = data.studios || [];
 
