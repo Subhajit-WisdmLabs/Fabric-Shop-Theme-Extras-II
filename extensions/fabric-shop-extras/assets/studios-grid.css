@@ -185,31 +185,6 @@
   z-index: 0;
 }
 
-/* ── Fav button ── */
-.sgb-fav {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  background: rgba(250, 248, 243, 0.85);
-  color: var(--sgb-ink, #1A1814);
-  font-size: 15px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(4px);
-  z-index: 1;
-  line-height: 1;
-  padding: 0;
-  transition: background 0.15s, color 0.15s;
-}
-.sgb-fav:hover { background: #FAF8F3; color: var(--sgb-rust, #A6502E); }
-.sgb-fav.active { color: var(--sgb-rust, #A6502E); }
-
 /* 8 CSS gradient banner variants */
 .sgb-banner-1 { background: linear-gradient(135deg, #EEF1EC 0%, #5C7355 100%); }
 .sgb-banner-2 { background: linear-gradient(135deg, #F4ECDA 0%, #A87A2E 100%); }

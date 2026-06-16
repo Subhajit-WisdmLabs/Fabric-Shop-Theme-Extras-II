@@ -23,26 +23,6 @@
     return 'v' + ((idx % VARIANTS) + 1);
   }
 
-  // ── Studio wishlist / favourites ──
-  var STUDIO_WISHLIST_KEY = 'fp_studio_wishlist';
-  var PROXY_BASE = '/apps/fabric-shop/api';
-
-  function getStudioWishlist() {
-    try { return JSON.parse(localStorage.getItem(STUDIO_WISHLIST_KEY) || '[]'); } catch (e) { return []; }
-  }
-  function setStudioWishlist(list) {
-    try { localStorage.setItem(STUDIO_WISHLIST_KEY, JSON.stringify(list)); } catch (e) {}
-  }
-  function initFavBtns(container) {
-    var favs = getStudioWishlist();
-    (container || document).querySelectorAll('.sgb-fav').forEach(function (btn) {
-      var slug = String(btn.dataset.studioSlug || '');
-      var on = favs.indexOf(slug) > -1;
-      btn.textContent = on ? '♥' : '♡';
-      btn.classList.toggle('active', on);
-    });
-  }
-
   function renderCard(studio, idx, profileUrl) {
     var v = tileVariant(idx);
 
@@ -89,13 +69,9 @@
       return '<div class="sgb-tile sgb-tile-' + v + '-' + t + '"></div>';
     }).join('');
 
-    var slug = esc(studio.slug || '');
-    var isFaved = getStudioWishlist().indexOf(slug) > -1;
-
     return (
       '<article class="sgb-card">' +
         bannerEl +
-        '<button class="sgb-fav' + (isFaved ? ' active' : '') + '" aria-label="Save ' + esc(studio.studioName) + '" data-studio-slug="' + slug + '">' + (isFaved ? '♥' : '♡') + '</button>' +
         '<div class="sgb-body">' +
           '<a class="sgb-name-link" href="' + esc(href) + '">' +
             '<h3 class="sgb-name">' + esc(studio.studioName) + '</h3>' +
@@ -238,37 +214,9 @@
           }
         }
 
-        initFavBtns(gridEl);
       };
       xhr.onerror = function () { setLoading(false); };
       xhr.send();
-    }
-
-    // ── Fav button click (delegated from grid) ──
-    if (gridEl) {
-      gridEl.addEventListener('click', function (e) {
-        var btn = e.target.closest('.sgb-fav');
-        if (!btn) return;
-        e.preventDefault();
-        e.stopPropagation();
-        var slug = String(btn.dataset.studioSlug || '');
-        if (!slug) return;
-        var favs    = getStudioWishlist();
-        var isFaved = favs.indexOf(slug) > -1;
-        if (isFaved) {
-          favs = favs.filter(function (s) { return s !== slug; });
-        } else {
-          favs.push(slug);
-        }
-        setStudioWishlist(favs);
-        btn.textContent = isFaved ? '♡' : '♥';
-        btn.classList.toggle('active', !isFaved);
-        window.fetch(PROXY_BASE + '/wishlist', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: isFaved ? 'remove' : 'add', studioSlug: slug })
-        }).catch(function () {});
-      });
     }
 
     if (pillsEl) {
