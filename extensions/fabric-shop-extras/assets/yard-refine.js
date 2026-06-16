@@ -27,9 +27,7 @@
     var favs = getWishlist();
     root.querySelectorAll('.yrf-fav').forEach(function(btn) {
       var pid = String(btn.dataset.productId || '');
-      var on  = favs.indexOf(pid) > -1;
-      btn.textContent = on ? '♥' : '♡';
-      btn.classList.toggle('active', on);
+      btn.classList.toggle('active', favs.indexOf(pid) > -1);
     });
   }
 
@@ -321,7 +319,6 @@
       favs.push(pid);
     }
     setWishlist(favs);
-    btn.textContent = isFaved ? '♡' : '♥';
     btn.classList.toggle('active', !isFaved);
     fetch(PROXY_BASE + '/wishlist', {
       method: 'POST',
@@ -333,10 +330,7 @@
   // ── Collapse/expand filter groups ──
   root.querySelectorAll('.yrf-group-head').forEach(function (head) {
     head.addEventListener('click', function () {
-      var group  = this.closest('.yrf-group');
-      var toggle = this.querySelector('.yrf-group-toggle');
-      group.classList.toggle('collapsed');
-      toggle.textContent = group.classList.contains('collapsed') ? '+' : '−';
+      this.closest('.yrf-group').classList.toggle('collapsed');
     });
   });
 

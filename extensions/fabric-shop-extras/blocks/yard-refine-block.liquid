@@ -23,7 +23,7 @@
     <div class="yrf-group" id="yrf-type-group">
       <div class="yrf-group-head">
         <span class="yrf-group-name">{{ block.settings.type_group_label | default: 'Product type' }}</span>
-        <span class="yrf-group-toggle">−</span>
+        <svg class="yrf-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <label class="yrf-opt">
         <input type="radio" name="yrf-type" value="all" class="yrf-radio" checked>
@@ -52,7 +52,7 @@
     <div class="yrf-group" id="yrf-fibre-group">
       <div class="yrf-group-head">
         <span class="yrf-group-name">Fibre</span>
-        <span class="yrf-group-toggle">−</span>
+        <svg class="yrf-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <div id="yrf-fibre-opts"></div>
     </div>
@@ -61,7 +61,7 @@
     <div class="yrf-group" id="yrf-weight-group">
       <div class="yrf-group-head">
         <span class="yrf-group-name">Weight</span>
-        <span class="yrf-group-toggle">−</span>
+        <svg class="yrf-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <div class="yrf-weight-chips" id="yrf-weight-chips">
         <span class="yrf-chip" data-weight="light">Light</span>
@@ -206,7 +206,13 @@
                 </span>
               {%- endif -%}
             </a>
-            <button class="yrf-fav" aria-label="Save {{ product.title | escape }}" data-product-id="{{ product.id }}">♡</button>
+            <div class="yrf-hover-bar">
+              <a href="{{ product.url }}" class="yrf-hover-view-btn">View Product</a>
+              <span class="yrf-hover-sep"></span>
+              <button class="yrf-fav" aria-label="Save {{ product.title | escape }}" data-product-id="{{ product.id }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </button>
+            </div>
           </div>
           <div class="yrf-meta">
             <a href="{{ product.url }}" class="yrf-name-link">
