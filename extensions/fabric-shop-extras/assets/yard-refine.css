@@ -427,9 +427,9 @@
   margin: 0 0 4px;
 }
 .yrf-spec {
-  font-size: 10.5px;
-  color: var(--yrf-ink-mute);
-  letter-spacing: 0.04em;
+  font-size: 12px;
+  color: var(--yrf-ink-soft);
+  letter-spacing: 0.03em;
   margin-bottom: 8px;
 }
 .yrf-price-row {
