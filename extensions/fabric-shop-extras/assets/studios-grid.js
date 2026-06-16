@@ -23,6 +23,26 @@
     return 'v' + ((idx % VARIANTS) + 1);
   }
 
+  // ── Studio wishlist / favourites ──
+  var STUDIO_WISHLIST_KEY = 'fp_studio_wishlist';
+  var PROXY_BASE = '/apps/fabric-shop/api';
+
+  function getStudioWishlist() {
+    try { return JSON.parse(localStorage.getItem(STUDIO_WISHLIST_KEY) || '[]'); } catch (e) { return []; }
+  }
+  function setStudioWishlist(list) {
+    try { localStorage.setItem(STUDIO_WISHLIST_KEY, JSON.stringify(list)); } catch (e) {}
+  }
+  function initFavBtns(container) {
+    var favs = getStudioWishlist();
+    (container || document).querySelectorAll('.sgb-fav').forEach(function (btn) {
+      var slug = String(btn.dataset.studioSlug || '');
+      var on = favs.indexOf(slug) > -1;
+      btn.textContent = on ? '♥' : '♡';
+      btn.classList.toggle('active', on);
+    });
+  }
+
   function renderCard(studio, idx, profileUrl) {
     var v = tileVariant(idx);
 
@@ -31,12 +51,24 @@
       : '';
     var portraitEl = '<div class="sgb-portrait ' + portraitVariant(idx) + '">' + portraitInner + '</div>';
 
-    var bannerEl = studio.bannerImageUrl
-      ? '<div class="sgb-banner"><img src="' + esc(studio.bannerImageUrl) + '" alt="" loading="lazy">' + portraitEl + '</div>'
-      : '<div class="sgb-banner ' + bannerVariant(idx) + '">' + portraitEl + '</div>';
-
     var sep = profileUrl.indexOf('?') >= 0 ? '&' : '?';
     var href = profileUrl + sep + 'handle=' + encodeURIComponent(studio.slug || '');
+
+    var bannerEl;
+    if (studio.bannerImageUrl) {
+      bannerEl =
+        '<div class="sgb-banner">' +
+          '<a class="sgb-banner-link" href="' + esc(href) + '" tabindex="-1" aria-hidden="true"></a>' +
+          '<img src="' + esc(studio.bannerImageUrl) + '" alt="" loading="lazy">' +
+          portraitEl +
+        '</div>';
+    } else {
+      bannerEl =
+        '<div class="sgb-banner ' + bannerVariant(idx) + '">' +
+          '<a class="sgb-banner-link" href="' + esc(href) + '" tabindex="-1" aria-hidden="true"></a>' +
+          portraitEl +
+        '</div>';
+    }
 
     var locationParts = [];
     if (studio.city) locationParts.push(studio.city);
@@ -52,20 +84,26 @@
       return '<div class="sgb-tile sgb-tile-' + v + '-' + t + '"></div>';
     }).join('');
 
+    var slug = esc(studio.slug || '');
+    var isFaved = getStudioWishlist().indexOf(slug) > -1;
+
     return (
-      '<a class="sgb-card" href="' + esc(href) + '">' +
+      '<article class="sgb-card">' +
         bannerEl +
+        '<button class="sgb-fav' + (isFaved ? ' active' : '') + '" aria-label="Save ' + esc(studio.studioName) + '" data-studio-slug="' + slug + '">' + (isFaved ? '♥' : '♡') + '</button>' +
         '<div class="sgb-body">' +
-          '<h3 class="sgb-name">' + esc(studio.studioName) + '</h3>' +
+          '<a class="sgb-name-link" href="' + esc(href) + '">' +
+            '<h3 class="sgb-name">' + esc(studio.studioName) + '</h3>' +
+          '</a>' +
           '<div class="sgb-location">' + byline + '</div>' +
           '<p class="sgb-discipline">' + esc(studio.specialties) + '</p>' +
           '<div class="sgb-strip">' + tiles + '</div>' +
           '<div class="sgb-foot">' +
             '<span class="sgb-meta">' + esc(meta.join(' · ')) + '</span>' +
-            '<span class="sgb-link">Visit studio</span>' +
+            '<a class="sgb-link" href="' + esc(href) + '">Visit studio</a>' +
           '</div>' +
         '</div>' +
-      '</a>'
+      '</article>'
     );
   }
 
@@ -195,9 +233,38 @@
             loadCountEl.textContent = 'Showing ' + state.renderedCount + ' of ' + state.total;
           }
         }
+
+        initFavBtns(gridEl);
       };
       xhr.onerror = function () { setLoading(false); };
       xhr.send();
+    }
+
+    // ── Fav button click (delegated from grid) ──
+    if (gridEl) {
+      gridEl.addEventListener('click', function (e) {
+        var btn = e.target.closest('.sgb-fav');
+        if (!btn) return;
+        e.preventDefault();
+        e.stopPropagation();
+        var slug = String(btn.dataset.studioSlug || '');
+        if (!slug) return;
+        var favs    = getStudioWishlist();
+        var isFaved = favs.indexOf(slug) > -1;
+        if (isFaved) {
+          favs = favs.filter(function (s) { return s !== slug; });
+        } else {
+          favs.push(slug);
+        }
+        setStudioWishlist(favs);
+        btn.textContent = isFaved ? '♡' : '♥';
+        btn.classList.toggle('active', !isFaved);
+        window.fetch(PROXY_BASE + '/wishlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: isFaved ? 'remove' : 'add', studioSlug: slug })
+        }).catch(function () {});
+      });
     }
 
     if (pillsEl) {

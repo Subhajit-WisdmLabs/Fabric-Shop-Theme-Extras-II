@@ -121,7 +121,8 @@
         {%- assign yrf_fibre_str = yrf_fibre_list | join: ',' | downcase -%}
         {%- assign yrf_weight_lc = yrf_weight | downcase -%}
 
-        {%- comment -%}— Spec line: GSM · fibre content · width cm; fallback to product description —{%- endcomment -%}
+        {%- comment -%}— Spec line: GSM · fibre content · width cm; fallback to fabric.description meta —{%- endcomment -%}
+        {%- assign yrf_fabric_desc = product.metafields.fabric.description.value -%}
         {%- assign yrf_spec = '' -%}
         {%- if yrf_gsm != blank -%}
           {%- assign yrf_spec = yrf_gsm | append: ' GSM' -%}
@@ -134,8 +135,8 @@
           {%- if yrf_spec != '' -%}{%- assign yrf_spec = yrf_spec | append: ' · ' -%}{%- endif -%}
           {%- assign yrf_spec = yrf_spec | append: yrf_width | append: ' cm' -%}
         {%- endif -%}
-        {%- if yrf_spec == '' and product.description != blank -%}
-          {%- assign yrf_spec = product.description | strip_html | truncate: 80 -%}
+        {%- if yrf_spec == '' and yrf_fabric_desc != blank -%}
+          {%- assign yrf_spec = yrf_fabric_desc | strip_html | truncate: 80 -%}
         {%- endif -%}
 
         {%- comment -%}— Status badge from product tags —{%- endcomment -%}

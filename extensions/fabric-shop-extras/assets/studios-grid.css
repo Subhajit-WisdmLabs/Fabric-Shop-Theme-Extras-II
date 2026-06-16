@@ -154,7 +154,6 @@
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  text-decoration: none;
   color: inherit;
   transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
 }
@@ -178,6 +177,38 @@
   object-fit: cover;
   display: block;
 }
+
+/* Banner overlay link (covers banner area, like yrf-card-link) */
+.sgb-banner-link {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* ── Fav button ── */
+.sgb-fav {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(250, 248, 243, 0.85);
+  color: var(--sgb-ink, #1A1814);
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  z-index: 1;
+  line-height: 1;
+  padding: 0;
+  transition: background 0.15s, color 0.15s;
+}
+.sgb-fav:hover { background: #FAF8F3; color: var(--sgb-rust, #A6502E); }
+.sgb-fav.active { color: var(--sgb-rust, #A6502E); }
 
 /* 8 CSS gradient banner variants */
 .sgb-banner-1 { background: linear-gradient(135deg, #EEF1EC 0%, #5C7355 100%); }
@@ -225,6 +256,8 @@
   display: flex;
   flex-direction: column;
 }
+
+.sgb-name-link { text-decoration: none; color: inherit; display: block; }
 
 .sgb-name {
   font-family: 'Cormorant Garamond', Georgia, serif;
@@ -323,6 +356,7 @@
   font-size: 12px;
   color: var(--sgb-ink, #1A1814);
   font-weight: 500;
+  text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 4px;
