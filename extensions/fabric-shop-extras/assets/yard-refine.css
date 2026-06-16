@@ -418,11 +418,9 @@
 .yrf-meta { padding-top: 10px; }
 .yrf-name-link { text-decoration: none; color: inherit; }
 .yrf-name {
-  font-weight: 500;
   font-size: 16.5px;
   line-height: 1.2;
-  margin-bottom: 4px;
-  letter-spacing: -0.012em;
+  margin: 0 0 4px;
 }
 .yrf-spec {
   font-size: 10.5px;
@@ -438,7 +436,7 @@
   border-top: 1px solid var(--yrf-rule);
 }
 .yrf-price {
-  font-size: 12px;
+  font-size: 15px;
   color: var(--yrf-ink);
   font-weight: 500;
   letter-spacing: 0.02em;
