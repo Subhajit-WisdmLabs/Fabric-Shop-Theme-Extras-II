@@ -54,6 +54,10 @@
     var sep = profileUrl.indexOf('?') >= 0 ? '&' : '?';
     var href = profileUrl + sep + 'handle=' + encodeURIComponent(studio.slug || '');
 
+    var slug = esc(studio.slug || '');
+    var isFaved = getStudioWishlist().indexOf(slug) > -1;
+    var favBtn = '<button class="sgb-fav' + (isFaved ? ' active' : '') + '" aria-label="Save ' + esc(studio.studioName) + '" data-studio-slug="' + slug + '">' + (isFaved ? '♥' : '♡') + '</button>';
+
     var bannerEl;
     if (studio.bannerImageUrl) {
       bannerEl =
@@ -61,12 +65,14 @@
           '<a class="sgb-banner-link" href="' + esc(href) + '" tabindex="-1" aria-hidden="true"></a>' +
           '<img src="' + esc(studio.bannerImageUrl) + '" alt="" loading="lazy">' +
           portraitEl +
+          favBtn +
         '</div>';
     } else {
       bannerEl =
         '<div class="sgb-banner ' + bannerVariant(idx) + '">' +
           '<a class="sgb-banner-link" href="' + esc(href) + '" tabindex="-1" aria-hidden="true"></a>' +
           portraitEl +
+          favBtn +
         '</div>';
     }
 
@@ -89,13 +95,9 @@
       return '<div class="sgb-tile sgb-tile-' + v + '-' + t + '"></div>';
     }).join('');
 
-    var slug = esc(studio.slug || '');
-    var isFaved = getStudioWishlist().indexOf(slug) > -1;
-
     return (
       '<article class="sgb-card">' +
         bannerEl +
-        '<button class="sgb-fav' + (isFaved ? ' active' : '') + '" aria-label="Save ' + esc(studio.studioName) + '" data-studio-slug="' + slug + '">' + (isFaved ? '♥' : '♡') + '</button>' +
         '<div class="sgb-body">' +
           '<a class="sgb-name-link" href="' + esc(href) + '">' +
             '<h3 class="sgb-name">' + esc(studio.studioName) + '</h3>' +
@@ -118,12 +120,16 @@
     var profileUrl = root.getAttribute('data-profile-url') || '/pages/partners';
     var perPage   = parseInt(root.getAttribute('data-per-page') || '9', 10);
 
-    var modCountEl   = document.getElementById('sgb-mod-count-' + blockId);
-    var pillsEl      = document.getElementById('sgb-pills-' + blockId);
-    var gridEl       = document.getElementById('sgb-grid-' + blockId);
-    var loadMoreWrap = document.getElementById('sgb-load-more-' + blockId);
-    var loadBtn      = document.getElementById('sgb-load-btn-' + blockId);
-    var loadCountEl  = document.getElementById('sgb-load-count-' + blockId);
+    var modCountEl       = document.getElementById('sgb-mod-count-' + blockId);
+    var pillsEl          = document.getElementById('sgb-pills-' + blockId);
+    var gridEl           = document.getElementById('sgb-grid-' + blockId);
+    var loadMoreWrap     = document.getElementById('sgb-load-more-' + blockId);
+    var loadBtn          = document.getElementById('sgb-load-btn-' + blockId);
+    var loadCountEl      = document.getElementById('sgb-load-count-' + blockId);
+    var contentEl        = document.getElementById('sgb-content-' + blockId);
+    var filterToggleEl   = document.getElementById('sgb-filter-toggle-' + blockId);
+    var sidebarCloseEl   = document.getElementById('sgb-sidebar-close-' + blockId);
+    var disciplineGroupEl = document.getElementById('sgb-discipline-group-' + blockId);
 
     var state = {
       discipline:      '',
@@ -135,6 +141,30 @@
       loading:         false,
       pillsPopulated:  false,
     };
+
+    // ── Sidebar toggle ──
+    if (filterToggleEl && contentEl) {
+      filterToggleEl.addEventListener('click', function () {
+        contentEl.classList.toggle('sgb-sidebar-open');
+      });
+    }
+    if (sidebarCloseEl && contentEl) {
+      sidebarCloseEl.addEventListener('click', function () {
+        contentEl.classList.remove('sgb-sidebar-open');
+      });
+    }
+
+    // ── Discipline group collapse ──
+    if (disciplineGroupEl) {
+      var groupHead   = disciplineGroupEl.querySelector('.sgb-sidebar-group-head');
+      var groupToggle = disciplineGroupEl.querySelector('.sgb-sidebar-group-toggle');
+      if (groupHead) {
+        groupHead.addEventListener('click', function () {
+          var isCollapsed = disciplineGroupEl.classList.toggle('collapsed');
+          if (groupToggle) groupToggle.textContent = isCollapsed ? '+' : '−';
+        });
+      }
+    }
 
     function buildUrl(page) {
       var u = proxyBase + '/studios?per_page=' + perPage + '&page=' + page + '&sort=' + encodeURIComponent(state.sort);
@@ -276,6 +306,7 @@
       pillsEl.addEventListener('click', function (e) {
         var target = e.target.closest('.sgb-pill');
         if (!target) return;
+        if (target.classList.contains('sgb-pill-toggle')) return;
         state.discipline = target.getAttribute('data-discipline') || '';
         syncActivePill();
         fetch(1, false);
