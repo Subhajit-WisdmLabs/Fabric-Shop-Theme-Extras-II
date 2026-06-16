@@ -117,24 +117,10 @@
 }
 
 
-/* ── Count row ── */
-.sgb-count-row {
-  max-width: 1280px;
-  margin: 0 auto 16px;
-}
-
-.sgb-count {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 10.5px;
-  color: var(--sgb-ink-mute, #9A9285);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
 /* ── Grid ── */
 .sgb-grid {
   max-width: 1280px;
-  margin: 0 auto;
+  margin: 36px auto 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
