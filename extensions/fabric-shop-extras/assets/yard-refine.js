@@ -320,6 +320,9 @@
     }
     setWishlist(favs);
     btn.classList.toggle('active', !isFaved);
+    if (typeof window.fsUpdateWishlistCount === 'function') {
+      window.fsUpdateWishlistCount(favs.length);
+    }
     fetch(PROXY_BASE + '/wishlist', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
