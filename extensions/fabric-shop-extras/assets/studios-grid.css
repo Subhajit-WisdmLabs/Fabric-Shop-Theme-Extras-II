@@ -151,7 +151,6 @@
   height: 110px;
   position: relative;
   flex-shrink: 0;
-  overflow: hidden;
 }
 
 .sgb-banner img {
