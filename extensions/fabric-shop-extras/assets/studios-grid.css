@@ -446,21 +446,17 @@
 }
 .sgb-link {
   font-size: 11.5px;
-  color: var(--sgb-ink, #1A1814);
-  font-weight: 500;
+  color: var(--sgb-ink-mute, #9A9285);
+  font-weight: 400;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 6px 13px;
-  border: 1px solid var(--sgb-ink, #1A1814);
-  border-radius: 999px;
-  transition: background 0.15s, color 0.15s;
+  gap: 4px;
+  transition: color 0.15s;
   white-space: nowrap;
 }
 .sgb-link:hover {
-  background: var(--sgb-ink, #1A1814);
-  color: #FAF8F3;
+  color: var(--sgb-ink, #1A1814);
 }
 .sgb-link::after {
   content: '\2192';
