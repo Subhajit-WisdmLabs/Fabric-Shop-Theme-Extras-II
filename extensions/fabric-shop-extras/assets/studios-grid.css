@@ -272,6 +272,10 @@
   line-height: 1.55;
   margin: 0 0 20px;
   flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* ── 3-tile strip (CSS gradients only) ── */
