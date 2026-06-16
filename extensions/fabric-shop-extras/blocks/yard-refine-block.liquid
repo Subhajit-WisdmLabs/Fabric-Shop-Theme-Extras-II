@@ -121,8 +121,8 @@
         {%- assign yrf_fibre_str = yrf_fibre_list | join: ',' | downcase -%}
         {%- assign yrf_weight_lc = yrf_weight | downcase -%}
 
-        {%- comment -%}— Spec line: GSM · fibre content · width cm; fallback to fabric.description meta —{%- endcomment -%}
-        {%- assign yrf_fabric_desc = product.metafields.fabric.description.value -%}
+        {%- comment -%}— Spec line: GSM · fibre content · width cm; fallback to fabric.descriptor meta —{%- endcomment -%}
+        {%- assign yrf_fabric_desc = product.metafields.fabric.descriptor.value -%}
         {%- assign yrf_spec = '' -%}
         {%- if yrf_gsm != blank -%}
           {%- assign yrf_spec = yrf_gsm | append: ' GSM' -%}
