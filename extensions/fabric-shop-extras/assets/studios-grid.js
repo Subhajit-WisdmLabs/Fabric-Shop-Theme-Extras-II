@@ -77,7 +77,6 @@
 
     var modCountEl   = document.getElementById('sgb-mod-count-' + blockId);
     var pillsEl      = document.getElementById('sgb-pills-' + blockId);
-    var sortEl       = document.getElementById('sgb-sort-' + blockId);
     var countEl      = document.getElementById('sgb-count-' + blockId);
     var gridEl       = document.getElementById('sgb-grid-' + blockId);
     var loadMoreWrap = document.getElementById('sgb-load-more-' + blockId);
@@ -197,13 +196,6 @@
         if (!target) return;
         state.discipline = target.getAttribute('data-discipline') || '';
         syncActivePill();
-        fetch(1, false);
-      });
-    }
-
-    if (sortEl) {
-      sortEl.addEventListener('change', function () {
-        state.sort = sortEl.value;
         fetch(1, false);
       });
     }

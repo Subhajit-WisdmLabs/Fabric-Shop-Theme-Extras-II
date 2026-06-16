@@ -116,31 +116,6 @@
   border-color: var(--sgb-ink, #1A1814);
 }
 
-.sgb-toolbar-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: auto;
-}
-
-.sgb-sort-label {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 10.5px;
-  color: var(--sgb-ink-soft, #5C564A);
-  letter-spacing: 0.04em;
-}
-
-.sgb-sort {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 11px;
-  letter-spacing: 0.04em;
-  color: var(--sgb-ink-soft, #5C564A);
-  padding: 6px 12px;
-  border: 1px solid var(--sgb-rule, #E8E3D8);
-  border-radius: 3px;
-  background: var(--sgb-card-bg, #FFFFFF);
-  cursor: pointer;
-}
 
 /* ── Count row ── */
 .sgb-count-row {
