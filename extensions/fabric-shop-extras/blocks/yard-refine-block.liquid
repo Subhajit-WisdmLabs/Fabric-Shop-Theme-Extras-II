@@ -121,7 +121,7 @@
         {%- assign yrf_fibre_str = yrf_fibre_list | join: ',' | downcase -%}
         {%- assign yrf_weight_lc = yrf_weight | downcase -%}
 
-        {%- comment -%}— Spec line: GSM · fibre content · width cm —{%- endcomment -%}
+        {%- comment -%}— Spec line: GSM · fibre content · width cm; fallback to product description —{%- endcomment -%}
         {%- assign yrf_spec = '' -%}
         {%- if yrf_gsm != blank -%}
           {%- assign yrf_spec = yrf_gsm | append: ' GSM' -%}
@@ -133,6 +133,9 @@
         {%- if yrf_width != blank -%}
           {%- if yrf_spec != '' -%}{%- assign yrf_spec = yrf_spec | append: ' · ' -%}{%- endif -%}
           {%- assign yrf_spec = yrf_spec | append: yrf_width | append: ' cm' -%}
+        {%- endif -%}
+        {%- if yrf_spec == '' and product.description != blank -%}
+          {%- assign yrf_spec = product.description | strip_html | truncate: 80 -%}
         {%- endif -%}
 
         {%- comment -%}— Status badge from product tags —{%- endcomment -%}
@@ -185,10 +188,12 @@
                   class="yrf-thumb-img"
                 >
               {%- endif -%}
-              <span class="yrf-cat-tag">{{ product.metafields.fabric.type.value | default: product.type | default: 'Product' }}</span>
-              {%- if yrf_print_ready -%}
-                <span class="yrf-print-ready">Print-ready</span>
-              {%- endif -%}
+              <div class="yrf-thumb-tags">
+                <span class="yrf-cat-tag">{{ product.metafields.fabric.type.value | default: product.type | default: 'Product' }}</span>
+                {%- if yrf_print_ready -%}
+                  <span class="yrf-print-ready">Print-ready</span>
+                {%- endif -%}
+              </div>
               {%- if yrf_badge != '' -%}
                 <span class="yrf-badge yrf-badge--{{ yrf_badge }}">
                   {%- case yrf_badge -%}
