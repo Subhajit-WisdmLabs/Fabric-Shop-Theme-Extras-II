@@ -190,7 +190,7 @@
                   class="yrf-thumb-img"
                 >
               {%- endif -%}
-              <span class="yrf-cat-tag">{{ product.type | default: 'Product' }}</span>
+              <span class="yrf-cat-tag">{{ product.metafields.fabric.type.value | default: product.type | default: 'Product' }}</span>
               {%- if yrf_print_ready -%}
                 <span class="yrf-print-ready">Print-ready</span>
               {%- endif -%}
