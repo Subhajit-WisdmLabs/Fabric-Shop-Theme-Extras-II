@@ -231,6 +231,7 @@
   border-radius: 3px;
   background: var(--yrf-linen);
   font-size: 12px;
+  font-weight: normal;
   color: var(--yrf-ink);
   cursor: pointer;
   background-image:
