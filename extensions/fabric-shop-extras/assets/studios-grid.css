@@ -116,6 +116,25 @@
   border-color: var(--sgb-ink, #1A1814);
 }
 
+.sgb-pill--overflow {
+  display: none;
+}
+
+.sgb-pills--expanded .sgb-pill--overflow {
+  display: inline-flex;
+}
+
+.sgb-pill-toggle {
+  border-style: dashed;
+  color: var(--sgb-ink-mute, #9A9285);
+}
+
+.sgb-pill-toggle:hover {
+  color: var(--sgb-ink, #1A1814);
+  border-color: var(--sgb-ink-mute, #9A9285);
+  background: var(--sgb-card-bg, #FFFFFF);
+}
+
 
 /* ── Grid ── */
 .sgb-grid {

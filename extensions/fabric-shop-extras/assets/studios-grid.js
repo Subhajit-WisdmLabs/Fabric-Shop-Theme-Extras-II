@@ -104,21 +104,37 @@
       if (loadBtn) loadBtn.disabled = on;
     }
 
+    var MAX_PILLS = 6;
+
     function populatePills(disciplines) {
       if (!pillsEl || state.pillsPopulated) return;
       state.pillsPopulated = true;
 
       pillsEl.innerHTML = '<button type="button" class="sgb-pill active" data-discipline="">All</button>';
-      disciplines.forEach(function (d) {
+      disciplines.forEach(function (d, i) {
         var btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'sgb-pill';
+        btn.className = i >= MAX_PILLS ? 'sgb-pill sgb-pill--overflow' : 'sgb-pill';
         btn.setAttribute('data-discipline', d);
         var label = d.length > 24 ? d.slice(0, 22) + '…' : d;
         btn.textContent = label;
         btn.title = d;
         pillsEl.appendChild(btn);
       });
+
+      if (disciplines.length > MAX_PILLS) {
+        var extra = disciplines.length - MAX_PILLS;
+        var moreBtn = document.createElement('button');
+        moreBtn.type = 'button';
+        moreBtn.className = 'sgb-pill sgb-pill-toggle';
+        moreBtn.textContent = '+' + extra + ' more';
+        moreBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var expanded = pillsEl.classList.toggle('sgb-pills--expanded');
+          moreBtn.textContent = expanded ? 'Show less' : '+' + extra + ' more';
+        });
+        pillsEl.appendChild(moreBtn);
+      }
     }
 
     function syncActivePill() {
