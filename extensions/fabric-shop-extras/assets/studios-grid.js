@@ -81,6 +81,11 @@
     if (studio.collectionCount > 0) meta.push(studio.collectionCount + ' collection' + (studio.collectionCount === 1 ? '' : 's'));
 
     var tiles = [0, 1, 2].map(function (t) {
+      var imgUrl = studio.recentDesigns && studio.recentDesigns[t];
+      if (imgUrl) {
+        var src = imgUrl + (imgUrl.indexOf('?') >= 0 ? '&' : '?') + 'width=400';
+        return '<div class="sgb-tile sgb-tile-img"><img src="' + esc(src) + '" alt="" loading="lazy"></div>';
+      }
       return '<div class="sgb-tile sgb-tile-' + v + '-' + t + '"></div>';
     }).join('');
 
