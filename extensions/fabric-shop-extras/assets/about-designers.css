@@ -14,7 +14,6 @@
 /* ── Eyebrow ─────────────────────────────────────────────────────────────── */
 
 .adp-eyebrow {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -37,7 +36,6 @@
 /* ── Heading ─────────────────────────────────────────────────────────────── */
 
 .adp-heading {
-  font-family: 'Fabric-Shop-Heading', var(--font-heading-family, Georgia, serif);
   font-weight: 500;
   font-size: 46px;
   line-height: 1.05;
@@ -139,7 +137,6 @@
   padding: 40px 12px 12px;
   background: linear-gradient(transparent, rgba(26,24,20,0.82));
   color: #FFFFFF;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-size: 13px;
   letter-spacing: 0.05em;
   text-shadow: 0 1px 4px rgba(0,0,0,0.5);
@@ -182,7 +179,6 @@
 .adp-link {
   display: inline-block;
   margin-top: 48px;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-size: 12px;
   letter-spacing: 0.06em;
   color: var(--color-foreground, #1A1814);
