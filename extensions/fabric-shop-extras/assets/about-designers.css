@@ -143,15 +143,13 @@
   font-size: 13px;
   letter-spacing: 0.05em;
   text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  transition: color 0.2s ease;
   z-index: 1;
 }
 
-.adp-tile-cap-cta {
-  display: block;
-  margin-top: 5px;
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  opacity: 0.75;
+.adp-tile:hover .adp-tile-cap {
+  color: #5B9FE8;
+  transition: color 0.2s ease;
 }
 
 /* ── Skeleton loading state ──────────────────────────────────────────────── */

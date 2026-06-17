@@ -46,14 +46,10 @@
             }
           }
 
-          // Fill studio name + link cue
+          // Fill studio name caption
           if (cap) {
             cap.classList.remove('adp-tile-cap--skel');
             cap.textContent = card.studioName;
-            var cta = document.createElement('span');
-            cta.className = 'adp-tile-cap-cta';
-            cta.textContent = 'View studio →';
-            cap.appendChild(cta);
           }
 
           // Overlay link to studio profile
