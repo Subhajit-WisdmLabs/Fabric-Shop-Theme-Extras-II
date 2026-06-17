@@ -1,0 +1,143 @@
+/* ── about-founders.css ──────────────────────────────────────────────────── */
+
+.afnd-section {
+  background: var(--color-background, #FAF8F3);
+  border-top: 1px solid var(--color-border, #E8E3D8);
+}
+
+.afnd-inner {
+  max-width: calc(var(--page-width, 1320px) + var(--gutter, 64px) * 2);
+  margin: 0 auto;
+  padding: 96px var(--gutter, 64px);
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+/* ── Portrait column ─────────────────────────────────────────────────────── */
+
+.afnd-portrait {
+  background: var(--color-background-secondary, #FFFFFF);
+  border: 1px solid var(--color-border, #E8E3D8);
+  padding: 14px;
+  box-shadow: 0 1px 2px rgba(26,24,20,0.04);
+}
+
+.afnd-portrait-img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  display: block;
+}
+
+.afnd-portrait-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background:
+    repeating-linear-gradient(135deg, #E8E3D8 0 1px, transparent 1px 9px),
+    repeating-linear-gradient(45deg,  #E8E3D8 0 1px, transparent 1px 9px),
+    #EFF1EA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.afnd-portrait-placeholder span {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-foreground-secondary, #5C564A);
+  background: rgba(250,248,243,0.85);
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+
+.afnd-portrait-cap {
+  margin-top: 10px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-foreground-muted, #9A9285);
+}
+
+/* ── Content column ──────────────────────────────────────────────────────── */
+
+.afnd-eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-foreground-muted, #9A9285);
+  margin-bottom: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.afnd-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 22px;
+  height: 1px;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.afnd-names {
+  font-family: 'Fabric-Shop-Heading', var(--font-heading-family, Georgia, serif);
+  font-weight: 500;
+  font-size: 46px;
+  line-height: 1.02;
+  letter-spacing: -0.018em;
+  margin: 0 0 6px;
+  color: var(--color-foreground, #1A1814);
+}
+
+.afnd-names em {
+  font-style: italic;
+  color: var(--color-sage, #5C7355);
+}
+
+.afnd-names p { margin: 0; }
+
+.afnd-strap {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-foreground-muted, #9A9285);
+  margin: 0 0 32px;
+}
+
+.afnd-body {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-foreground, #1A1814);
+  max-width: 600px;
+}
+
+.afnd-body p { margin: 0 0 14px; }
+.afnd-body p:last-child { margin-bottom: 0; }
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .afnd-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .afnd-portrait { max-width: 300px; }
+  .afnd-names { font-size: 38px; }
+}
+
+@media (max-width: 768px) {
+  .afnd-inner { padding: 64px 24px; }
+  .afnd-names { font-size: 32px; }
+  .afnd-body { font-size: 15px; }
+}

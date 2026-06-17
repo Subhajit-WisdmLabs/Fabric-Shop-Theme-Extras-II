@@ -1,0 +1,137 @@
+{{ 'about-designers.css' | asset_url | stylesheet_tag }}
+
+<section class="adp-section">
+  <div class="adp-inner">
+
+    {%- if block.settings.eyebrow != blank -%}
+      <div class="adp-eyebrow">{{- block.settings.eyebrow -}}</div>
+    {%- endif -%}
+
+    {%- if block.settings.heading != blank -%}
+      <h2 class="adp-heading">{{- block.settings.heading -}}</h2>
+    {%- endif -%}
+
+    {%- if block.settings.lead != blank -%}
+      <div class="adp-lead">{{- block.settings.lead -}}</div>
+    {%- endif -%}
+
+    <div class="adp-tiles">
+
+      <figure class="adp-tile adp-tile--1">
+        {%- if block.settings.tile_image_1 != blank -%}
+          <div class="adp-tile-art">
+            {{- block.settings.tile_image_1 | image_url: width: 400 | image_tag: loading: 'lazy', class: 'adp-tile-img', alt: block.settings.tile_caption_1 -}}
+          </div>
+        {%- else -%}
+          <div class="adp-tile-art adp-tile-art--placeholder"></div>
+        {%- endif -%}
+        {%- if block.settings.tile_caption_1 != blank -%}
+          <figcaption class="adp-tile-cap">{{- block.settings.tile_caption_1 -}}</figcaption>
+        {%- endif -%}
+      </figure>
+
+      <figure class="adp-tile adp-tile--2">
+        {%- if block.settings.tile_image_2 != blank -%}
+          <div class="adp-tile-art">
+            {{- block.settings.tile_image_2 | image_url: width: 400 | image_tag: loading: 'lazy', class: 'adp-tile-img', alt: block.settings.tile_caption_2 -}}
+          </div>
+        {%- else -%}
+          <div class="adp-tile-art adp-tile-art--placeholder"></div>
+        {%- endif -%}
+        {%- if block.settings.tile_caption_2 != blank -%}
+          <figcaption class="adp-tile-cap">{{- block.settings.tile_caption_2 -}}</figcaption>
+        {%- endif -%}
+      </figure>
+
+      <figure class="adp-tile adp-tile--3">
+        {%- if block.settings.tile_image_3 != blank -%}
+          <div class="adp-tile-art">
+            {{- block.settings.tile_image_3 | image_url: width: 400 | image_tag: loading: 'lazy', class: 'adp-tile-img', alt: block.settings.tile_caption_3 -}}
+          </div>
+        {%- else -%}
+          <div class="adp-tile-art adp-tile-art--placeholder"></div>
+        {%- endif -%}
+        {%- if block.settings.tile_caption_3 != blank -%}
+          <figcaption class="adp-tile-cap">{{- block.settings.tile_caption_3 -}}</figcaption>
+        {%- endif -%}
+      </figure>
+
+      <figure class="adp-tile adp-tile--4">
+        {%- if block.settings.tile_image_4 != blank -%}
+          <div class="adp-tile-art">
+            {{- block.settings.tile_image_4 | image_url: width: 400 | image_tag: loading: 'lazy', class: 'adp-tile-img', alt: block.settings.tile_caption_4 -}}
+          </div>
+        {%- else -%}
+          <div class="adp-tile-art adp-tile-art--placeholder"></div>
+        {%- endif -%}
+        {%- if block.settings.tile_caption_4 != blank -%}
+          <figcaption class="adp-tile-cap">{{- block.settings.tile_caption_4 -}}</figcaption>
+        {%- endif -%}
+      </figure>
+
+      <figure class="adp-tile adp-tile--5">
+        {%- if block.settings.tile_image_5 != blank -%}
+          <div class="adp-tile-art">
+            {{- block.settings.tile_image_5 | image_url: width: 400 | image_tag: loading: 'lazy', class: 'adp-tile-img', alt: block.settings.tile_caption_5 -}}
+          </div>
+        {%- else -%}
+          <div class="adp-tile-art adp-tile-art--placeholder"></div>
+        {%- endif -%}
+        {%- if block.settings.tile_caption_5 != blank -%}
+          <figcaption class="adp-tile-cap">{{- block.settings.tile_caption_5 -}}</figcaption>
+        {%- endif -%}
+      </figure>
+
+    </div>
+
+    {%- if block.settings.link_url != blank and block.settings.link_label != blank -%}
+      <a href="{{ block.settings.link_url }}" class="adp-link">{{- block.settings.link_label -}}</a>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About — Designers",
+  "target": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "PrintLab · the Design Partner Programme"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>The studios behind <em>every print.</em></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "lead",
+      "label": "Lead paragraph",
+      "default": "<p>Every print on PrintLab comes from an independent designer running their own studio on the platform — a Design Partner who earns on every metre. <strong>Choose a print, choose a base, and we make it to order.</strong></p>"
+    },
+    { "type": "header", "content": "Tile 1" },
+    { "type": "image_picker", "id": "tile_image_1", "label": "Image" },
+    { "type": "text", "id": "tile_caption_1", "label": "Studio name", "default": "Meadow & Thread" },
+    { "type": "header", "content": "Tile 2" },
+    { "type": "image_picker", "id": "tile_image_2", "label": "Image" },
+    { "type": "text", "id": "tile_caption_2", "label": "Studio name", "default": "Nokomi Studio" },
+    { "type": "header", "content": "Tile 3" },
+    { "type": "image_picker", "id": "tile_image_3", "label": "Image" },
+    { "type": "text", "id": "tile_caption_3", "label": "Studio name", "default": "Studio Komoro" },
+    { "type": "header", "content": "Tile 4" },
+    { "type": "image_picker", "id": "tile_image_4", "label": "Image" },
+    { "type": "text", "id": "tile_caption_4", "label": "Studio name", "default": "Mae & Field" },
+    { "type": "header", "content": "Tile 5" },
+    { "type": "image_picker", "id": "tile_image_5", "label": "Image" },
+    { "type": "text", "id": "tile_caption_5", "label": "Studio name", "default": "Pacific Drift" },
+    { "type": "header", "content": "Link" },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "Browse the studios →" },
+    { "type": "url", "id": "link_url", "label": "Link URL" }
+  ]
+}
+{% endschema %}
