@@ -99,6 +99,11 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.35s ease;
+}
+
+.adp-tile:hover .adp-tile-img {
+  transform: scale(1.04);
 }
 
 .adp-tile-art--placeholder {
@@ -137,6 +142,32 @@
   font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-size: 9.5px;
   letter-spacing: 0.04em;
+  z-index: 1;
+}
+
+/* ── Skeleton loading state ──────────────────────────────────────────────── */
+
+@keyframes adp-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+
+.adp-tile-art--skel {
+  background: var(--color-border, #E8E3D8);
+  animation: adp-pulse 1.4s ease-in-out infinite;
+}
+
+.adp-tile-cap--skel {
+  background: transparent;
+}
+
+/* ── Link overlay ────────────────────────────────────────────────────────── */
+
+.adp-tile-link {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
 }
 
 /* ── Link ────────────────────────────────────────────────────────────────── */

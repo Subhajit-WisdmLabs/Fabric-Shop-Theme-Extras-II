@@ -1,5 +1,17 @@
 {{ 'about-designers.css' | asset_url | stylesheet_tag }}
 
+{%- assign adp_slug_1 = block.settings.slug_1 | strip -%}
+{%- assign adp_slug_2 = block.settings.slug_2 | strip -%}
+{%- assign adp_slug_3 = block.settings.slug_3 | strip -%}
+{%- assign adp_slug_4 = block.settings.slug_4 | strip -%}
+{%- assign adp_slug_5 = block.settings.slug_5 | strip -%}
+
+{%- assign adp_slugs_list = adp_slug_1 -%}
+{%- if adp_slug_2 != blank -%}{%- assign adp_slugs_list = adp_slugs_list | append: ',' | append: adp_slug_2 -%}{%- endif -%}
+{%- if adp_slug_3 != blank -%}{%- assign adp_slugs_list = adp_slugs_list | append: ',' | append: adp_slug_3 -%}{%- endif -%}
+{%- if adp_slug_4 != blank -%}{%- assign adp_slugs_list = adp_slugs_list | append: ',' | append: adp_slug_4 -%}{%- endif -%}
+{%- if adp_slug_5 != blank -%}{%- assign adp_slugs_list = adp_slugs_list | append: ',' | append: adp_slug_5 -%}{%- endif -%}
+
 <section class="adp-section">
   <div class="adp-inner">
 
@@ -15,70 +27,54 @@
       <div class="adp-lead">{{- block.settings.lead -}}</div>
     {%- endif -%}
 
-    <div class="adp-tiles">
+    <div class="adp-tiles"
+      data-adp-block="{{ block.id }}"
+      data-adp-slugs="{{ adp_slugs_list | escape }}"
+      data-proxy-base="/apps/fabric-shop/api"
+      data-profile-base="{{ block.settings.studio_page_url | default: '/pages/partners' | escape }}">
 
-      <figure class="adp-tile adp-tile--1">
-        {%- if block.settings.tile_image_1 != blank -%}
-          <div class="adp-tile-art">
-            {{- block.settings.tile_image_1 | image_url: width: 400 | image_tag: loading: 'lazy', class: 'adp-tile-img', alt: block.settings.tile_caption_1 -}}
-          </div>
+      <figure class="adp-tile adp-tile--1"{% if adp_slug_1 != blank %} data-adp-slug="{{ adp_slug_1 | escape }}"{% endif %}>
+        {%- if adp_slug_1 != blank -%}
+          <div class="adp-tile-art adp-tile-art--skel"></div>
+          <figcaption class="adp-tile-cap adp-tile-cap--skel"></figcaption>
         {%- else -%}
           <div class="adp-tile-art adp-tile-art--placeholder"></div>
-        {%- endif -%}
-        {%- if block.settings.tile_caption_1 != blank -%}
-          <figcaption class="adp-tile-cap">{{- block.settings.tile_caption_1 -}}</figcaption>
         {%- endif -%}
       </figure>
 
-      <figure class="adp-tile adp-tile--2">
-        {%- if block.settings.tile_image_2 != blank -%}
-          <div class="adp-tile-art">
-            {{- block.settings.tile_image_2 | image_url: width: 400 | image_tag: loading: 'lazy', class: 'adp-tile-img', alt: block.settings.tile_caption_2 -}}
-          </div>
+      <figure class="adp-tile adp-tile--2"{% if adp_slug_2 != blank %} data-adp-slug="{{ adp_slug_2 | escape }}"{% endif %}>
+        {%- if adp_slug_2 != blank -%}
+          <div class="adp-tile-art adp-tile-art--skel"></div>
+          <figcaption class="adp-tile-cap adp-tile-cap--skel"></figcaption>
         {%- else -%}
           <div class="adp-tile-art adp-tile-art--placeholder"></div>
-        {%- endif -%}
-        {%- if block.settings.tile_caption_2 != blank -%}
-          <figcaption class="adp-tile-cap">{{- block.settings.tile_caption_2 -}}</figcaption>
         {%- endif -%}
       </figure>
 
-      <figure class="adp-tile adp-tile--3">
-        {%- if block.settings.tile_image_3 != blank -%}
-          <div class="adp-tile-art">
-            {{- block.settings.tile_image_3 | image_url: width: 400 | image_tag: loading: 'lazy', class: 'adp-tile-img', alt: block.settings.tile_caption_3 -}}
-          </div>
+      <figure class="adp-tile adp-tile--3"{% if adp_slug_3 != blank %} data-adp-slug="{{ adp_slug_3 | escape }}"{% endif %}>
+        {%- if adp_slug_3 != blank -%}
+          <div class="adp-tile-art adp-tile-art--skel"></div>
+          <figcaption class="adp-tile-cap adp-tile-cap--skel"></figcaption>
         {%- else -%}
           <div class="adp-tile-art adp-tile-art--placeholder"></div>
-        {%- endif -%}
-        {%- if block.settings.tile_caption_3 != blank -%}
-          <figcaption class="adp-tile-cap">{{- block.settings.tile_caption_3 -}}</figcaption>
         {%- endif -%}
       </figure>
 
-      <figure class="adp-tile adp-tile--4">
-        {%- if block.settings.tile_image_4 != blank -%}
-          <div class="adp-tile-art">
-            {{- block.settings.tile_image_4 | image_url: width: 400 | image_tag: loading: 'lazy', class: 'adp-tile-img', alt: block.settings.tile_caption_4 -}}
-          </div>
+      <figure class="adp-tile adp-tile--4"{% if adp_slug_4 != blank %} data-adp-slug="{{ adp_slug_4 | escape }}"{% endif %}>
+        {%- if adp_slug_4 != blank -%}
+          <div class="adp-tile-art adp-tile-art--skel"></div>
+          <figcaption class="adp-tile-cap adp-tile-cap--skel"></figcaption>
         {%- else -%}
           <div class="adp-tile-art adp-tile-art--placeholder"></div>
-        {%- endif -%}
-        {%- if block.settings.tile_caption_4 != blank -%}
-          <figcaption class="adp-tile-cap">{{- block.settings.tile_caption_4 -}}</figcaption>
         {%- endif -%}
       </figure>
 
-      <figure class="adp-tile adp-tile--5">
-        {%- if block.settings.tile_image_5 != blank -%}
-          <div class="adp-tile-art">
-            {{- block.settings.tile_image_5 | image_url: width: 400 | image_tag: loading: 'lazy', class: 'adp-tile-img', alt: block.settings.tile_caption_5 -}}
-          </div>
+      <figure class="adp-tile adp-tile--5"{% if adp_slug_5 != blank %} data-adp-slug="{{ adp_slug_5 | escape }}"{% endif %}>
+        {%- if adp_slug_5 != blank -%}
+          <div class="adp-tile-art adp-tile-art--skel"></div>
+          <figcaption class="adp-tile-cap adp-tile-cap--skel"></figcaption>
         {%- else -%}
           <div class="adp-tile-art adp-tile-art--placeholder"></div>
-        {%- endif -%}
-        {%- if block.settings.tile_caption_5 != blank -%}
-          <figcaption class="adp-tile-cap">{{- block.settings.tile_caption_5 -}}</figcaption>
         {%- endif -%}
       </figure>
 
@@ -90,6 +86,8 @@
 
   </div>
 </section>
+
+<script src="{{ 'about-designers.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
@@ -114,21 +112,13 @@
       "label": "Lead paragraph",
       "default": "<p>Every print on PrintLab comes from an independent designer running their own studio on the platform — a Design Partner who earns on every metre. <strong>Choose a print, choose a base, and we make it to order.</strong></p>"
     },
-    { "type": "header", "content": "Tile 1" },
-    { "type": "image_picker", "id": "tile_image_1", "label": "Image" },
-    { "type": "text", "id": "tile_caption_1", "label": "Studio name", "default": "Meadow & Thread" },
-    { "type": "header", "content": "Tile 2" },
-    { "type": "image_picker", "id": "tile_image_2", "label": "Image" },
-    { "type": "text", "id": "tile_caption_2", "label": "Studio name", "default": "Nokomi Studio" },
-    { "type": "header", "content": "Tile 3" },
-    { "type": "image_picker", "id": "tile_image_3", "label": "Image" },
-    { "type": "text", "id": "tile_caption_3", "label": "Studio name", "default": "Studio Komoro" },
-    { "type": "header", "content": "Tile 4" },
-    { "type": "image_picker", "id": "tile_image_4", "label": "Image" },
-    { "type": "text", "id": "tile_caption_4", "label": "Studio name", "default": "Mae & Field" },
-    { "type": "header", "content": "Tile 5" },
-    { "type": "image_picker", "id": "tile_image_5", "label": "Image" },
-    { "type": "text", "id": "tile_caption_5", "label": "Studio name", "default": "Pacific Drift" },
+    { "type": "header", "content": "Studios" },
+    { "type": "text", "id": "slug_1", "label": "Studio 1 — slug", "info": "Partner slug, e.g. meadow-and-thread" },
+    { "type": "text", "id": "slug_2", "label": "Studio 2 — slug" },
+    { "type": "text", "id": "slug_3", "label": "Studio 3 — slug" },
+    { "type": "text", "id": "slug_4", "label": "Studio 4 — slug" },
+    { "type": "text", "id": "slug_5", "label": "Studio 5 — slug" },
+    { "type": "url", "id": "studio_page_url", "label": "Studio profile page URL", "info": "Defaults to /pages/partners — ?handle=slug appended per tile" },
     { "type": "header", "content": "Link" },
     { "type": "text", "id": "link_label", "label": "Link label", "default": "Browse the studios →" },
     { "type": "url", "id": "link_url", "label": "Link URL" }
