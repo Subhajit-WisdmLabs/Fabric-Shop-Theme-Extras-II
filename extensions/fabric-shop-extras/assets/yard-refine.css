@@ -141,9 +141,21 @@
 
 .yrf-opt-label { flex: 1; }
 .yrf-opt-count {
-  font-size: 10px;
-  color: var(--yrf-ink-mute);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  color: #fff;
+  background: #6B4C8A;
+  border-radius: 999px;
+  flex-shrink: 0;
 }
+.yrf-opt-count:empty { display: none; }
 
 /* Category subchips */
 .yrf-subchips {
@@ -158,28 +170,32 @@
 .yrf-subchips.yrf-hidden { display: none; }
 
 .yrf-subchip {
-  padding: 4px 9px;
-  font-size: 10px;
+  padding: 5px 11px;
+  font-size: 12px;
   letter-spacing: 0.04em;
-  color: var(--yrf-ink-soft);
-  border: 1px solid var(--yrf-rule);
+  color: #3F4F3A;
+  border: 1px solid rgba(92, 115, 85, 0.30);
   border-radius: 12px;
   cursor: pointer;
-  background: transparent;
+  background: rgba(92, 115, 85, 0.12);
 }
-.yrf-subchip:hover { border-color: var(--yrf-rule-s); color: var(--yrf-ink); }
+.yrf-subchip:hover {
+  border-color: rgba(92, 115, 85, 0.55);
+  background: rgba(92, 115, 85, 0.20);
+  color: #5C7355;
+}
 .yrf-subchip.active {
-  background: var(--yrf-ink);
+  background: #5C7355;
   color: var(--yrf-bone);
-  border-color: var(--yrf-ink);
+  border-color: #5C7355;
 }
 .yrf-subchip em {
   font-style: normal;
-  font-size: 9px;
-  color: var(--yrf-ink-mute);
+  font-size: 11px;
+  color: #5C7355;
   margin-left: 4px;
 }
-.yrf-subchip.active em { color: rgba(250, 248, 243, 0.6); }
+.yrf-subchip.active em { color: rgba(250, 248, 243, 0.7); }
 
 /* Weight chips */
 .yrf-weight-chips { display: flex; flex-wrap: wrap; gap: 6px; }
