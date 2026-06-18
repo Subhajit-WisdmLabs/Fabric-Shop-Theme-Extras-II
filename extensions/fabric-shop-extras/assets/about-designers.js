@@ -52,6 +52,15 @@
             cap.textContent = card.studioName;
           }
 
+          // Hover bar — slides up from bottom of tile on hover
+          var hoverBar = document.createElement('div');
+          hoverBar.className = 'adp-hover-bar';
+          var hoverLabel = document.createElement('span');
+          hoverLabel.className = 'adp-hover-bar-label';
+          hoverLabel.textContent = 'Browse studio →';
+          hoverBar.appendChild(hoverLabel);
+          tile.appendChild(hoverBar);
+
           // Overlay link to studio profile
           var a = document.createElement('a');
           a.className = 'adp-tile-link';

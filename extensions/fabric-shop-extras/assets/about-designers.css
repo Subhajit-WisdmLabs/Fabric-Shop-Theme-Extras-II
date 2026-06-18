@@ -144,11 +144,6 @@
   z-index: 1;
 }
 
-.adp-tile:hover .adp-tile-cap {
-  color: #5B9FE8;
-  transition: color 0.2s ease;
-}
-
 /* ── Skeleton loading state ──────────────────────────────────────────────── */
 
 @keyframes adp-pulse {
@@ -165,12 +160,42 @@
   background: transparent;
 }
 
+/* ── Hover bar (slides up from bottom on tile hover) ─────────────────────── */
+
+.adp-hover-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(26, 24, 20, 0.84);
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(100%);
+  transition: transform 0.22s ease;
+  z-index: 2;
+  border-radius: 0 0 2px 2px;
+}
+
+.adp-tile:hover .adp-hover-bar {
+  transform: translateY(0);
+}
+
+.adp-hover-bar-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #FAF8F3;
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+}
+
 /* ── Link overlay ────────────────────────────────────────────────────────── */
 
 .adp-tile-link {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 3;
   display: block;
 }
 
