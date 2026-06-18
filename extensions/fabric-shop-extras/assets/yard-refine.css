@@ -346,10 +346,9 @@
   letter-spacing: 0.10em;
   text-transform: uppercase;
   border-radius: 2px;
-  background: rgba(250, 248, 243, 0.92);
-  color: var(--yrf-sage);
+  background: var(--yrf-sage);
+  color: #fff;
   border: 1px solid var(--yrf-sage);
-  backdrop-filter: blur(4px);
 }
 .yrf-badge {
   position: absolute;
