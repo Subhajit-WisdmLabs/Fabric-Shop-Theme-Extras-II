@@ -342,7 +342,7 @@
   text-transform: uppercase;
   border-radius: 2px;
   background: rgba(238, 241, 236, 0.92);
-  color: var(--yrf-sage);
+  color: #2F3B2A;
   backdrop-filter: blur(4px);
 }
 .yrf-print-ready {
