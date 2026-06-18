@@ -46,11 +46,8 @@
             }
           }
 
-          // Fill studio name caption
-          if (cap) {
-            cap.classList.remove('adp-tile-cap--skel');
-            cap.textContent = card.studioName;
-          }
+          // Remove caption — hover bar replaces it
+          if (cap) cap.remove();
 
           // Hover bar — slides up from bottom of tile on hover
           var hoverBar = document.createElement('div');
