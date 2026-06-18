@@ -1,0 +1,161 @@
+{{ 'about-mto.css' | asset_url | stylesheet_tag }}
+
+<section class="amto-section">
+  <div class="amto-inner">
+
+    {%- if block.settings.eyebrow != blank -%}
+      <div class="amto-eyebrow">{{- block.settings.eyebrow -}}</div>
+    {%- endif -%}
+
+    {%- if block.settings.heading != blank -%}
+      <h2 class="amto-heading">{{- block.settings.heading -}}</h2>
+    {%- endif -%}
+
+    {%- if block.settings.lead != blank -%}
+      <div class="amto-lead">{{- block.settings.lead -}}</div>
+    {%- endif -%}
+
+    <div class="amto-showcase">
+
+      <div class="amto-figure{% unless block.settings.image != blank %} amto-figure--placeholder{% endunless %}">
+        {%- if block.settings.image != blank -%}
+          {{- block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'amto-img', alt: block.settings.image_alt -}}
+        {%- else -%}
+          <span class="amto-figure-cap">{{- block.settings.image_caption -}}</span>
+        {%- endif -%}
+      </div>
+
+      <div class="amto-beats">
+
+        {%- if block.settings.beat_1_heading != blank -%}
+          <div class="amto-beat">
+            <h3 class="amto-beat-h">{{- block.settings.beat_1_heading -}}</h3>
+            {%- if block.settings.beat_1_desc != blank -%}
+              <p class="amto-beat-d">{{- block.settings.beat_1_desc -}}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if block.settings.beat_2_heading != blank -%}
+          <div class="amto-beat">
+            <h3 class="amto-beat-h">{{- block.settings.beat_2_heading -}}</h3>
+            {%- if block.settings.beat_2_desc != blank -%}
+              <p class="amto-beat-d">{{- block.settings.beat_2_desc -}}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if block.settings.beat_3_heading != blank -%}
+          <div class="amto-beat">
+            <h3 class="amto-beat-h">{{- block.settings.beat_3_heading -}}</h3>
+            {%- if block.settings.beat_3_desc != blank -%}
+              <p class="amto-beat-d">{{- block.settings.beat_3_desc -}}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+      </div>
+    </div>
+
+    {%- if block.settings.link_url != blank and block.settings.link_label != blank -%}
+      <a href="{{ block.settings.link_url }}" class="amto-link">{{- block.settings.link_label -}}</a>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About — Made to Order",
+  "target": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Made to order · shipped worldwide"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>We make it when you order it — <em>then ship it wherever you make.</em></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "lead",
+      "label": "Lead paragraph",
+      "default": "<p>Nothing here is printed on spec. Every print is made for your order and every length cut to size — so the design you want never sells out, and nothing's run off that won't be used. <strong>Then it ships worldwide, with duties and any local taxes for your country laid out clearly at checkout.</strong></p>"
+    },
+    { "type": "header", "content": "Image" },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Made-to-order photo"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "Made-to-order fabric printing"
+    },
+    {
+      "type": "text",
+      "id": "image_caption",
+      "label": "Placeholder caption (shown until image is set)",
+      "default": "Photo · made-to-order printing"
+    },
+    { "type": "header", "content": "Beat 1" },
+    {
+      "type": "text",
+      "id": "beat_1_heading",
+      "label": "Heading",
+      "default": "By the metre, no minimums"
+    },
+    {
+      "type": "text",
+      "id": "beat_1_desc",
+      "label": "Description",
+      "default": "Order a single metre or a hundred. No bolt to buy, no print run to fund — just what your project needs."
+    },
+    { "type": "header", "content": "Beat 2" },
+    {
+      "type": "text",
+      "id": "beat_2_heading",
+      "label": "Heading",
+      "default": "Sample before metres"
+    },
+    {
+      "type": "text",
+      "id": "beat_2_desc",
+      "label": "Description",
+      "default": "Order a sample first — see the print and feel the fabric before you commit to a full length."
+    },
+    { "type": "header", "content": "Beat 3" },
+    {
+      "type": "text",
+      "id": "beat_3_heading",
+      "label": "Heading",
+      "default": "Shipped worldwide"
+    },
+    {
+      "type": "text",
+      "id": "beat_3_desc",
+      "label": "Description",
+      "default": "Australia, New Zealand, the UK, Europe, North America and Japan — delivered to your door, costs clear at checkout."
+    },
+    { "type": "header", "content": "Link" },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "default": "From your order to your door — see how it works →"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    }
+  ]
+}
+{% endschema %}

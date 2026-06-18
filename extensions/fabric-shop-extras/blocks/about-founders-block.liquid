@@ -1,0 +1,92 @@
+{{ 'about-founders.css' | asset_url | stylesheet_tag }}
+
+<section class="afnd-section">
+  <div class="afnd-inner">
+
+    <div class="afnd-portrait-col">
+      <div class="afnd-portrait">
+        {%- if block.settings.portrait != blank -%}
+          {{- block.settings.portrait | image_url: width: 600 | image_tag: loading: 'lazy', class: 'afnd-portrait-img', alt: block.settings.portrait_alt -}}
+        {%- else -%}
+          <div class="afnd-portrait-placeholder">
+            <span>Nick &amp; Nat</span>
+          </div>
+        {%- endif -%}
+      </div>
+      {%- if block.settings.portrait_caption != blank -%}
+        <div class="afnd-portrait-cap">{{- block.settings.portrait_caption -}}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="afnd-content">
+
+      {%- if block.settings.eyebrow != blank -%}
+        <div class="afnd-eyebrow">{{- block.settings.eyebrow -}}</div>
+      {%- endif -%}
+
+      {%- if block.settings.heading != blank -%}
+        <h2 class="afnd-names">{{- block.settings.heading -}}</h2>
+      {%- endif -%}
+
+      {%- if block.settings.strap != blank -%}
+        <p class="afnd-strap">{{- block.settings.strap -}}</p>
+      {%- endif -%}
+
+      {%- if block.settings.body != blank -%}
+        <div class="afnd-body">{{- block.settings.body -}}</div>
+      {%- endif -%}
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About — Founders",
+  "target": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The people"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Names heading",
+      "default": "<p>Nick <em>&amp;</em> Nat.</p>"
+    },
+    {
+      "type": "text",
+      "id": "strap",
+      "label": "Strap (e.g. role or title)",
+      "default": "Founders"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body text",
+      "default": "<p>The Fabric Shop is run by its two founders, Nick and Nat. Between them they've spent their working lives in the textile trade — sourcing and supplying the fabric that goes into other people's labels. They built the shop to sell that fabric direct, by the metre, to anyone who makes.</p>"
+    },
+    { "type": "header", "content": "Portrait" },
+    {
+      "type": "image_picker",
+      "id": "portrait",
+      "label": "Portrait photo"
+    },
+    {
+      "type": "text",
+      "id": "portrait_alt",
+      "label": "Portrait alt text",
+      "default": "Nick and Nat, founders of The Fabric Shop."
+    },
+    {
+      "type": "text",
+      "id": "portrait_caption",
+      "label": "Portrait caption (optional)"
+    }
+  ]
+}
+{% endschema %}

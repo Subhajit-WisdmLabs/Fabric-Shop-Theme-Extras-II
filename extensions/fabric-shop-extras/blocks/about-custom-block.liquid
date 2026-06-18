@@ -1,7 +1,7 @@
 {{ 'about-custom.css' | asset_url | stylesheet_tag }}
 
 <section class="ac-section">
-  <div class="ac-inner">
+  <div class="ac-inner" style="--ac-pad-y: {{ block.settings.padding_y | default: 88 }}px;">
     <div class="ac-content">
 
       {%- if block.settings.eyebrow != blank -%}
@@ -36,6 +36,16 @@
       "id": "heading",
       "label": "Heading",
       "default": "<p>Your design, printed by the metre.</p>"
+    },
+    {
+      "type": "range",
+      "id": "padding_y",
+      "label": "Vertical padding",
+      "min": 24,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 88
     },
     {
       "type": "richtext",

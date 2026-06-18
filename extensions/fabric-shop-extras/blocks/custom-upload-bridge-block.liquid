@@ -16,9 +16,9 @@
       </h2>
 
       {%- if block.settings.body_copy != blank -%}
-        <p class="cub-sub" style="color:{{ block.settings.body_color }};">
-          {{- block.settings.body_copy -}}
-        </p>
+        <div class="cub-sub" style="color:{{ block.settings.body_color }};">
+          {{ block.settings.body_copy }}
+        </div>
       {%- endif -%}
 
       {%- if block.settings.cta_label != blank -%}
@@ -89,10 +89,10 @@
       "default": "Print your own design."
     },
     {
-      "type": "textarea",
+      "type": "richtext",
       "id": "body_copy",
       "label": "Body copy",
-      "default": "Upload your file, set the repeat, choose your base fabric. A live preview shows you exactly what arrives — before you commit a single metre."
+      "default": "<p>Upload your file, set the repeat, choose your base fabric. A live preview shows you exactly what arrives — before you commit a single metre.</p>"
     },
     {
       "type": "text",
