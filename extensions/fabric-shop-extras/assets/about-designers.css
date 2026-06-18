@@ -14,8 +14,9 @@
 /* ── Eyebrow ─────────────────────────────────────────────────────────────── */
 
 .adp-eyebrow {
-  font-size: 11px;
-  letter-spacing: 0.14em;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-foreground-muted, #9A9285);
   margin-bottom: 24px;

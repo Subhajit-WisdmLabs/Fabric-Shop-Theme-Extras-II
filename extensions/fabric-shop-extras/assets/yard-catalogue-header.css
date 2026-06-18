@@ -8,9 +8,10 @@
 }
 
 .ych-eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-size: 10.5px;
   color: #A87A2E;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   margin-bottom: 18px;
   display: inline-flex;

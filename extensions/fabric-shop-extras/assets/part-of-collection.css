@@ -111,6 +111,7 @@
 /* ── Text side ───────────────────────────────────────────────────────────── */
 
 .poc-eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-size: 10.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;

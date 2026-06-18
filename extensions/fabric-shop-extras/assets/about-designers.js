@@ -54,7 +54,7 @@
           hoverBar.className = 'adp-hover-bar';
           var hoverLabel = document.createElement('span');
           hoverLabel.className = 'adp-hover-bar-label';
-          hoverLabel.textContent = card.studioName;
+          hoverLabel.textContent = card.studioName + ' →';
           hoverBar.appendChild(hoverLabel);
           tile.appendChild(hoverBar);
 

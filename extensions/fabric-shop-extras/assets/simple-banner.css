@@ -12,7 +12,7 @@
 
 .sb-eyebrow {
   font-size: 10.5px;
-  font-family: monospace;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   display: inline-flex;

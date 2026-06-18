@@ -481,8 +481,9 @@
 .yrf-editorial[hidden] { display: none !important; }
 
 .yrf-editorial-eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-size: 10.5px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   margin-bottom: 18px;
   color: var(--yrf-sage-dark);
