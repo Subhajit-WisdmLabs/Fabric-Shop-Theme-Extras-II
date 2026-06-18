@@ -140,4 +140,12 @@
   .afnd-inner { padding: 64px 24px; }
   .afnd-names { font-size: 32px; }
   .afnd-body { font-size: 15px; }
+  .afnd-portrait { max-width: 100%; }
+}
+
+@media (max-width: 479px) {
+  .afnd-inner { padding: 48px 20px; gap: 24px; }
+  .afnd-names { font-size: 26px; }
+  .afnd-portrait { max-width: 100%; }
+  .afnd-body { font-size: 14px; }
 }

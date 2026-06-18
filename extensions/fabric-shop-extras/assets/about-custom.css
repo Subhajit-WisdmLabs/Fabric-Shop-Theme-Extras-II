@@ -86,3 +86,9 @@
   .ac-inner { padding: 64px 24px; }
   .ac-heading { font-size: 26px; }
 }
+
+@media (max-width: 479px) {
+  .ac-inner { padding: 48px 20px; }
+  .ac-heading { font-size: 21px; }
+  .ac-body { font-size: 14px; }
+}
