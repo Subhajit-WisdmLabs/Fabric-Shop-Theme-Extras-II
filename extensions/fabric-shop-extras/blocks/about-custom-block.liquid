@@ -1,7 +1,7 @@
 {{ 'about-custom.css' | asset_url | stylesheet_tag }}
 
 <section class="ac-section">
-  <div class="ac-inner{% if block.settings.padding_size == 'reduced' %} ac-inner--reduced{% endif %}">
+  <div class="ac-inner" style="--ac-pad-y: {{ block.settings.padding_y | default: 88 }}px;">
     <div class="ac-content">
 
       {%- if block.settings.eyebrow != blank -%}
@@ -38,14 +38,14 @@
       "default": "<p>Your design, printed by the metre.</p>"
     },
     {
-      "type": "select",
-      "id": "padding_size",
+      "type": "range",
+      "id": "padding_y",
       "label": "Vertical padding",
-      "default": "default",
-      "options": [
-        { "value": "default", "label": "Default" },
-        { "value": "reduced", "label": "Reduced" }
-      ]
+      "min": 24,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 88
     },
     {
       "type": "richtext",
