@@ -1,7 +1,7 @@
 {{ 'about-custom.css' | asset_url | stylesheet_tag }}
 
 <section class="ac-section">
-  <div class="ac-inner">
+  <div class="ac-inner{% if block.settings.padding_size == 'reduced' %} ac-inner--reduced{% endif %}">
     <div class="ac-content">
 
       {%- if block.settings.eyebrow != blank -%}
@@ -36,6 +36,16 @@
       "id": "heading",
       "label": "Heading",
       "default": "<p>Your design, printed by the metre.</p>"
+    },
+    {
+      "type": "select",
+      "id": "padding_size",
+      "label": "Vertical padding",
+      "default": "default",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "reduced", "label": "Reduced" }
+      ]
     },
     {
       "type": "richtext",

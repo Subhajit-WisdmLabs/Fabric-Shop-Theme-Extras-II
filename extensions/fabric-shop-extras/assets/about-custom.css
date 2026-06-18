@@ -76,6 +76,10 @@
   text-underline-offset: 2px;
 }
 
+/* ── Reduced vertical padding modifier ───────────────────────────────────── */
+
+.ac-inner--reduced { padding-top: 48px; padding-bottom: 48px; }
+
 /* ── Responsive ──────────────────────────────────────────────────────────── */
 
 @media (max-width: 1024px) {
@@ -84,11 +88,13 @@
 
 @media (max-width: 768px) {
   .ac-inner { padding: 64px 24px; }
+  .ac-inner--reduced { padding-top: 36px; padding-bottom: 36px; }
   .ac-heading { font-size: 26px; }
 }
 
 @media (max-width: 479px) {
   .ac-inner { padding: 48px 20px; }
+  .ac-inner--reduced { padding-top: 28px; padding-bottom: 28px; }
   .ac-heading { font-size: 21px; }
   .ac-body { font-size: 14px; }
 }
