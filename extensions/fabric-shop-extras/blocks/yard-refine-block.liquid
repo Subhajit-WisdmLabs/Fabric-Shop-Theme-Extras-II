@@ -63,12 +63,7 @@
         <span class="yrf-group-name">Weight</span>
         <svg class="yrf-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
-      <div class="yrf-weight-chips" id="yrf-weight-chips">
-        <span class="yrf-chip" data-weight="light">Light</span>
-        <span class="yrf-chip" data-weight="mid">Mid</span>
-        <span class="yrf-chip" data-weight="mid-heavy">Mid-heavy</span>
-        <span class="yrf-chip" data-weight="heavy">Heavy</span>
-      </div>
+      <div class="yrf-weight-chips" id="yrf-weight-chips"></div>
     </div>
 
   </aside>
@@ -173,6 +168,7 @@
           data-tags="{{ yrf_tags_str | escape }}"
           data-fibre="{{ yrf_fibre_str | escape }}"
           data-weight="{{ yrf_weight_lc | escape }}"
+          data-weight-label="{{ yrf_weight | escape }}"
           data-price="{{ product.price_min }}"
           data-title="{{ product.title | escape }}"
           data-print-ready="{{ yrf_print_ready }}"

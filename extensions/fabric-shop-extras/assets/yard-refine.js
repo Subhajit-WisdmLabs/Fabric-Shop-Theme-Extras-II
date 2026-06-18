@@ -77,8 +77,43 @@
     });
   }
 
+  // ── Build weight chips from the fabric.weight metafield values in use ──
+  var weightChipsEl = document.getElementById('yrf-weight-chips');
+  // Light → heavy ordering for known tokens; unknown values fall back to A–Z.
+  var WEIGHT_ORDER = [
+    'ultralight', 'ultra-light', 'sheer', 'light', 'lightweight',
+    'light-mid', 'mid-light', 'mid', 'midweight', 'medium',
+    'mid-heavy', 'midheavy', 'medium-heavy', 'heavy', 'heavyweight', 'extra-heavy'
+  ];
+  function buildWeightChips() {
+    if (!weightChipsEl) return;
+    var map = {};
+    allCards.forEach(function (card) {
+      var key = (card.dataset.weight || '').trim().toLowerCase();
+      if (!key) return;
+      if (!map[key]) map[key] = (card.dataset.weightLabel || card.dataset.weight || key).trim();
+    });
+    var keys = Object.keys(map).sort(function (a, b) {
+      var ia = WEIGHT_ORDER.indexOf(a), ib = WEIGHT_ORDER.indexOf(b);
+      if (ia === -1 && ib === -1) return a.localeCompare(b);
+      if (ia === -1) return 1;
+      if (ib === -1) return -1;
+      return ia - ib;
+    });
+    weightChipsEl.innerHTML = '';
+    keys.forEach(function (key) {
+      var span = document.createElement('span');
+      span.className = 'yrf-chip';
+      if (state.weight === key) span.classList.add('active');
+      span.setAttribute('data-weight', key);
+      span.textContent = map[key];
+      weightChipsEl.appendChild(span);
+    });
+  }
+
   buildSubchips();
   buildFibreOptions();
+  buildWeightChips();
 
   function matches(card) {
     var type   = (card.dataset.type   || '').trim();
@@ -269,21 +304,23 @@
     apply();
   });
 
-  root.querySelectorAll('.yrf-chip[data-weight]').forEach(function (ch) {
-    ch.addEventListener('click', function () {
-      var w = this.dataset.weight;
+  if (weightChipsEl) {
+    weightChipsEl.addEventListener('click', function (e) {
+      var ch = e.target.closest('.yrf-chip[data-weight]');
+      if (!ch) return;
+      var w = ch.dataset.weight;
       if (state.weight === w) {
         state.weight = null;
-        this.classList.remove('active');
+        ch.classList.remove('active');
       } else {
-        root.querySelectorAll('.yrf-chip[data-weight]').forEach(function (c) { c.classList.remove('active'); });
+        weightChipsEl.querySelectorAll('.yrf-chip[data-weight]').forEach(function (c) { c.classList.remove('active'); });
         state.weight = w;
-        this.classList.add('active');
+        ch.classList.add('active');
       }
       state.page = 1;
       apply();
     });
-  });
+  }
 
   document.getElementById('yrf-sort-select').addEventListener('change', function () {
     state.sort = this.value; state.page = 1; apply();
@@ -403,6 +440,7 @@
       });
       buildSubchips();
       buildFibreOptions();
+      buildWeightChips();
       syncSubchips();
       apply();
       initFavBtns();
