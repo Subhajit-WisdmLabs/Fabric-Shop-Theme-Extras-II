@@ -209,19 +209,24 @@
 /* Weight chips */
 .yrf-weight-chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .yrf-chip {
-  padding: 6px 11px;
-  font-size: 10.5px;
-  letter-spacing: 0.03em;
-  border: 1px solid var(--yrf-rule-s);
-  border-radius: 3px;
-  background: var(--yrf-bone);
+  padding: 5px 11px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(92, 115, 85, 0.30);
+  border-radius: 4px;
+  background: rgba(92, 115, 85, 0.12);
   cursor: pointer;
-  color: var(--yrf-ink-soft);
+  color: #3F4F3A;
+}
+.yrf-chip:hover {
+  border-color: rgba(92, 115, 85, 0.55);
+  background: rgba(92, 115, 85, 0.20);
+  color: #5C7355;
 }
 .yrf-chip.active {
-  background: var(--yrf-ink);
+  background: #5C7355;
   color: var(--yrf-bone);
-  border-color: var(--yrf-ink);
+  border-color: #5C7355;
 }
 
 /* ── Grid area ── */
@@ -336,8 +341,8 @@
   letter-spacing: 0.10em;
   text-transform: uppercase;
   border-radius: 2px;
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--yrf-ink);
+  background: rgba(238, 241, 236, 0.92);
+  color: var(--yrf-sage);
   backdrop-filter: blur(4px);
 }
 .yrf-print-ready {
