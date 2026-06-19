@@ -106,14 +106,14 @@
         {%- assign yrf_gsm           = product.metafields.fabric.gsm.value -%}
         {%- assign yrf_width         = product.metafields.fabric.width_cm.value -%}
         {%- assign yrf_fibre_content = product.metafields.fabric.fibre_content.value -%}
-        {%- assign yrf_fibre_list    = product.metafields.fabric.fibre.value -%}
+        {%- assign yrf_fibre         = product.metafields.fabric.fibre.value -%}
         {%- assign yrf_weight        = product.metafields.fabric.weight.value -%}
         {%- assign yrf_print_ready   = product.metafields.fabric.print_ready.value -%}
 
         {%- comment -%}— Data attributes for JS filtering —{%- endcomment -%}
         {%- assign yrf_type_key  = product.type | downcase | replace: ' ', '-' -%}
         {%- assign yrf_tags_str  = product.tags | join: ',' | downcase -%}
-        {%- assign yrf_fibre_str = yrf_fibre_list | join: ',' | downcase -%}
+        {%- assign yrf_fibre_str = yrf_fibre | downcase -%}
         {%- assign yrf_weight_lc = yrf_weight | downcase -%}
 
         {%- comment -%}— Spec line: GSM · fibre content · width cm; fallback to fabric.descriptor meta —{%- endcomment -%}
