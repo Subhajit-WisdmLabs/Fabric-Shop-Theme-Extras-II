@@ -1,0 +1,17 @@
+[     431ms] [WARNING] [LW] GET /like failed: TypeError: Failed to fetch
+    at https://thefabricshop.com/cdn/wpm/b032da393w19368061p0cc732e2m671615c3m.js:1:72565
+    at window2.fetch (https://thefabricshop.com/cdn/shopifycloud/storefront/assets/shop_events_listener-4e26a9ce.js:1:7379)
+    at https://cdn.shopify.com/extensions/cb89e3c1-e126-4528-bfe3-8ac1ed071291/inbox-1274/assets/shopifyChatV1Widget.js:2:268347
+    at new Promise (<anonymous>)
+    at t.fetch (https://cdn.shopify.com/extensions/cb89e3c1-e126-4528-bfe3-8ac1ed071291/inbox-1274/assets/shopifyChatV1Widget.js:2:268303)
+    at window.fetch (https://cdn.shopify.com/extensions/019ed078-8369-75c4-adba-34703f4d553d/fabric-shop-printlabs-633/assets/fabric-cart-drawer.js:220:33)
+    at apiGet (https://cdn.shopify.com/extensions/019ed078-8369-75c4-adba-34703f4d553d/fabric-shop-printlabs-633/assets/like-wishlist.js:58:5)
+    at hydrateLikeCounts (https://cdn.shopify.com/extensions/019ed078-8369-75c4-adba-34703f4d553d/fabric-shop-printlabs-633/assets/like-wishlist.js:612:5)
+    at init (https://cdn.shopify.com/extensions/019ed078-8369-75c4-adba-34703f4d553d/fabric-shop-printlabs-633/assets/like-wishlist.js:625:5)
+    at https://cdn.shopify.com/extensions/019ed078-8369-75c4-adba-34703f4d553d/fabric-shop-printlabs-633/assets/like-wishlist.js:659:5 @ https://cdn.shopify.com/extensions/cb89e3c1-e126-4528-bfe3-8ac1ed071291/inbox-1274/assets/shopifyChatV1Widget.js:1
+[     903ms] [LOG] %c Powerful Contact Form Builder %c
+%c✨ Top 1 Form App for Shopify (2026)
+🌍 Trusted by 50,000+ global merchants
+🧩 Build stunning, fully customizable contact forms in minutes
+⚡ Capture leads, feedback & inquiries effortlessly — no coding required
+Learn more:%c%s background: linear-gradient(90deg,rgb(0, 126, 96) 0%,rgb(9, 189, 147) 40%,rgb(87, 177, 98) 100%);color: white;padding: 6px 10px;border-radius: 4px;font-weight: 800;font-family: "Segoe UI", Roboto, Menlo, monospace;font-size: 15px;box-shadow: 0 3px 0 rgba(0,0,0,0.12), inset 0 -4px 12px rgba(255,255,255,0.06);display: inline-block font-family: Menlo, Monaco, Consolas, "Courier New", monospace;font-weight: 700;color: #0b4626;font-size: 14px;display: inline-block;vertical-align: middle display:block;font-family: Menlo, Monaco, Consolas, "Courier New", monospace;font-size: 13px;line-height: 1.5;padding-top: 8px display:block;font-family: Menlo, Monaco, Consolas, "Courier New", monospace;font-size: 12px;text-decoration: underline;color: #1a57d6;font-weight: 600 https://apps.shopify.com/form-builder-contact-form?utm_source=storefront-console&utm_medium=console&utm_campaign=gigf&utm_content=learn-more&utm_term=the-fabric-shop-offical.myshopify.com @ https://cdn.shopify.com/extensions/019eca09-8a7d-7043-9c1f-dd6cbfcd6542/powerful-form-builder-319/assets/globo.formbuilder.index.js:0

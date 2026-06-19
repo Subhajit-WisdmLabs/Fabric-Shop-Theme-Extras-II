@@ -1,0 +1,474 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e3]:
+    - generic [ref=e5]:
+      - generic [ref=e7]:
+        - generic [ref=e8]: The Yard · the catalogue
+        - heading "Stocked fabrics, by the metre." [level=1] [ref=e9]:
+          - text: Stocked fabrics,
+          - emphasis [ref=e10]: by the metre.
+        - paragraph [ref=e11]: Stocked fabrics by the metre — wovens, knits, linings, and deadstock prints. Buttons, zips, and notions by the piece.
+        - generic [ref=e12]:
+          - generic [ref=e13]:
+            - strong [ref=e14]: "47"
+            - generic [ref=e15]: All
+          - generic [ref=e17]:
+            - strong [ref=e18]: 3 days
+            - generic [ref=e19]: Shipped within
+      - generic [ref=e22]:
+        - generic [ref=e23]: Print-ready
+        - paragraph [ref=e24]:
+          - strong [ref=e25]: Some fabrics can be printed with your design.
+          - text: Look for the badge — order it plain by the metre, or print any design on it in PrintLab.
+      - generic [ref=e27]:
+        - complementary [ref=e28]:
+          - generic [ref=e30]: Refine
+          - generic [ref=e31]:
+            - strong [ref=e32]: In stock now.
+            - text: Everything in The Yard ships within 3 business days.*
+            - generic [ref=e33]: "*Orders combined with a PrintLab print follow PrintLab's lead times."
+          - generic [ref=e34]:
+            - generic [ref=e35] [cursor=pointer]:
+              - generic [ref=e36]: Category
+              - generic [ref=e37]: −
+            - generic [ref=e38] [cursor=pointer]:
+              - radio "All stocked 8" [checked] [ref=e39]
+              - generic [ref=e40]: All stocked
+              - generic [ref=e41]: "8"
+            - generic [ref=e42] [cursor=pointer]:
+              - radio "Undyed Fabric 5" [ref=e43]
+              - generic [ref=e44]: Undyed Fabric
+              - generic [ref=e45]: "5"
+            - generic [ref=e46] [cursor=pointer]:
+              - radio "Buttons 1" [ref=e47]
+              - generic [ref=e48]: Buttons
+              - generic [ref=e49]: "1"
+            - generic [ref=e50] [cursor=pointer]:
+              - radio "Zippers 1" [ref=e51]
+              - generic [ref=e52]: Zippers
+              - generic [ref=e53]: "1"
+            - generic [ref=e54] [cursor=pointer]:
+              - radio "Notions 1" [ref=e55]
+              - generic [ref=e56]: Notions
+              - generic [ref=e57]: "1"
+          - generic [ref=e58]:
+            - generic [ref=e59] [cursor=pointer]:
+              - generic [ref=e60]: Fibre
+              - generic [ref=e61]: −
+            - generic [ref=e63] [cursor=pointer]:
+              - checkbox "Test fibre 1" [ref=e64]
+              - generic [ref=e65]: Test fibre
+              - generic [ref=e66]: "1"
+          - generic [ref=e67]:
+            - generic [ref=e68] [cursor=pointer]:
+              - generic [ref=e69]: Weight
+              - generic [ref=e70]: −
+            - generic [ref=e71]:
+              - generic [ref=e72] [cursor=pointer]: Light
+              - generic [ref=e73] [cursor=pointer]: Mid
+              - generic [ref=e74] [cursor=pointer]: Mid-heavy
+              - generic [ref=e75] [cursor=pointer]: Heavy
+        - generic [ref=e76]:
+          - generic [ref=e77]:
+            - generic [ref=e78]:
+              - text: Showing
+              - strong [ref=e79]: 1–8
+              - text: of
+              - strong [ref=e80]: "8"
+            - generic [ref=e82]:
+              - generic [ref=e83]: "Sort:"
+              - combobox [ref=e84] [cursor=pointer]:
+                - option "Newest first" [selected]
+                - option "Bestselling"
+                - option "Price · low to high"
+                - option "Price · high to low"
+                - option "A–Z"
+          - generic [ref=e85]:
+            - article [ref=e86] [cursor=pointer]:
+              - generic [ref=e87]:
+                - link "Buttons Linings" [ref=e88]:
+                  - /url: /products/buttons
+                  - img "Buttons" [ref=e89]
+                  - generic:
+                    - generic: Linings
+                - button "Save Buttons" [ref=e90]: ♡
+              - generic [ref=e91]:
+                - link "Buttons" [ref=e92]:
+                  - /url: /products/buttons
+                  - generic [ref=e93]: Buttons
+                - generic [ref=e94]: Button Size · Button Material · Button Color
+                - generic [ref=e96]: FromRs. 1,000.00
+            - article [ref=e97] [cursor=pointer]:
+              - generic [ref=e98]:
+                - link "Sewing Thread Box Deadstock prints" [ref=e99]:
+                  - /url: /products/sewing-thread-box
+                  - img "Sewing Thread Box" [ref=e100]
+                  - generic:
+                    - generic: Deadstock prints
+                - button "Save Sewing Thread Box" [ref=e101]: ♡
+              - generic [ref=e102]:
+                - link "Sewing Thread Box" [ref=e103]:
+                  - /url: /products/sewing-thread-box
+                  - generic [ref=e104]: Sewing Thread Box
+                - generic [ref=e106]: Rs. 3,500.00
+            - article [ref=e107] [cursor=pointer]:
+              - generic [ref=e108]:
+                - link "Simple Zipper Knita" [ref=e109]:
+                  - /url: /products/simple-zipper
+                  - img "Simple Zipper" [ref=e110]
+                  - generic:
+                    - generic: Knita
+                - button "Save Simple Zipper" [ref=e111]: ♡
+              - generic [ref=e112]:
+                - link "Simple Zipper" [ref=e113]:
+                  - /url: /products/simple-zipper
+                  - generic [ref=e114]: Simple Zipper
+                - generic [ref=e116]: Rs. 400.00
+            - article [ref=e117] [cursor=pointer]:
+              - generic [ref=e118]:
+                - link "Scuba Wooven Print-ready" [ref=e119]:
+                  - /url: /products/scuba
+                  - img "Scuba" [ref=e120]
+                  - generic:
+                    - generic: Wooven
+                    - generic: Print-ready
+                - button "Save Scuba" [ref=e121]: ♡
+              - generic [ref=e122]:
+                - link "Scuba" [ref=e123]:
+                  - /url: /products/scuba
+                  - generic [ref=e124]: Scuba
+                - generic [ref=e125]: 145 GSM · 100% Polyester · 140 cm
+                - generic [ref=e127]: FromRs. 1,100.00
+            - article [ref=e128] [cursor=pointer]:
+              - generic [ref=e129]:
+                - link "Pearl Satin Wooven" [ref=e130]:
+                  - /url: /products/pearl-satin
+                  - img "Pearl Satin" [ref=e131]
+                  - generic:
+                    - generic: Wooven
+                - button "Save Pearl Satin" [ref=e132]: ♡
+              - generic [ref=e133]:
+                - link "Pearl Satin" [ref=e134]:
+                  - /url: /products/pearl-satin
+                  - generic [ref=e135]: Pearl Satin
+                - generic [ref=e136]: 100% Ployester | 75 GSM
+                - generic [ref=e138]: FromRs. 500.00
+            - article [ref=e139] [cursor=pointer]:
+              - generic [ref=e140]:
+                - link "Noosa Linen Cotton Wooven" [ref=e141]:
+                  - /url: /products/noosa-linen-cotton
+                  - img "Noosa Linen Cotton" [ref=e142]
+                  - generic:
+                    - generic: Wooven
+                - button "Save Noosa Linen Cotton" [ref=e143]: ♡
+              - generic [ref=e144]:
+                - link "Noosa Linen Cotton" [ref=e145]:
+                  - /url: /products/noosa-linen-cotton
+                  - generic [ref=e146]: Noosa Linen Cotton
+                - generic [ref=e147]: Linen 55% Cotton 45% | 165 GSM
+                - generic [ref=e149]: FromRs. 700.00
+            - article [ref=e150] [cursor=pointer]:
+              - generic [ref=e151]:
+                - link "Cotton Lawn Fabric Linings" [ref=e152]:
+                  - /url: /products/cotton-lawn-fabric
+                  - img "Cotton Lawn Fabric" [ref=e153]
+                  - generic:
+                    - generic: Linings
+                - button "Save Cotton Lawn Fabric" [ref=e154]: ♡
+              - generic [ref=e155]:
+                - link "Cotton Lawn Fabric" [ref=e156]:
+                  - /url: /products/cotton-lawn-fabric
+                  - generic [ref=e157]: Cotton Lawn Fabric
+                - generic [ref=e158]: 100% Cotton | 81 GSM
+                - generic [ref=e160]: FromRs. 700.00
+            - article [ref=e161] [cursor=pointer]:
+              - generic [ref=e162]:
+                - link "Cotton Poplin Fabric Deadstock prints" [ref=e163]:
+                  - /url: /products/cotton-poplin-fabric
+                  - img "Cotton Poplin Fabric" [ref=e164]
+                  - generic:
+                    - generic: Deadstock prints
+                - button "Save Cotton Poplin Fabric" [ref=e165]: ♡
+              - generic [ref=e166]:
+                - link "Cotton Poplin Fabric" [ref=e167]:
+                  - /url: /products/cotton-poplin-fabric
+                  - generic [ref=e168]: Cotton Poplin Fabric
+                - generic [ref=e169]: 100% Cotton | 115 GSM
+                - generic [ref=e171]: FromRs. 600.00
+            - generic [ref=e173]:
+              - generic [ref=e174]: — Printed to order, too
+              - generic [ref=e175]:
+                - text: Bring your
+                - emphasis [ref=e176]: own design.
+              - generic [ref=e177]: Many of these bases take a print. Upload your artwork or choose one from our Design Partners, and we'll print it by the metre — on the fabric you pick.
+          - generic [ref=e179]: 8 of 8
+      - generic [ref=e181]:
+        - generic [ref=e182]:
+          - paragraph [ref=e183]: Before you commit a metre
+          - heading "See it. Feel it.Then order metres." [level=2] [ref=e184]:
+            - text: See it. Feel it.
+            - emphasis [ref=e185]: Then order metres.
+        - generic [ref=e187]:
+          - generic [ref=e188]:
+            - paragraph [ref=e189]: The Base Fabrics Pack
+            - heading "Every base fabric,in one pack." [level=3] [ref=e190]:
+              - text: Every base fabric,
+              - emphasis [ref=e191]: in one pack.
+            - paragraph [ref=e192]: Made for choosing weight, drape, and hand before you order metres.
+            - generic [ref=e193] [cursor=pointer]: Order the Base Fabrics Pack →
+          - img [ref=e195]
+      - generic [ref=e198]:
+        - paragraph [ref=e199]: Behind the fabric
+        - heading "Twenty years inside the trade." [level=2] [ref=e200]:
+          - emphasis [ref=e201]: Twenty years
+          - text: inside the trade.
+        - paragraph [ref=e202]: The same mills, the same quality work, the same trade — supplying makers, brands, and wholesalers across Europe and Asia for two decades. Now open to anyone making.
+        - generic [ref=e203] [cursor=pointer]: Read the story →
+  - contentinfo [ref=e205]:
+    - generic [ref=e206]:
+      - generic [ref=e207]:
+        - generic [ref=e209]:
+          - heading "The Fabric Shop" [level=2] [ref=e210]
+          - paragraph [ref=e212]:
+            - text: Quality fabric, printed on demand.
+            - emphasis [ref=e213]: By the metre, worldwide.
+          - list [ref=e215]:
+            - listitem [ref=e216]:
+              - link "Instagram" [ref=e217] [cursor=pointer]:
+                - /url: https://instagram.com/shopify
+                - img
+                - generic [ref=e218]: Instagram
+            - listitem [ref=e219]:
+              - link "TikTok" [ref=e220] [cursor=pointer]:
+                - /url: https://tiktok.com/@shopify
+                - img
+                - generic [ref=e221]: TikTok
+            - listitem [ref=e222]:
+              - link "Pinterest" [ref=e223] [cursor=pointer]:
+                - /url: https://pinterest.com/shopify
+                - img
+                - generic [ref=e224]: Pinterest
+        - group [ref=e227]:
+          - generic "Shop":
+            - generic:
+              - heading "Shop" [level=2]
+          - list [ref=e229]:
+            - listitem [ref=e230]:
+              - link "Printlab" [ref=e231] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e232]:
+              - link "The Yard" [ref=e233] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e234]:
+              - link "Studios" [ref=e235] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e236]:
+              - link "Sample Pack" [ref=e237] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e238]:
+              - link "Wholesale Enquiries" [ref=e239] [cursor=pointer]:
+                - /url: "#"
+        - group [ref=e242]:
+          - generic "Support":
+            - generic:
+              - heading "Support" [level=2]
+          - list [ref=e244]:
+            - listitem [ref=e245]:
+              - link "How it works" [ref=e246] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e247]:
+              - link "Shipping" [ref=e248] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e249]:
+              - link "Returns" [ref=e250] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e251]:
+              - link "FAQs" [ref=e252] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e253]:
+              - link "Become a design partner" [ref=e254] [cursor=pointer]:
+                - /url: /pages/partner-registration
+        - group [ref=e257]:
+          - generic "The Mill":
+            - generic:
+              - heading "The Mill" [level=2]
+          - generic [ref=e259]:
+            - paragraph [ref=e261]: First sight of what's new. Twice a month, never more.
+            - generic [ref=e263]:
+              - generic [ref=e264]: Email
+              - generic [ref=e265]:
+                - textbox "Email" [ref=e266]:
+                  - /placeholder: Your email
+                - button "Subscribe" [ref=e267] [cursor=pointer]:
+                  - generic [ref=e268]: Subscribe
+                  - img
+      - generic [ref=e269]:
+        - generic [ref=e270]:
+          - generic [ref=e271]: Payment methods accepted
+          - list [ref=e272]:
+            - listitem [ref=e273]:
+              - img "Visa" [ref=e274]
+            - listitem [ref=e279]:
+              - img "Mastercard" [ref=e280]
+            - listitem [ref=e287]:
+              - img "American Express" [ref=e288]
+            - listitem [ref=e293]:
+              - img "PayPal" [ref=e294]
+            - listitem [ref=e300]:
+              - img "Diners Club" [ref=e301]
+            - listitem [ref=e305]:
+              - img "Discover" [ref=e306]
+        - generic [ref=e319]:
+          - generic [ref=e320]: Country/Region
+          - button "Country/Region" [ref=e322] [cursor=pointer]:
+            - generic [ref=e323]: India (INR ₹)
+            - img
+      - separator [ref=e324]
+      - generic [ref=e325]:
+        - generic [ref=e327]:
+          - text: © 2026
+          - link "The Fabric Shop" [ref=e328] [cursor=pointer]:
+            - /url: /
+          - text: .
+        - list [ref=e330]:
+          - listitem [ref=e331]:
+            - link "About" [ref=e332] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e333]:
+            - link "Terms & Conditions" [ref=e334] [cursor=pointer]:
+              - /url: /policies/terms-of-service
+          - listitem [ref=e335]:
+            - link "Privacy Policy" [ref=e336] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e337]:
+            - link "IP & Takedown" [ref=e338] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e339]:
+            - link "Cookies" [ref=e340] [cursor=pointer]:
+              - /url: "#"
+  - generic [ref=e341]:
+    - generic [ref=e343]:
+      - generic [ref=e344]: Made on Order · Shipped Worldwide
+      - combobox "Country/Currency" [ref=e347] [cursor=pointer]:
+        - option "Australia (AUD $)"
+        - option "Austria (EUR €)"
+        - option "Belgium (EUR €)"
+        - option "Brazil (AUD $)"
+        - option "Bulgaria (EUR €)"
+        - option "Cambodia (KHR ៛)"
+        - option "Canada (CAD $)"
+        - option "Colombia (AUD $)"
+        - option "Croatia (EUR €)"
+        - option "Cyprus (EUR €)"
+        - option "Czechia (CZK Kč)"
+        - option "Denmark (DKK kr.)"
+        - option "Estonia (EUR €)"
+        - option "Fiji (FJD $)"
+        - option "Finland (EUR €)"
+        - option "France (EUR €)"
+        - option "Germany (EUR €)"
+        - option "Greece (EUR €)"
+        - option "Hong Kong SAR (HKD $)"
+        - option "Hungary (HUF Ft)"
+        - option "India (INR ₹)" [selected]
+        - option "Indonesia (IDR Rp)"
+        - option "Ireland (EUR €)"
+        - option "Italy (EUR €)"
+        - option "Japan (JPY ¥)"
+        - option "Latvia (EUR €)"
+        - option "Lithuania (EUR €)"
+        - option "Luxembourg (EUR €)"
+        - option "Macao SAR (MOP P)"
+        - option "Malaysia (MYR RM)"
+        - option "Maldives (MVR MVR)"
+        - option "Malta (EUR €)"
+        - option "Mauritius (MUR ₨)"
+        - option "Netherlands (EUR €)"
+        - option "New Zealand (NZD $)"
+        - option "Norway (AUD $)"
+        - option "Philippines (PHP ₱)"
+        - option "Poland (PLN zł)"
+        - option "Portugal (EUR €)"
+        - option "Qatar (QAR ر.ق)"
+        - option "Romania (RON Lei)"
+        - option "Singapore (SGD $)"
+        - option "Slovakia (EUR €)"
+        - option "Slovenia (EUR €)"
+        - option "South Korea (KRW ₩)"
+        - option "Spain (EUR €)"
+        - option "Sri Lanka (LKR ₨)"
+        - option "Sweden (SEK kr)"
+        - option "Switzerland (CHF CHF)"
+        - option "Taiwan (TWD $)"
+        - option "Türkiye (AUD $)"
+        - option "United Arab Emirates (AED د.إ)"
+        - option "United Kingdom (GBP £)"
+        - option "United States (USD $)"
+    - generic [ref=e349]:
+      - link "The Fabric Shop" [ref=e350] [cursor=pointer]:
+        - /url: /
+        - heading "The Fabric Shop" [level=1] [ref=e351]
+      - generic [ref=e352]:
+        - generic [ref=e353]:
+          - button "All" [ref=e354] [cursor=pointer]:
+            - generic [ref=e355]: All
+            - img [ref=e356]
+          - search [ref=e358]:
+            - generic [ref=e359]:
+              - img [ref=e360]
+              - searchbox "Search" [ref=e363]
+        - generic [ref=e364]:
+          - link "Account" [ref=e365] [cursor=pointer]:
+            - /url: /account
+            - img [ref=e366]
+          - link "Wishlist" [ref=e369] [cursor=pointer]:
+            - /url: /pages/wishlist
+            - img [ref=e370]
+          - link "Cart (0 items)" [ref=e372] [cursor=pointer]:
+            - /url: /cart
+            - img [ref=e373]
+    - navigation "Main navigation" [ref=e376]:
+      - generic [ref=e377]:
+        - list [ref=e378]:
+          - listitem [ref=e379]:
+            - button "PrintLab" [ref=e380] [cursor=pointer]:
+              - text: PrintLab
+              - img [ref=e381]
+          - listitem [ref=e383]:
+            - button "The Yard" [ref=e384] [cursor=pointer]:
+              - text: The Yard
+              - img [ref=e385]
+          - listitem [ref=e387]:
+            - button "Studios" [ref=e388] [cursor=pointer]:
+              - text: Studios
+              - img [ref=e389]
+          - listitem [ref=e391]:
+            - button "About" [ref=e392] [cursor=pointer]:
+              - text: About
+              - img [ref=e393]
+        - link "Contact Us" [ref=e395] [cursor=pointer]:
+          - /url: mailto:support@fabricshop.au
+          - img [ref=e396]
+          - text: Contact Us
+  - generic:
+    - generic:
+      - generic:
+        - banner:
+          - heading "Your cart" [level=2]
+          - generic:
+            - link "View cart":
+              - /url: /cart
+            - button "Close cart": ×
+        - generic:
+          - generic: Your cart is empty
+        - contentinfo:
+          - paragraph:
+            - generic: Taxes and shipping calculated at checkout.
+          - button "Checkout":
+            - img
+            - generic: Checkout
+  - generic "Shopify online store chat" [ref=e399]:
+    - button "1" [ref=e401] [cursor=pointer]:
+      - img [ref=e402]
+      - generic [ref=e404]: "1"

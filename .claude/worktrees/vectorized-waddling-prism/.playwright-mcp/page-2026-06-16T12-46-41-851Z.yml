@@ -1,0 +1,168 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - heading "The Fabric Shop" [level=1] [ref=e6]
+      - group [ref=e8]:
+        - generic "Enter using password" [ref=e9] [cursor=pointer]:
+          - generic:
+            - img
+            - text: Enter using password
+  - main [ref=e10]:
+    - generic [ref=e11]:
+      - generic [ref=e13]:
+        - heading "Opening soon" [level=2] [ref=e15]
+        - generic [ref=e16]:
+          - heading "Find out when we open" [level=2] [ref=e17]
+          - generic [ref=e18]:
+            - generic [ref=e19]: Email
+            - generic [ref=e20]:
+              - textbox "Email" [ref=e21]:
+                - /placeholder: Your email
+              - button "Submit" [ref=e22] [cursor=pointer]
+        - list [ref=e24]:
+          - listitem [ref=e25]:
+            - link "Instagram" [ref=e26] [cursor=pointer]:
+              - /url: https://instagram.com/shopify
+              - img
+              - generic [ref=e27]: Instagram
+          - listitem [ref=e28]:
+            - link "TikTok" [ref=e29] [cursor=pointer]:
+              - /url: https://tiktok.com/@shopify
+              - img
+              - generic [ref=e30]: TikTok
+          - listitem [ref=e31]:
+            - link "Pinterest" [ref=e32] [cursor=pointer]:
+              - /url: https://pinterest.com/shopify
+              - img
+              - generic [ref=e33]: Pinterest
+      - generic [ref=e34]:
+        - text: This shop will be powered by
+        - link "Shopify" [ref=e35] [cursor=pointer]:
+          - /url: //www.shopify.com
+          - img [ref=e36]
+          - generic [ref=e39]: Shopify
+  - generic [ref=e40]:
+    - generic [ref=e42]:
+      - generic [ref=e43]: Made on Order · Shipped Worldwide
+      - combobox "Country/Currency" [ref=e46] [cursor=pointer]:
+        - option "Australia (AUD $)"
+        - option "Austria (EUR €)"
+        - option "Belgium (EUR €)"
+        - option "Brazil (AUD $)"
+        - option "Bulgaria (EUR €)"
+        - option "Cambodia (KHR ៛)"
+        - option "Canada (CAD $)"
+        - option "Colombia (AUD $)"
+        - option "Croatia (EUR €)"
+        - option "Cyprus (EUR €)"
+        - option "Czechia (CZK Kč)"
+        - option "Denmark (DKK kr.)"
+        - option "Estonia (EUR €)"
+        - option "Fiji (FJD $)"
+        - option "Finland (EUR €)"
+        - option "France (EUR €)"
+        - option "Germany (EUR €)"
+        - option "Greece (EUR €)"
+        - option "Hong Kong SAR (HKD $)"
+        - option "Hungary (HUF Ft)"
+        - option "India (INR ₹)" [selected]
+        - option "Indonesia (IDR Rp)"
+        - option "Ireland (EUR €)"
+        - option "Italy (EUR €)"
+        - option "Japan (JPY ¥)"
+        - option "Latvia (EUR €)"
+        - option "Lithuania (EUR €)"
+        - option "Luxembourg (EUR €)"
+        - option "Macao SAR (MOP P)"
+        - option "Malaysia (MYR RM)"
+        - option "Maldives (MVR MVR)"
+        - option "Malta (EUR €)"
+        - option "Mauritius (MUR ₨)"
+        - option "Netherlands (EUR €)"
+        - option "New Zealand (NZD $)"
+        - option "Norway (AUD $)"
+        - option "Philippines (PHP ₱)"
+        - option "Poland (PLN zł)"
+        - option "Portugal (EUR €)"
+        - option "Qatar (QAR ر.ق)"
+        - option "Romania (RON Lei)"
+        - option "Singapore (SGD $)"
+        - option "Slovakia (EUR €)"
+        - option "Slovenia (EUR €)"
+        - option "South Korea (KRW ₩)"
+        - option "Spain (EUR €)"
+        - option "Sri Lanka (LKR ₨)"
+        - option "Sweden (SEK kr)"
+        - option "Switzerland (CHF CHF)"
+        - option "Taiwan (TWD $)"
+        - option "Türkiye (AUD $)"
+        - option "United Arab Emirates (AED د.إ)"
+        - option "United Kingdom (GBP £)"
+        - option "United States (USD $)"
+    - generic [ref=e48]:
+      - link "The Fabric Shop" [ref=e49] [cursor=pointer]:
+        - /url: /
+        - heading "The Fabric Shop" [level=1] [ref=e50]
+      - generic [ref=e51]:
+        - generic [ref=e52]:
+          - button "All" [ref=e53] [cursor=pointer]:
+            - generic [ref=e54]: All
+            - img [ref=e55]
+          - search [ref=e57]:
+            - generic [ref=e58]:
+              - img [ref=e59]
+              - searchbox "Search" [ref=e62]
+        - generic [ref=e63]:
+          - link "Account" [ref=e64] [cursor=pointer]:
+            - /url: /account
+            - img [ref=e65]
+          - link "Wishlist" [ref=e68] [cursor=pointer]:
+            - /url: /pages/wishlist
+            - img [ref=e69]
+          - link "Cart (0 items)" [ref=e71] [cursor=pointer]:
+            - /url: /cart
+            - img [ref=e72]
+    - navigation "Main navigation" [ref=e75]:
+      - generic [ref=e76]:
+        - list [ref=e77]:
+          - listitem [ref=e78]:
+            - button "PrintLab" [ref=e79] [cursor=pointer]:
+              - text: PrintLab
+              - img [ref=e80]
+          - listitem [ref=e82]:
+            - button "The Yard" [ref=e83] [cursor=pointer]:
+              - text: The Yard
+              - img [ref=e84]
+          - listitem [ref=e86]:
+            - button "Studios" [ref=e87] [cursor=pointer]:
+              - text: Studios
+              - img [ref=e88]
+          - listitem [ref=e90]:
+            - button "About" [ref=e91] [cursor=pointer]:
+              - text: About
+              - img [ref=e92]
+        - link "Contact Us" [ref=e94] [cursor=pointer]:
+          - /url: mailto:support@fabricshop.au
+          - img [ref=e95]
+          - text: Contact Us
+  - generic:
+    - generic:
+      - generic:
+        - banner:
+          - heading "Your cart" [level=2]
+          - generic:
+            - link "View cart":
+              - /url: /cart
+            - button "Close cart": ×
+        - generic:
+          - generic: Your cart is empty
+        - contentinfo:
+          - paragraph:
+            - generic: Taxes and shipping calculated at checkout.
+          - button "Checkout":
+            - img
+            - generic: Checkout
+  - generic "Shopify online store chat" [ref=e98]:
+    - button "1" [ref=e100] [cursor=pointer]:
+      - img [ref=e101]
+      - generic [ref=e103]: "1"

@@ -1,0 +1,521 @@
+/* studios-grid.css — Studios Hub grid block */
+
+.sgb-wrap {
+  background: var(--sgb-bg, #FAF8F3);
+  padding: 64px 36px;
+}
+
+/* ── Module header ── */
+.sgb-mod-head {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.sgb-mod-head-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+.sgb-mod-eyebrow {
+  font-size: 10.5px;
+  color: #9A9285;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.sgb-mod-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 22px;
+  height: 1px;
+  background: #9A9285;
+}
+.sgb-mod-title {
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 1.06;
+  margin: 0;
+  letter-spacing: -0.015em;
+  color: var(--sgb-ink, #1A1814);
+}
+.sgb-mod-title em {
+  font-style: italic;
+  color: var(--sgb-sage, #5C7355);
+}
+.sgb-mod-sub {
+  font-size: 13.5px;
+  color: var(--sgb-ink-soft, #5C564A);
+  margin: 12px 0 0;
+  max-width: 540px;
+  line-height: 1.6;
+}
+.sgb-mod-count {
+  font-size: 10.5px;
+  color: var(--sgb-ink-mute, #9A9285);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ── Content layout (sidebar + main) ── */
+.sgb-content {
+  display: flex;
+  align-items: flex-start;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ── Sidebar ── */
+.sgb-sidebar {
+  display: none;
+  flex-shrink: 0;
+  width: 220px;
+  padding-right: 28px;
+  align-self: flex-start;
+  position: sticky;
+  top: 22px;
+  max-height: calc(100vh - 44px);
+  overflow-y: auto;
+}
+.sgb-content.sgb-sidebar-open .sgb-sidebar {
+  display: block;
+}
+.sgb-sidebar::-webkit-scrollbar { width: 4px; }
+.sgb-sidebar::-webkit-scrollbar-thumb { background: #D4CCBC; border-radius: 2px; }
+
+.sgb-sidebar-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--sgb-rule, #E8E3D8);
+}
+.sgb-sidebar-label {
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sgb-ink-soft, #5C564A);
+}
+.sgb-sidebar-close {
+  background: none;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  color: var(--sgb-ink-mute, #9A9285);
+  padding: 0;
+  line-height: 1;
+}
+.sgb-sidebar-close:hover { color: var(--sgb-ink, #1A1814); }
+
+.sgb-sidebar-group {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--sgb-rule, #E8E3D8);
+}
+.sgb-sidebar-group-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.sgb-sidebar-group-name {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--sgb-ink, #1A1814);
+}
+.sgb-sidebar-group-toggle {
+  font-size: 11px;
+  color: var(--sgb-ink-mute, #9A9285);
+}
+.sgb-sidebar-group.collapsed .sgb-pills--vertical { display: none; }
+
+/* ── Pills ── */
+.sgb-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+.sgb-pills--vertical {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 2px;
+}
+
+.sgb-pill {
+  padding: 6px 14px;
+  font-size: 12px;
+  border: 1px solid var(--sgb-rule, #E8E3D8);
+  background: var(--sgb-card-bg, #FFFFFF);
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--sgb-ink-soft, #5C564A);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.sgb-pills--vertical .sgb-pill {
+  width: 100%;
+  justify-content: flex-start;
+  border-radius: 3px;
+  padding: 7px 12px;
+}
+.sgb-pill:hover {
+  border-color: var(--sgb-ink-mute, #9A9285);
+  color: var(--sgb-ink, #1A1814);
+}
+.sgb-pill.active {
+  background: var(--sgb-ink, #1A1814);
+  color: #FAF8F3;
+  border-color: var(--sgb-ink, #1A1814);
+}
+.sgb-pill--overflow { display: none; }
+.sgb-pills--expanded .sgb-pill--overflow { display: inline-flex; }
+.sgb-pills--vertical .sgb-pill--overflow { display: flex; }
+.sgb-pills--vertical .sgb-pill-toggle { display: none; }
+
+/* ── Main area ── */
+.sgb-main {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Toolbar ── */
+.sgb-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-top: 1px solid #D4CCBC;
+  border-bottom: 1px solid #D4CCBC;
+  margin-bottom: 24px;
+}
+.sgb-filter-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 13px;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid #D4CCBC;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--sgb-ink-soft, #5C564A);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.sgb-filter-toggle:hover {
+  border-color: var(--sgb-ink-mute, #9A9285);
+  color: var(--sgb-ink, #1A1814);
+}
+.sgb-content.sgb-sidebar-open .sgb-filter-toggle {
+  background: var(--sgb-ink, #1A1814);
+  color: #FAF8F3;
+  border-color: var(--sgb-ink, #1A1814);
+}
+
+/* ── Grid ── */
+.sgb-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.sgb-content.sgb-sidebar-open .sgb-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* ── Studio card ── */
+.sgb-card {
+  background: var(--sgb-card-bg, #FFFFFF);
+  border: 1px solid var(--sgb-rule, #E8E3D8);
+  border-radius: 3px;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.sgb-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(26, 24, 20, 0.06);
+  border-color: #D4CCBC;
+}
+
+/* ── Banner ── */
+.sgb-banner {
+  height: 110px;
+  position: relative;
+  flex-shrink: 0;
+}
+.sgb-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Banner overlay link */
+.sgb-banner-link {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* ── Fav button — matches yard-refine style ── */
+.sgb-fav {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.88);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--sgb-ink-soft, #5C564A);
+  backdrop-filter: blur(4px);
+  z-index: 1;
+  line-height: 1;
+  padding: 0;
+  transition: background 0.15s, color 0.15s;
+}
+.sgb-fav:hover { background: #FAF8F3; color: var(--sgb-rust, #A6502E); }
+.sgb-fav.active { color: var(--sgb-rust, #A6502E); }
+
+/* 8 CSS gradient banner variants */
+.sgb-banner-1 { background: linear-gradient(135deg, #EEF1EC 0%, #5C7355 100%); }
+.sgb-banner-2 { background: linear-gradient(135deg, #F4ECDA 0%, #A87A2E 100%); }
+.sgb-banner-3 { background: linear-gradient(135deg, #EFEAF1 0%, #5D4566 100%); }
+.sgb-banner-4 { background: linear-gradient(135deg, #F4E4DA 0%, #A6502E 100%); }
+.sgb-banner-5 { background: linear-gradient(180deg, #FAF8F3 0%, #1A1814 100%); }
+.sgb-banner-6 { background: repeating-linear-gradient(45deg, #EEF1EC 0 8px, #F4ECDA 8px 16px); }
+.sgb-banner-7 { background: radial-gradient(circle at 30% 30%, #A6502E 0 18px, transparent 26px) 0 0 / 70px 70px, #F4E4DA; }
+.sgb-banner-8 { background: linear-gradient(180deg, #EFEAF1 0%, #FAF8F3 50%, #EEF1EC 100%); }
+
+/* ── Portrait ── */
+.sgb-portrait {
+  position: absolute;
+  bottom: -28px;
+  left: 22px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 3px solid var(--sgb-card-bg, #FFFFFF);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.sgb-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 8 CSS gradient portrait fallbacks */
+.sgb-portrait-1 { background: linear-gradient(135deg, #C9A77F, #6B5337); }
+.sgb-portrait-2 { background: linear-gradient(135deg, #B8946C, #5C4524); }
+.sgb-portrait-3 { background: linear-gradient(135deg, #8E5F47, #2E1A0F); }
+.sgb-portrait-4 { background: linear-gradient(135deg, #D4B89A, #8E6D45); }
+.sgb-portrait-5 { background: linear-gradient(135deg, #A57C5B, #4D3320); }
+.sgb-portrait-6 { background: linear-gradient(135deg, #C2956A, #6F4F2F); }
+.sgb-portrait-7 { background: linear-gradient(135deg, #B8835E, #553521); }
+.sgb-portrait-8 { background: linear-gradient(135deg, #C2A47D, #745430); }
+
+/* ── Card body ── */
+.sgb-body {
+  padding: 40px 24px 22px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.sgb-name-link { text-decoration: none; color: inherit; display: block; }
+.sgb-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.15;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+  color: var(--sgb-ink, #1A1814);
+}
+.sgb-location {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  color: var(--sgb-ink-mute, #9A9285);
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+.sgb-discipline {
+  font-size: 12.5px;
+  color: var(--sgb-ink-soft, #5C564A);
+  line-height: 1.55;
+  margin: 0 0 20px;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── 3-tile strip (CSS gradients only) ── */
+.sgb-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  margin-bottom: 18px;
+}
+.sgb-tile {
+  aspect-ratio: 1;
+  border-radius: 2px;
+}
+
+/* Tile sets — one set of 3 per banner variant (v1–v8) */
+.sgb-tile-v1-0 { background: radial-gradient(circle at 30% 30%, #5C7355 0 6px, transparent 9px) 0 0/18px 18px, #EEF1EC; }
+.sgb-tile-v1-1 { background: radial-gradient(circle at 60% 40%, #A87A2E 0 5px, transparent 8px) 0 0/16px 16px, #F4ECDA; }
+.sgb-tile-v1-2 { background: radial-gradient(circle at 50% 50%, #A6502E 0 4px, transparent 7px) 0 0/14px 14px, #F4E4DA; }
+
+.sgb-tile-v2-0 { background: repeating-linear-gradient(0deg, #1A1814 0 1px, transparent 1px 4px), #FAF8F3; }
+.sgb-tile-v2-1 { background: repeating-linear-gradient(45deg, #1A1814 0 1px, transparent 1px 6px), #FAF8F3; }
+.sgb-tile-v2-2 { background: radial-gradient(circle, #1A1814 0 1px, transparent 2px) 0 0/8px 8px, #FAF8F3; }
+
+.sgb-tile-v3-0 { background: repeating-linear-gradient(0deg, #5D4566 0 2px, #FAF8F3 2px 5px), #EFEAF1; }
+.sgb-tile-v3-1 { background: repeating-linear-gradient(90deg, #5D4566 0 2px, #EFEAF1 2px 8px); }
+.sgb-tile-v3-2 { background: radial-gradient(circle at 50% 50%, #5D4566 0 6px, transparent 9px) 0 0/16px 16px, #EFEAF1; }
+
+.sgb-tile-v4-0 { background: repeating-linear-gradient(45deg, #A6502E 0 4px, #A87A2E 4px 8px, #FAF8F3 8px 14px); }
+.sgb-tile-v4-1 { background: radial-gradient(circle at 40% 40%, #A6502E 0 7px, transparent 11px) 0 0/22px 22px, #F4E4DA; }
+.sgb-tile-v4-2 { background: linear-gradient(45deg, #A87A2E 0%, #A6502E 50%, #5D4566 100%); }
+
+.sgb-tile-v5-0 { background: linear-gradient(135deg, #D4CDBE 0%, #FAF8F3 100%); }
+.sgb-tile-v5-1 { background: radial-gradient(circle, #9A9285 0 4px, transparent 7px) 0 0/14px 14px, #FAF8F3; }
+.sgb-tile-v5-2 { background: linear-gradient(180deg, #B0A998 0%, #D4CDBE 100%); }
+
+.sgb-tile-v6-0 { background: repeating-linear-gradient(0deg, #5C7355 0 2px, #EEF1EC 2px 4px), repeating-linear-gradient(90deg, #5C7355 0 2px, transparent 2px 4px), #EEF1EC; }
+.sgb-tile-v6-1 { background: radial-gradient(circle at 50% 50%, #5C7355 0 6px, transparent 9px) 0 0/16px 16px, #EEF1EC; }
+.sgb-tile-v6-2 { background: repeating-linear-gradient(45deg, #A6502E 0 3px, #FAF8F3 3px 8px); }
+
+.sgb-tile-v7-0 { background: linear-gradient(135deg, #5D4566, #A6502E); }
+.sgb-tile-v7-1 { background: radial-gradient(circle at 50% 50%, #5C7355 0 12px, transparent 18px), #EEF1EC; }
+.sgb-tile-v7-2 { background: linear-gradient(90deg, #1A1814, #5D4566, #FAF8F3); }
+
+.sgb-tile-v8-0 { background: repeating-linear-gradient(45deg, #A6502E 0 4px, #A87A2E 4px 8px); }
+.sgb-tile-v8-1 { background: repeating-linear-gradient(0deg, #1A1814 0 3px, #F4E4DA 3px 7px); }
+.sgb-tile-v8-2 { background: linear-gradient(135deg, #A6502E, #A87A2E); }
+
+/* ── Card footer ── */
+.sgb-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid var(--sgb-rule, #E8E3D8);
+}
+.sgb-meta {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 13px;
+  color: var(--sgb-ink-soft, #5C564A);
+  letter-spacing: 0.04em;
+}
+.sgb-link {
+  font-size: 11.5px;
+  color: var(--sgb-ink, #1A1814);
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 13px;
+  border: 1px solid var(--sgb-ink, #1A1814);
+  border-radius: 999px;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.sgb-link:hover {
+  background: var(--sgb-ink, #1A1814);
+  color: #FAF8F3;
+}
+.sgb-link::after {
+  content: '\2192';
+  transition: transform 0.15s;
+}
+.sgb-card:hover .sgb-link::after {
+  transform: translateX(3px);
+}
+
+/* ── Load more ── */
+.sgb-load-more {
+  margin: 36px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.sgb-load-btn {
+  padding: 13px 26px;
+  font-size: 12.5px;
+  background: transparent;
+  border: 1px solid var(--sgb-ink, #1A1814);
+  color: var(--sgb-ink, #1A1814);
+  cursor: pointer;
+  border-radius: 3px;
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s;
+}
+.sgb-load-btn:hover {
+  background: var(--sgb-ink, #1A1814);
+  color: #FAF8F3;
+}
+.sgb-load-btn:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+.sgb-load-count {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  color: var(--sgb-ink-mute, #9A9285);
+  margin: 0;
+}
+
+/* ── Empty state ── */
+.sgb-empty {
+  margin: 48px auto;
+  text-align: center;
+  font-size: 14px;
+  color: var(--sgb-ink-soft, #5C564A);
+  grid-column: 1 / -1;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .sgb-grid { grid-template-columns: repeat(2, 1fr); }
+  .sgb-content.sgb-sidebar-open .sgb-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 700px) {
+  .sgb-wrap { padding: 40px 20px; }
+  .sgb-grid { grid-template-columns: 1fr; }
+  .sgb-content.sgb-sidebar-open {
+    flex-direction: column;
+  }
+  .sgb-content.sgb-sidebar-open .sgb-sidebar {
+    width: 100%;
+    padding-right: 0;
+    position: static;
+    max-height: none;
+  }
+}
