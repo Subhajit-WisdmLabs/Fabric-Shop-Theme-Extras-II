@@ -186,21 +186,23 @@
                 >
               {%- endif -%}
               <div class="yrf-thumb-tags">
-                <span class="yrf-cat-tag">{{ product.metafields.fabric.type.value | default: product.type | default: 'Product' }}</span>
-                {%- if yrf_print_ready -%}
-                  <span class="yrf-print-ready">Print-ready</span>
+                <div class="yrf-tag-row">
+                  <span class="yrf-cat-tag">{{ product.metafields.fabric.type.value | default: product.type | default: 'Product' }}</span>
+                  {%- if yrf_print_ready -%}
+                    <span class="yrf-print-ready">Print-ready</span>
+                  {%- endif -%}
+                </div>
+                {%- if yrf_badge != '' -%}
+                  <span class="yrf-badge yrf-badge--{{ yrf_badge }}">
+                    {%- case yrf_badge -%}
+                      {%- when 'new'    -%}New
+                      {%- when 'restock' -%}Restocked
+                      {%- when 'low'    -%}Low stock
+                      {%- when 'unique' -%}One of a kind
+                    {%- endcase -%}
+                  </span>
                 {%- endif -%}
               </div>
-              {%- if yrf_badge != '' -%}
-                <span class="yrf-badge yrf-badge--{{ yrf_badge }}">
-                  {%- case yrf_badge -%}
-                    {%- when 'new'    -%}New
-                    {%- when 'restock' -%}Restocked
-                    {%- when 'low'    -%}Low stock
-                    {%- when 'unique' -%}One of a kind
-                  {%- endcase -%}
-                </span>
-              {%- endif -%}
             </a>
             <div class="yrf-hover-bar">
               <a href="{{ product.url }}" class="yrf-hover-view-btn">View Product</a>
