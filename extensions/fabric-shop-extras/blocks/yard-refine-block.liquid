@@ -116,11 +116,10 @@
         {%- assign yrf_fibre_str = yrf_fibre | downcase -%}
         {%- assign yrf_weight_lc = yrf_weight | downcase -%}
 
-        {%- comment -%}— Spec line: GSM · fibre content · width cm; fallback to fabric.descriptor meta —{%- endcomment -%}
-        {%- assign yrf_fabric_desc = product.metafields.fabric.descriptor.value -%}
+        {%- comment -%}— Spec line: three free-text slots (Weight/Material · Composition/Colour · Width/Size), printed exactly as entered —{%- endcomment -%}
         {%- assign yrf_spec = '' -%}
         {%- if yrf_gsm != blank -%}
-          {%- assign yrf_spec = yrf_gsm | append: ' GSM' -%}
+          {%- assign yrf_spec = yrf_gsm -%}
         {%- endif -%}
         {%- if yrf_fibre_content != blank -%}
           {%- if yrf_spec != '' -%}{%- assign yrf_spec = yrf_spec | append: ' · ' -%}{%- endif -%}
@@ -128,10 +127,7 @@
         {%- endif -%}
         {%- if yrf_width != blank -%}
           {%- if yrf_spec != '' -%}{%- assign yrf_spec = yrf_spec | append: ' · ' -%}{%- endif -%}
-          {%- assign yrf_spec = yrf_spec | append: yrf_width | append: ' cm' -%}
-        {%- endif -%}
-        {%- if yrf_spec == '' and yrf_fabric_desc != blank -%}
-          {%- assign yrf_spec = yrf_fabric_desc | strip_html | truncate: 80 -%}
+          {%- assign yrf_spec = yrf_spec | append: yrf_width -%}
         {%- endif -%}
 
         {%- comment -%}— Status badge from product tags —{%- endcomment -%}
