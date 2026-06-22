@@ -21,24 +21,43 @@
     <div class="sb-sub">{{ block.settings.subtext }}</div>
     {%- endif -%}
 
-    {%- if block.settings.btn1_label != blank or block.settings.btn2_label != blank -%}
+    {%- assign any_cta = false -%}
+    {%- if block.settings.btn1_label != blank or block.settings.btn2_label != blank or block.settings.btn3_label != blank -%}
+      {%- assign any_cta = true -%}
+    {%- endif -%}
+
+    {%- if any_cta -%}
     <div class="sb-ctas">
 
-      {%- if block.settings.btn1_label != blank -%}
-      <a href="{{ block.settings.btn1_url }}"
-         class="sb-btn"
-         style="--sb-text:{{ block.settings.btn1_text_color }};--sb-bg:{{ block.settings.btn1_bg_color }};--sb-border:{{ block.settings.btn1_border_color }};--sb-hover-text:{{ block.settings.btn1_hover_text_color }};--sb-hover-bg:{{ block.settings.btn1_hover_bg_color }};--sb-hover-border:{{ block.settings.btn1_hover_border_color }};">
-        {{- block.settings.btn1_label -}}
-      </a>
-      {%- endif -%}
-
-      {%- if block.settings.btn2_label != blank -%}
-      <a href="{{ block.settings.btn2_url }}"
-         class="sb-btn"
-         style="--sb-text:{{ block.settings.btn2_text_color }};--sb-bg:{{ block.settings.btn2_bg_color }};--sb-border:{{ block.settings.btn2_border_color }};--sb-hover-text:{{ block.settings.btn2_hover_text_color }};--sb-hover-bg:{{ block.settings.btn2_hover_bg_color }};--sb-hover-border:{{ block.settings.btn2_hover_border_color }};">
-        {{- block.settings.btn2_label -}}
-      </a>
-      {%- endif -%}
+      {%- for i in (1..3) -%}
+        {%- assign lbl_key        = 'btn' | append: i | append: '_label' -%}
+        {%- assign url_key        = 'btn' | append: i | append: '_url' -%}
+        {%- assign type_key       = 'btn' | append: i | append: '_type' -%}
+        {%- assign tc_key         = 'btn' | append: i | append: '_text_color' -%}
+        {%- assign bg_key         = 'btn' | append: i | append: '_bg_color' -%}
+        {%- assign bc_key         = 'btn' | append: i | append: '_border_color' -%}
+        {%- assign htc_key        = 'btn' | append: i | append: '_hover_text_color' -%}
+        {%- assign hbg_key        = 'btn' | append: i | append: '_hover_bg_color' -%}
+        {%- assign hbc_key        = 'btn' | append: i | append: '_hover_border_color' -%}
+        {%- assign lbl  = block.settings[lbl_key] -%}
+        {%- assign url  = block.settings[url_key] | default: '#' -%}
+        {%- assign type = block.settings[type_key] -%}
+        {%- if lbl != blank -%}
+          {%- if type == 'link' -%}
+          <a href="{{ url }}"
+             class="sb-link"
+             style="--sb-text:{{ block.settings[tc_key] }};--sb-hover-text:{{ block.settings[htc_key] }};">
+            {{- lbl -}}
+          </a>
+          {%- else -%}
+          <a href="{{ url }}"
+             class="sb-btn"
+             style="--sb-text:{{ block.settings[tc_key] }};--sb-bg:{{ block.settings[bg_key] }};--sb-border:{{ block.settings[bc_key] }};--sb-hover-text:{{ block.settings[htc_key] }};--sb-hover-bg:{{ block.settings[hbg_key] }};--sb-hover-border:{{ block.settings[hbc_key] }};">
+            {{- lbl -}}
+          </a>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
 
     </div>
     {%- endif -%}
@@ -109,7 +128,17 @@
     },
     {
       "type": "header",
-      "content": "Button 1"
+      "content": "CTA 1"
+    },
+    {
+      "type": "select",
+      "id": "btn1_type",
+      "label": "Style",
+      "options": [
+        { "value": "button", "label": "Button" },
+        { "value": "link",   "label": "Text link" }
+      ],
+      "default": "button"
     },
     {
       "type": "text",
@@ -160,7 +189,17 @@
     },
     {
       "type": "header",
-      "content": "Button 2"
+      "content": "CTA 2"
+    },
+    {
+      "type": "select",
+      "id": "btn2_type",
+      "label": "Style",
+      "options": [
+        { "value": "button", "label": "Button" },
+        { "value": "link",   "label": "Text link" }
+      ],
+      "default": "button"
     },
     {
       "type": "text",
@@ -206,6 +245,66 @@
     {
       "type": "color",
       "id": "btn2_hover_border_color",
+      "label": "Hover border colour",
+      "default": "#1A1814"
+    },
+    {
+      "type": "header",
+      "content": "CTA 3"
+    },
+    {
+      "type": "select",
+      "id": "btn3_type",
+      "label": "Style",
+      "options": [
+        { "value": "button", "label": "Button" },
+        { "value": "link",   "label": "Text link" }
+      ],
+      "default": "button"
+    },
+    {
+      "type": "text",
+      "id": "btn3_label",
+      "label": "Label"
+    },
+    {
+      "type": "url",
+      "id": "btn3_url",
+      "label": "URL"
+    },
+    {
+      "type": "color",
+      "id": "btn3_text_color",
+      "label": "Text colour",
+      "default": "#1A1814"
+    },
+    {
+      "type": "color",
+      "id": "btn3_bg_color",
+      "label": "Background colour",
+      "default": "#FAF8F3"
+    },
+    {
+      "type": "color",
+      "id": "btn3_border_color",
+      "label": "Border colour",
+      "default": "#1A1814"
+    },
+    {
+      "type": "color",
+      "id": "btn3_hover_text_color",
+      "label": "Hover text colour",
+      "default": "#FAF8F3"
+    },
+    {
+      "type": "color",
+      "id": "btn3_hover_bg_color",
+      "label": "Hover background colour",
+      "default": "#1A1814"
+    },
+    {
+      "type": "color",
+      "id": "btn3_hover_border_color",
       "label": "Hover border colour",
       "default": "#1A1814"
     }
