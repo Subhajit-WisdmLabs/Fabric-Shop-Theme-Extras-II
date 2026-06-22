@@ -16,4 +16,10 @@
   </div>
 </div>
 <script src="{{ 'studios-grid.js' | asset_url }}" defer></script>
-{% schema %}{"name":"Studios Grid","target":"section","settings":[{"type":"url","id":"profile_page_url","label":"Studio profile page URL","info":"Handle query param appended automatically"},{"type":"range","id":"per_page","label":"Studios per load","min":3,"max":24,"step":3,"default":9},{"type":"range","id":"eyebrow_font_size","label":"Eyebrow font size","min":8,"max":20,"step":1,"unit":"px","default":13}]}{% endschema %}
+{% schema %}
+{"name":"Studios Grid","target":"section","settings":[
+  {"type":"url","id":"profile_page_url","label":"Studio profile page URL","info":"Handle query param appended automatically"},
+  {"type":"range","id":"per_page","label":"Studios per load","min":3,"max":24,"step":3,"default":9},
+  {"type":"range","id":"eyebrow_font_size","label":"Eyebrow font size","min":8,"max":20,"step":1,"unit":"px","default":13}
+]}
+{% endschema %}

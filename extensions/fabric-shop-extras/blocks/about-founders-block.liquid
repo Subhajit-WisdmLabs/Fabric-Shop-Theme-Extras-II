@@ -42,61 +42,15 @@
 </section>
 
 {% schema %}
-{
-  "name": "About — Founders",
-  "target": "section",
-  "settings": [
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "The people"
-    },
-    {
-      "type": "range",
-      "id": "eyebrow_font_size",
-      "label": "Eyebrow font size",
-      "min": 8,
-      "max": 20,
-      "step": 1,
-      "unit": "px",
-      "default": 13
-    },
-    {
-      "type": "richtext",
-      "id": "heading",
-      "label": "Names heading",
-      "default": "<p>Nick <em>&amp;</em> Nat.</p>"
-    },
-    {
-      "type": "text",
-      "id": "strap",
-      "label": "Strap (e.g. role or title)",
-      "default": "Founders"
-    },
-    {
-      "type": "richtext",
-      "id": "body",
-      "label": "Body text",
-      "default": "<p>The Fabric Shop is run by its two founders, Nick and Nat. Between them they've spent their working lives in the textile trade — sourcing and supplying the fabric that goes into other people's labels. They built the shop to sell that fabric direct, by the metre, to anyone who makes.</p>"
-    },
-    { "type": "header", "content": "Portrait" },
-    {
-      "type": "image_picker",
-      "id": "portrait",
-      "label": "Portrait photo"
-    },
-    {
-      "type": "text",
-      "id": "portrait_alt",
-      "label": "Portrait alt text",
-      "default": "Nick and Nat, founders of The Fabric Shop."
-    },
-    {
-      "type": "text",
-      "id": "portrait_caption",
-      "label": "Portrait caption (optional)"
-    }
-  ]
-}
+{"name":"About — Founders","target":"section","settings":[
+  {"type":"text","id":"eyebrow","label":"Eyebrow","default":"The people"},
+  {"type":"range","id":"eyebrow_font_size","label":"Eyebrow font size","min":8,"max":20,"step":1,"unit":"px","default":13},
+  {"type":"richtext","id":"heading","label":"Names heading","default":"<p>Nick <em>&amp;</em> Nat.</p>"},
+  {"type":"text","id":"strap","label":"Strap (e.g. role or title)","default":"Founders"},
+  {"type":"richtext","id":"body","label":"Body text","default":"<p>The Fabric Shop is run by its two founders, Nick and Nat. Between them they've spent their working lives in the textile trade — sourcing and supplying the fabric that goes into other people's labels. They built the shop to sell that fabric direct, by the metre, to anyone who makes.</p>"},
+  {"type":"header","content":"Portrait"},
+  {"type":"image_picker","id":"portrait","label":"Portrait photo"},
+  {"type":"text","id":"portrait_alt","label":"Portrait alt text","default":"Nick and Nat, founders of The Fabric Shop."},
+  {"type":"text","id":"portrait_caption","label":"Portrait caption (optional)"}
+]}
 {% endschema %}

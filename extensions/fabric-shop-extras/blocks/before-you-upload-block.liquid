@@ -117,123 +117,25 @@
 </section>
 
 {% schema %}
-{
-  "name": "Before You Upload",
-  "target": "section",
-  "settings": [
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background colour",
-      "default": "#FAF8F3"
-    },
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow text",
-      "default": "Before you upload"
-    },
-    {
-      "type": "range",
-      "id": "eyebrow_font_size",
-      "label": "Eyebrow font size",
-      "min": 8,
-      "max": 20,
-      "step": 1,
-      "unit": "px",
-      "default": 13
-    },
-    {
-      "type": "richtext",
-      "id": "heading",
-      "label": "Heading",
-      "default": "<p>What makes a <em>clean print</em>.</p>"
-    },
-    {
-      "type": "header",
-      "content": "Spec table rows"
-    },
-    {
-      "type": "text",
-      "id": "row_1_key",
-      "label": "Row 1 — Label",
-      "default": "Accepted formats"
-    },
-    {
-      "type": "text",
-      "id": "row_1_value",
-      "label": "Row 1 — Value",
-      "default": "JPG · PNG · TIFF — flattened, no layers"
-    },
-    {
-      "type": "text",
-      "id": "row_2_key",
-      "label": "Row 2 — Label",
-      "default": "Resolution"
-    },
-    {
-      "type": "text",
-      "id": "row_2_value",
-      "label": "Row 2 — Value",
-      "default": "300 PPI recommended · 150 minimum"
-    },
-    {
-      "type": "text",
-      "id": "row_3_key",
-      "label": "Row 3 — Label",
-      "default": "Colour"
-    },
-    {
-      "type": "text",
-      "id": "row_3_value",
-      "label": "Row 3 — Value",
-      "default": "sRGB — other profiles may shift on fabric"
-    },
-    {
-      "type": "text",
-      "id": "row_4_key",
-      "label": "Row 4 — Label",
-      "default": "Maximum size"
-    },
-    {
-      "type": "text",
-      "id": "row_4_value",
-      "label": "Row 4 — Value",
-      "default": "30 MB to upload · larger by email"
-    },
-    {
-      "type": "text",
-      "id": "row_5_key",
-      "label": "Row 5 — Label",
-      "default": "Print width"
-    },
-    {
-      "type": "text",
-      "id": "row_5_value",
-      "label": "Row 5 — Value",
-      "default": "Up to your chosen fabric's printable width"
-    },
-    {
-      "type": "header",
-      "content": "Aside — repeat guide"
-    },
-    {
-      "type": "text",
-      "id": "aside_heading",
-      "label": "Aside heading",
-      "default": "Setting a repeat?"
-    },
-    {
-      "type": "richtext",
-      "id": "aside_body",
-      "label": "Aside body",
-      "default": "<p>The repeat is how one tile fills the metre. Choose a layout in the configurator, or leave it on Simple. One thing to know: a repeat must tile cleanly in the file itself — we print what you send, and don't rework repeats on your behalf.</p>"
-    },
-    {
-      "type": "url",
-      "id": "repeat_guide_url",
-      "label": "Repeat guide link URL"
-    }
-  ]
-}
+{"name":"Before You Upload","target":"section","settings":[
+  {"type":"color","id":"background_color","label":"Background colour","default":"#FAF8F3"},
+  {"type":"text","id":"eyebrow","label":"Eyebrow text","default":"Before you upload"},
+  {"type":"range","id":"eyebrow_font_size","label":"Eyebrow font size","min":8,"max":20,"step":1,"unit":"px","default":13},
+  {"type":"richtext","id":"heading","label":"Heading","default":"<p>What makes a <em>clean print</em>.</p>"},
+  {"type":"header","content":"Spec table rows"},
+  {"type":"text","id":"row_1_key","label":"Row 1 — Label","default":"Accepted formats"},
+  {"type":"text","id":"row_1_value","label":"Row 1 — Value","default":"JPG · PNG · TIFF — flattened, no layers"},
+  {"type":"text","id":"row_2_key","label":"Row 2 — Label","default":"Resolution"},
+  {"type":"text","id":"row_2_value","label":"Row 2 — Value","default":"300 PPI recommended · 150 minimum"},
+  {"type":"text","id":"row_3_key","label":"Row 3 — Label","default":"Colour"},
+  {"type":"text","id":"row_3_value","label":"Row 3 — Value","default":"sRGB — other profiles may shift on fabric"},
+  {"type":"text","id":"row_4_key","label":"Row 4 — Label","default":"Maximum size"},
+  {"type":"text","id":"row_4_value","label":"Row 4 — Value","default":"30 MB to upload · larger by email"},
+  {"type":"text","id":"row_5_key","label":"Row 5 — Label","default":"Print width"},
+  {"type":"text","id":"row_5_value","label":"Row 5 — Value","default":"Up to your chosen fabric's printable width"},
+  {"type":"header","content":"Aside — repeat guide"},
+  {"type":"text","id":"aside_heading","label":"Aside heading","default":"Setting a repeat?"},
+  {"type":"richtext","id":"aside_body","label":"Aside body","default":"<p>The repeat is how one tile fills the metre. Choose a layout in the configurator, or leave it on Simple. One thing to know: a repeat must tile cleanly in the file itself — we print what you send, and don't rework repeats on your behalf.</p>"},
+  {"type":"url","id":"repeat_guide_url","label":"Repeat guide link URL"}
+]}
 {% endschema %}

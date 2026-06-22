@@ -60,153 +60,32 @@
 </div>
 
 {% schema %}
-{
-  "name": "Yard Catalogue Header",
-  "target": "section",
-  "settings": [
-    {
-      "type": "header",
-      "content": "Content"
-    },
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "The Yard · the catalogue"
-    },
-    {
-      "type": "range",
-      "id": "eyebrow_font_size",
-      "label": "Eyebrow font size",
-      "min": 8,
-      "max": 20,
-      "step": 1,
-      "unit": "px",
-      "default": 13
-    },
-    {
-      "type": "text",
-      "id": "heading_main",
-      "label": "Heading — main text",
-      "default": "Stocked fabrics,",
-      "info": "The roman part of the heading. The italic continuation appears immediately after."
-    },
-    {
-      "type": "text",
-      "id": "heading_italic",
-      "label": "Heading — italic continuation",
-      "default": " by the metre.",
-      "info": "Rendered in italic sage. Include a leading space if it follows the main text directly."
-    },
-    {
-      "type": "textarea",
-      "id": "sub_copy",
-      "label": "Sub-copy",
-      "default": "Stocked fabrics by the metre — wovens, knits, linings, and deadstock prints. Buttons, zips, and notions by the piece."
-    },
-    {
-      "type": "header",
-      "content": "Stat 1"
-    },
-    {
-      "type": "text",
-      "id": "stat_1_collection",
-      "label": "Collection handle",
-      "info": "The count is pulled live from this collection. Leave blank to use the custom value below."
-    },
-    {
-      "type": "text",
-      "id": "stat_1_label",
-      "label": "Label",
-      "default": "Stocked fabrics"
-    },
-    {
-      "type": "text",
-      "id": "stat_1_value",
-      "label": "Custom value (overrides collection count)",
-      "info": "Use for non-collection stats, e.g. \"3 days\". Leave blank to show the live product count."
-    },
-    {
-      "type": "header",
-      "content": "Stat 2"
-    },
-    {
-      "type": "text",
-      "id": "stat_2_collection",
-      "label": "Collection handle"
-    },
-    {
-      "type": "text",
-      "id": "stat_2_label",
-      "label": "Label",
-      "default": "Buttons"
-    },
-    {
-      "type": "text",
-      "id": "stat_2_value",
-      "label": "Custom value (overrides collection count)"
-    },
-    {
-      "type": "header",
-      "content": "Stat 3"
-    },
-    {
-      "type": "text",
-      "id": "stat_3_collection",
-      "label": "Collection handle"
-    },
-    {
-      "type": "text",
-      "id": "stat_3_label",
-      "label": "Label",
-      "default": "Zips"
-    },
-    {
-      "type": "text",
-      "id": "stat_3_value",
-      "label": "Custom value (overrides collection count)"
-    },
-    {
-      "type": "header",
-      "content": "Stat 4"
-    },
-    {
-      "type": "text",
-      "id": "stat_4_collection",
-      "label": "Collection handle"
-    },
-    {
-      "type": "text",
-      "id": "stat_4_label",
-      "label": "Label",
-      "default": "Notions"
-    },
-    {
-      "type": "text",
-      "id": "stat_4_value",
-      "label": "Custom value (overrides collection count)"
-    },
-    {
-      "type": "header",
-      "content": "Stat 5"
-    },
-    {
-      "type": "text",
-      "id": "stat_5_collection",
-      "label": "Collection handle"
-    },
-    {
-      "type": "text",
-      "id": "stat_5_label",
-      "label": "Label",
-      "default": "Shipped within"
-    },
-    {
-      "type": "text",
-      "id": "stat_5_value",
-      "label": "Custom value (overrides collection count)",
-      "default": "3 days"
-    }
-  ]
-}
+{"name":"Yard Catalogue Header","target":"section","settings":[
+  {"type":"header","content":"Content"},
+  {"type":"text","id":"eyebrow","label":"Eyebrow","default":"The Yard · the catalogue"},
+  {"type":"range","id":"eyebrow_font_size","label":"Eyebrow font size","min":8,"max":20,"step":1,"unit":"px","default":13},
+  {"type":"text","id":"heading_main","label":"Heading — main text","default":"Stocked fabrics,","info":"The roman part of the heading. The italic continuation appears immediately after."},
+  {"type":"text","id":"heading_italic","label":"Heading — italic continuation","default":" by the metre.","info":"Rendered in italic sage. Include a leading space if it follows the main text directly."},
+  {"type":"textarea","id":"sub_copy","label":"Sub-copy","default":"Stocked fabrics by the metre — wovens, knits, linings, and deadstock prints. Buttons, zips, and notions by the piece."},
+  {"type":"header","content":"Stat 1"},
+  {"type":"text","id":"stat_1_collection","label":"Collection handle","info":"The count is pulled live from this collection. Leave blank to use the custom value below."},
+  {"type":"text","id":"stat_1_label","label":"Label","default":"Stocked fabrics"},
+  {"type":"text","id":"stat_1_value","label":"Custom value (overrides collection count)","info":"Use for non-collection stats, e.g. \"3 days\". Leave blank to show the live product count."},
+  {"type":"header","content":"Stat 2"},
+  {"type":"text","id":"stat_2_collection","label":"Collection handle"},
+  {"type":"text","id":"stat_2_label","label":"Label","default":"Buttons"},
+  {"type":"text","id":"stat_2_value","label":"Custom value (overrides collection count)"},
+  {"type":"header","content":"Stat 3"},
+  {"type":"text","id":"stat_3_collection","label":"Collection handle"},
+  {"type":"text","id":"stat_3_label","label":"Label","default":"Zips"},
+  {"type":"text","id":"stat_3_value","label":"Custom value (overrides collection count)"},
+  {"type":"header","content":"Stat 4"},
+  {"type":"text","id":"stat_4_collection","label":"Collection handle"},
+  {"type":"text","id":"stat_4_label","label":"Label","default":"Notions"},
+  {"type":"text","id":"stat_4_value","label":"Custom value (overrides collection count)"},
+  {"type":"header","content":"Stat 5"},
+  {"type":"text","id":"stat_5_collection","label":"Collection handle"},
+  {"type":"text","id":"stat_5_label","label":"Label","default":"Shipped within"},
+  {"type":"text","id":"stat_5_value","label":"Custom value (overrides collection count)","default":"3 days"}
+]}
 {% endschema %}

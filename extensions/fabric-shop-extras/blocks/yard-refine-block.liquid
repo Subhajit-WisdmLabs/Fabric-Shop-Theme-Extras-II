@@ -255,51 +255,13 @@
 <script src="{{ 'yard-refine.js' | asset_url }}" defer></script>
 
 {% schema %}
-{
-  "name": "Yard · Refine & Browse",
-  "target": "section",
-  "settings": [
-    {
-      "type": "collection",
-      "id": "collection_handle",
-      "label": "Collection",
-      "info": "Products from this collection are shown and filtered client-side by type, fibre, weight, and the fabric.type metafield. All products load — the first 50 render immediately, the rest stream in via background pagination."
-    },
-    {
-      "type": "url",
-      "id": "printlab_url",
-      "label": "PrintLab URL",
-      "info": "URL for the mid-grid editorial card CTA (Explore PrintLab →)."
-    },
-    {
-      "type": "header",
-      "content": "Product type filter"
-    },
-    {
-      "type": "text",
-      "id": "type_group_label",
-      "label": "Filter group heading",
-      "default": "Product type"
-    },
-    {
-      "type": "text",
-      "id": "all_label",
-      "label": "\"All\" option label",
-      "default": "All stocked"
-    },
-    {
-      "type": "textarea",
-      "id": "product_types",
-      "label": "Product types",
-      "info": "Comma-separated product types shown as filter radios, in this order. Each must match a product's Type exactly (case-insensitive). e.g. Woven, Knit, Lining, Buttons, Zips, Notions"
-    },
-    {
-      "type": "text",
-      "id": "subchip_type",
-      "label": "Sub-category type",
-      "default": "Undyed fabric",
-      "info": "When this product type is selected, sub-category chips appear, built from the fabric.type metafield values of its products. Must match one of the product types above. Leave blank to disable."
-    }
-  ]
-}
+{"name":"Yard · Refine & Browse","target":"section","settings":[
+  {"type":"collection","id":"collection_handle","label":"Collection","info":"Products from this collection are shown and filtered client-side by type, fibre, weight, and the fabric.type metafield. All products load — the first 50 render immediately, the rest stream in via background pagination."},
+  {"type":"url","id":"printlab_url","label":"PrintLab URL","info":"URL for the mid-grid editorial card CTA (Explore PrintLab →)."},
+  {"type":"header","content":"Product type filter"},
+  {"type":"text","id":"type_group_label","label":"Filter group heading","default":"Product type"},
+  {"type":"text","id":"all_label","label":"\"All\" option label","default":"All stocked"},
+  {"type":"textarea","id":"product_types","label":"Product types","info":"Comma-separated product types shown as filter radios, in this order. Each must match a product's Type exactly (case-insensitive). e.g. Woven, Knit, Lining, Buttons, Zips, Notions"},
+  {"type":"text","id":"subchip_type","label":"Sub-category type","default":"Undyed fabric","info":"When this product type is selected, sub-category chips appear, built from the fabric.type metafield values of its products. Must match one of the product types above. Leave blank to disable."}
+]}
 {% endschema %}

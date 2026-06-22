@@ -63,161 +63,32 @@
 </section>
 
 {% schema %}
-{
-  "name": "Yard Sample Band",
-  "target": "section",
-  "settings": [
-    {
-      "type": "paragraph",
-      "content": "\"Before you commit a metre\" sample band. Centred heading with a single sample pack card below."
-    },
-    {
-      "type": "header",
-      "content": "Section head"
-    },
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "Before you commit a metre"
-    },
-    {
-      "type": "text",
-      "id": "heading_line1",
-      "label": "Heading — opening text",
-      "default": "See it. Feel it. ",
-      "info": "Include a trailing space before the italic part."
-    },
-    {
-      "type": "text",
-      "id": "heading_line2_italic",
-      "label": "Heading — italic ending",
-      "default": "Then order metres."
-    },
-    {
-      "type": "header",
-      "content": "Sample card"
-    },
-    {
-      "type": "text",
-      "id": "card_eyebrow",
-      "label": "Card eyebrow",
-      "default": "The Base Fabrics Pack"
-    },
-    {
-      "type": "text",
-      "id": "card_title_line1",
-      "label": "Card title — opening text",
-      "default": "Every base fabric, ",
-      "info": "Include a trailing space before the italic part."
-    },
-    {
-      "type": "text",
-      "id": "card_title_italic",
-      "label": "Card title — italic ending",
-      "default": "in one pack."
-    },
-    {
-      "type": "textarea",
-      "id": "card_body",
-      "label": "Card body",
-      "default": "Made for choosing weight, drape, and hand before you order metres."
-    },
-    {
-      "type": "text",
-      "id": "card_cta_label",
-      "label": "CTA label",
-      "default": "Order the Base Fabrics Pack →"
-    },
-    {
-      "type": "url",
-      "id": "card_cta_url",
-      "label": "CTA URL"
-    },
-    {
-      "type": "header",
-      "content": "Card image"
-    },
-    {
-      "type": "image_picker",
-      "id": "card_image",
-      "label": "Image",
-      "info": "Square or portrait. Min 500px wide. Replaces the decorative CSS background when set."
-    },
-    {
-      "type": "header",
-      "content": "Colours"
-    },
-    {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Section background",
-      "default": "#FAF8F3"
-    },
-    {
-      "type": "color",
-      "id": "rule_color",
-      "label": "Rule / border",
-      "default": "#E8E3D8"
-    },
-    {
-      "type": "color",
-      "id": "eyebrow_color",
-      "label": "Eyebrow",
-      "default": "#726D64"
-    },
-    {
-      "type": "range",
-      "id": "eyebrow_font_size",
-      "label": "Eyebrow font size",
-      "min": 8,
-      "max": 20,
-      "step": 1,
-      "unit": "px",
-      "default": 13
-    },
-    {
-      "type": "color",
-      "id": "heading_color",
-      "label": "Heading",
-      "default": "#1A1814"
-    },
-    {
-      "type": "color",
-      "id": "heading_italic_color",
-      "label": "Heading italic",
-      "default": "#5C7355"
-    },
-    {
-      "type": "color",
-      "id": "card_bg_color",
-      "label": "Card background",
-      "default": "#F0EAD8"
-    },
-    {
-      "type": "color",
-      "id": "card_eyebrow_color",
-      "label": "Card eyebrow",
-      "default": "#726D64"
-    },
-    {
-      "type": "color",
-      "id": "card_title_color",
-      "label": "Card title",
-      "default": "#1A1814"
-    },
-    {
-      "type": "color",
-      "id": "card_body_color",
-      "label": "Card body",
-      "default": "#5C564A"
-    },
-    {
-      "type": "color",
-      "id": "card_cta_color",
-      "label": "CTA",
-      "default": "#A6502E"
-    }
-  ]
-}
+{"name":"Yard Sample Band","target":"section","settings":[
+  {"type":"paragraph","content":"\"Before you commit a metre\" sample band. Centred heading with a single sample pack card below."},
+  {"type":"header","content":"Section head"},
+  {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Before you commit a metre"},
+  {"type":"text","id":"heading_line1","label":"Heading — opening text","default":"See it. Feel it. ","info":"Include a trailing space before the italic part."},
+  {"type":"text","id":"heading_line2_italic","label":"Heading — italic ending","default":"Then order metres."},
+  {"type":"header","content":"Sample card"},
+  {"type":"text","id":"card_eyebrow","label":"Card eyebrow","default":"The Base Fabrics Pack"},
+  {"type":"text","id":"card_title_line1","label":"Card title — opening text","default":"Every base fabric, ","info":"Include a trailing space before the italic part."},
+  {"type":"text","id":"card_title_italic","label":"Card title — italic ending","default":"in one pack."},
+  {"type":"textarea","id":"card_body","label":"Card body","default":"Made for choosing weight, drape, and hand before you order metres."},
+  {"type":"text","id":"card_cta_label","label":"CTA label","default":"Order the Base Fabrics Pack →"},
+  {"type":"url","id":"card_cta_url","label":"CTA URL"},
+  {"type":"header","content":"Card image"},
+  {"type":"image_picker","id":"card_image","label":"Image","info":"Square or portrait. Min 500px wide. Replaces the decorative CSS background when set."},
+  {"type":"header","content":"Colours"},
+  {"type":"color","id":"bg_color","label":"Section background","default":"#FAF8F3"},
+  {"type":"color","id":"rule_color","label":"Rule / border","default":"#E8E3D8"},
+  {"type":"color","id":"eyebrow_color","label":"Eyebrow","default":"#726D64"},
+  {"type":"range","id":"eyebrow_font_size","label":"Eyebrow font size","min":8,"max":20,"step":1,"unit":"px","default":13},
+  {"type":"color","id":"heading_color","label":"Heading","default":"#1A1814"},
+  {"type":"color","id":"heading_italic_color","label":"Heading italic","default":"#5C7355"},
+  {"type":"color","id":"card_bg_color","label":"Card background","default":"#F0EAD8"},
+  {"type":"color","id":"card_eyebrow_color","label":"Card eyebrow","default":"#726D64"},
+  {"type":"color","id":"card_title_color","label":"Card title","default":"#1A1814"},
+  {"type":"color","id":"card_body_color","label":"Card body","default":"#5C564A"},
+  {"type":"color","id":"card_cta_color","label":"CTA","default":"#A6502E"}
+]}
 {% endschema %}

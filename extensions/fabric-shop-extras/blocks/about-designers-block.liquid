@@ -90,48 +90,20 @@
 <script src="{{ 'about-designers.js' | asset_url }}" defer></script>
 
 {% schema %}
-{
-  "name": "About — Designers",
-  "target": "section",
-  "settings": [
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "PrintLab · the Design Partner Programme"
-    },
-    {
-      "type": "range",
-      "id": "eyebrow_font_size",
-      "label": "Eyebrow font size",
-      "min": 8,
-      "max": 20,
-      "step": 1,
-      "unit": "px",
-      "default": 13
-    },
-    {
-      "type": "richtext",
-      "id": "heading",
-      "label": "Heading",
-      "default": "<p>The studios behind <em>every print.</em></p>"
-    },
-    {
-      "type": "richtext",
-      "id": "lead",
-      "label": "Lead paragraph",
-      "default": "<p>Every print on PrintLab comes from an independent designer running their own studio on the platform — a Design Partner who earns on every metre. <strong>Choose a print, choose a base, and we make it to order.</strong></p>"
-    },
-    { "type": "header", "content": "Studios" },
-    { "type": "text", "id": "slug_1", "label": "Studio 1 — slug", "info": "Partner slug, e.g. meadow-and-thread" },
-    { "type": "text", "id": "slug_2", "label": "Studio 2 — slug" },
-    { "type": "text", "id": "slug_3", "label": "Studio 3 — slug" },
-    { "type": "text", "id": "slug_4", "label": "Studio 4 — slug" },
-    { "type": "text", "id": "slug_5", "label": "Studio 5 — slug" },
-    { "type": "url", "id": "studio_page_url", "label": "Studio profile page URL", "info": "Defaults to /pages/partners — ?handle=slug appended per tile" },
-    { "type": "header", "content": "Link" },
-    { "type": "text", "id": "link_label", "label": "Link label", "default": "Browse the studios →" },
-    { "type": "url", "id": "link_url", "label": "Link URL" }
-  ]
-}
+{"name":"About — Designers","target":"section","settings":[
+  {"type":"text","id":"eyebrow","label":"Eyebrow","default":"PrintLab · the Design Partner Programme"},
+  {"type":"range","id":"eyebrow_font_size","label":"Eyebrow font size","min":8,"max":20,"step":1,"unit":"px","default":13},
+  {"type":"richtext","id":"heading","label":"Heading","default":"<p>The studios behind <em>every print.</em></p>"},
+  {"type":"richtext","id":"lead","label":"Lead paragraph","default":"<p>Every print on PrintLab comes from an independent designer running their own studio on the platform — a Design Partner who earns on every metre. <strong>Choose a print, choose a base, and we make it to order.</strong></p>"},
+  {"type":"header","content":"Studios"},
+  {"type":"text","id":"slug_1","label":"Studio 1 — slug","info":"Partner slug, e.g. meadow-and-thread"},
+  {"type":"text","id":"slug_2","label":"Studio 2 — slug"},
+  {"type":"text","id":"slug_3","label":"Studio 3 — slug"},
+  {"type":"text","id":"slug_4","label":"Studio 4 — slug"},
+  {"type":"text","id":"slug_5","label":"Studio 5 — slug"},
+  {"type":"url","id":"studio_page_url","label":"Studio profile page URL","info":"Defaults to /pages/partners — ?handle=slug appended per tile"},
+  {"type":"header","content":"Link"},
+  {"type":"text","id":"link_label","label":"Link label","default":"Browse the studios →"},
+  {"type":"url","id":"link_url","label":"Link URL"}
+]}
 {% endschema %}

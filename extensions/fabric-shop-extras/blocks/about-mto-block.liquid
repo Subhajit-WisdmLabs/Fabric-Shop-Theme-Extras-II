@@ -65,107 +65,26 @@
 </section>
 
 {% schema %}
-{
-  "name": "About — Made to Order",
-  "target": "section",
-  "settings": [
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "Made to order · shipped worldwide"
-    },
-    {
-      "type": "range",
-      "id": "eyebrow_font_size",
-      "label": "Eyebrow font size",
-      "min": 8,
-      "max": 20,
-      "step": 1,
-      "unit": "px",
-      "default": 13
-    },
-    {
-      "type": "richtext",
-      "id": "heading",
-      "label": "Heading",
-      "default": "<p>We make it when you order it — <em>then ship it wherever you make.</em></p>"
-    },
-    {
-      "type": "richtext",
-      "id": "lead",
-      "label": "Lead paragraph",
-      "default": "<p>Nothing here is printed on spec. Every print is made for your order and every length cut to size — so the design you want never sells out, and nothing's run off that won't be used. <strong>Then it ships worldwide, with duties and any local taxes for your country laid out clearly at checkout.</strong></p>"
-    },
-    { "type": "header", "content": "Image" },
-    {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Made-to-order photo"
-    },
-    {
-      "type": "text",
-      "id": "image_alt",
-      "label": "Image alt text",
-      "default": "Made-to-order fabric printing"
-    },
-    {
-      "type": "text",
-      "id": "image_caption",
-      "label": "Placeholder caption (shown until image is set)",
-      "default": "Photo · made-to-order printing"
-    },
-    { "type": "header", "content": "Beat 1" },
-    {
-      "type": "text",
-      "id": "beat_1_heading",
-      "label": "Heading",
-      "default": "By the metre, no minimums"
-    },
-    {
-      "type": "text",
-      "id": "beat_1_desc",
-      "label": "Description",
-      "default": "Order a single metre or a hundred. No bolt to buy, no print run to fund — just what your project needs."
-    },
-    { "type": "header", "content": "Beat 2" },
-    {
-      "type": "text",
-      "id": "beat_2_heading",
-      "label": "Heading",
-      "default": "Sample before metres"
-    },
-    {
-      "type": "text",
-      "id": "beat_2_desc",
-      "label": "Description",
-      "default": "Order a sample first — see the print and feel the fabric before you commit to a full length."
-    },
-    { "type": "header", "content": "Beat 3" },
-    {
-      "type": "text",
-      "id": "beat_3_heading",
-      "label": "Heading",
-      "default": "Shipped worldwide"
-    },
-    {
-      "type": "text",
-      "id": "beat_3_desc",
-      "label": "Description",
-      "default": "Australia, New Zealand, the UK, Europe, North America and Japan — delivered to your door, costs clear at checkout."
-    },
-    { "type": "header", "content": "Link" },
-    {
-      "type": "text",
-      "id": "link_label",
-      "label": "Link label",
-      "default": "From your order to your door — see how it works →"
-    },
-    {
-      "type": "url",
-      "id": "link_url",
-      "label": "Link URL"
-    }
-  ]
-}
+{"name":"About — Made to Order","target":"section","settings":[
+  {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Made to order · shipped worldwide"},
+  {"type":"range","id":"eyebrow_font_size","label":"Eyebrow font size","min":8,"max":20,"step":1,"unit":"px","default":13},
+  {"type":"richtext","id":"heading","label":"Heading","default":"<p>We make it when you order it — <em>then ship it wherever you make.</em></p>"},
+  {"type":"richtext","id":"lead","label":"Lead paragraph","default":"<p>Nothing here is printed on spec. Every print is made for your order and every length cut to size — so the design you want never sells out, and nothing's run off that won't be used. <strong>Then it ships worldwide, with duties and any local taxes for your country laid out clearly at checkout.</strong></p>"},
+  {"type":"header","content":"Image"},
+  {"type":"image_picker","id":"image","label":"Made-to-order photo"},
+  {"type":"text","id":"image_alt","label":"Image alt text","default":"Made-to-order fabric printing"},
+  {"type":"text","id":"image_caption","label":"Placeholder caption (shown until image is set)","default":"Photo · made-to-order printing"},
+  {"type":"header","content":"Beat 1"},
+  {"type":"text","id":"beat_1_heading","label":"Heading","default":"By the metre, no minimums"},
+  {"type":"text","id":"beat_1_desc","label":"Description","default":"Order a single metre or a hundred. No bolt to buy, no print run to fund — just what your project needs."},
+  {"type":"header","content":"Beat 2"},
+  {"type":"text","id":"beat_2_heading","label":"Heading","default":"Sample before metres"},
+  {"type":"text","id":"beat_2_desc","label":"Description","default":"Order a sample first — see the print and feel the fabric before you commit to a full length."},
+  {"type":"header","content":"Beat 3"},
+  {"type":"text","id":"beat_3_heading","label":"Heading","default":"Shipped worldwide"},
+  {"type":"text","id":"beat_3_desc","label":"Description","default":"Australia, New Zealand, the UK, Europe, North America and Japan — delivered to your door, costs clear at checkout."},
+  {"type":"header","content":"Link"},
+  {"type":"text","id":"link_label","label":"Link label","default":"From your order to your door — see how it works →"},
+  {"type":"url","id":"link_url","label":"Link URL"}
+]}
 {% endschema %}
