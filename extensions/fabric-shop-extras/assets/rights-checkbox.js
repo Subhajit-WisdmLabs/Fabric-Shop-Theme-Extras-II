@@ -43,9 +43,8 @@
     if (disclosure && details) {
       disclosure.addEventListener('click', function (e) {
         e.stopPropagation();
-        var open = details.hasAttribute('hidden');
-        if (open) details.removeAttribute('hidden');
-        else details.setAttribute('hidden', '');
+        var open = !details.classList.contains('is-open');
+        details.classList.toggle('is-open', open);
         disclosure.setAttribute('aria-expanded', open ? 'true' : 'false');
         var txt = disclosure.querySelector('.rcb-disclosure-text');
         if (txt) {

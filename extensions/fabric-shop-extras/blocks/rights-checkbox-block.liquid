@@ -14,7 +14,7 @@
             data-open="{{ block.settings.confirm_link_label_open | escape }}">{{ block.settings.confirm_link_label | escape }}</span>
       <svg class="rcb-disclosure-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
     </button>
-    <div class="rcb-details" id="rcb-details-{{ block.id }}" hidden>{{ block.settings.confirm_details }}</div>
+    <div class="rcb-details" id="rcb-details-{{ block.id }}"><div class="rcb-details-inner">{{ block.settings.confirm_details }}</div></div>
   {%- endif -%}
 </div>
 
