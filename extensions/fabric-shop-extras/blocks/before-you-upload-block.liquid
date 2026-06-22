@@ -15,7 +15,7 @@
 
       <!-- Spec table -->
       <div class="byu-spec">
-        {%- assign row_ids = '1,2,3,4,5' | split: ',' -%}
+        {%- assign row_ids = '1,2,3,4,5,6' | split: ',' -%}
         {%- for i in row_ids -%}
           {%- assign key_id = 'row_' | append: i | append: '_key' -%}
           {%- assign val_id = 'row_' | append: i | append: '_value' -%}
@@ -133,6 +133,8 @@
   {"type":"text","id":"row_4_value","label":"Row 4 — Value","default":"30 MB to upload · larger by email"},
   {"type":"text","id":"row_5_key","label":"Row 5 — Label","default":"Print width"},
   {"type":"text","id":"row_5_value","label":"Row 5 — Value","default":"Up to your chosen fabric's printable width"},
+  {"type":"text","id":"row_6_key","label":"Row 6 — Label"},
+  {"type":"text","id":"row_6_value","label":"Row 6 — Value"},
   {"type":"header","content":"Aside — repeat guide"},
   {"type":"text","id":"aside_heading","label":"Aside heading","default":"Setting a repeat?"},
   {"type":"richtext","id":"aside_body","label":"Aside body","default":"<p>The repeat is how one tile fills the metre. Choose a layout in the configurator, or leave it on Simple. One thing to know: a repeat must tile cleanly in the file itself — we print what you send, and don't rework repeats on your behalf.</p>"},
