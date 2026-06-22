@@ -5,90 +5,26 @@
     <div class="rcb-checkbox"></div>
     <div class="rcb-label">{{ block.settings.checkbox_label }}</div>
   </div>
+
+  {%- if block.settings.confirm_details != blank -%}
+    <button type="button" class="rcb-disclosure" id="rcb-disclosure-{{ block.id }}"
+            aria-expanded="false" aria-controls="rcb-details-{{ block.id }}">
+      <span class="rcb-disclosure-text"
+            data-closed="{{ block.settings.confirm_link_label | escape }}"
+            data-open="{{ block.settings.confirm_link_label_open | escape }}">{{ block.settings.confirm_link_label | escape }}</span>
+      <svg class="rcb-disclosure-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </button>
+    <div class="rcb-details" id="rcb-details-{{ block.id }}" hidden>{{ block.settings.confirm_details }}</div>
+  {%- endif -%}
 </div>
 
-<script>
-(function () {
-  var blockId     = {{ block.id | json }};
-  var row         = document.getElementById('rcb-row-'   + blockId);
-  var card        = document.getElementById('rcb-block-' + blockId);
-  var checked     = false;
-  var designReady = false;
-
-  // Checkbox starts disabled — unlocked only after image is uploaded
-  row.classList.add('rcb-disabled');
-
-  function setGate(on) {
-    if (on) {
-      document.body.classList.add('rcb--needs-confirm');
-    } else {
-      document.body.classList.remove('rcb--needs-confirm');
-    }
-  }
-
-  function applyState() {
-    if (checked) {
-      row.classList.add('rcb-checked');
-      card.classList.add('rcb-confirmed');
-      row.setAttribute('aria-checked', 'true');
-      if (designReady) setGate(false);
-    } else {
-      row.classList.remove('rcb-checked');
-      card.classList.remove('rcb-confirmed');
-      row.setAttribute('aria-checked', 'false');
-      if (designReady) setGate(true);
-    }
-  }
-
-  function toggle() {
-    checked = !checked;
-    applyState();
-  }
-
-  row.addEventListener('click', toggle);
-  row.addEventListener('keydown', function (e) {
-    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); }
-  });
-
-  // Hard backstop: block form submit in capture phase if gate is active
-  document.addEventListener('DOMContentLoaded', function () {
-    var form = document.querySelector('form[action*="/cart/add"]');
-    if (form && !form._rcbGuardAttached) {
-      form._rcbGuardAttached = true;
-      form.addEventListener('submit', function (e) {
-        if (designReady && !checked) {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          card.style.animation = 'none';
-          card.offsetHeight; // reflow
-          card.style.animation = 'rcb-shake 0.3s ease';
-        }
-      }, true);
-    }
-  });
-
-  // custom-fabric.js fires this when a design image is selected/uploaded
-  document.addEventListener('cfu:design-loaded', function () {
-    designReady = true;
-    row.classList.remove('rcb-disabled');
-    if (!checked) setGate(true);
-  });
-
-  // Fires when the user removes/resets the design
-  document.addEventListener('cfu:design-reset', function () {
-    designReady = false;
-    checked = false;
-    row.classList.add('rcb-disabled');
-    row.classList.remove('rcb-checked');
-    card.classList.remove('rcb-confirmed');
-    row.setAttribute('aria-checked', 'false');
-    setGate(false);
-  });
-})();
-</script>
+<script src="{{ 'rights-checkbox.js' | asset_url }}" defer></script>
 
 {% schema %}
 {"name":"Rights Checkbox","target":"section","settings":[
-  {"type":"richtext","id":"checkbox_label","label":"Checkbox label","default":"<p>I have the right to use this design, and I agree to the <a href=\"#\">PrintLab Design Submission Agreement</a>.</p>"}
+  {"type":"richtext","id":"checkbox_label","label":"Checkbox label","default":"<p>I have the right to use this design, and I agree to the <a href=\"#\">PrintLab Design Submission Agreement</a>.</p>"},
+  {"type":"text","id":"confirm_link_label","label":"Disclosure link (collapsed)","default":"What I'm confirming"},
+  {"type":"text","id":"confirm_link_label_open","label":"Disclosure link (expanded)","default":"Show less"},
+  {"type":"richtext","id":"confirm_details","label":"What I'm confirming — details"}
 ]}
 {% endschema %}

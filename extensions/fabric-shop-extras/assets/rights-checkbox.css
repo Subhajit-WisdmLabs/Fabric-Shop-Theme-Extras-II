@@ -76,6 +76,57 @@
   text-underline-offset: 2px;
 }
 
+/* ── "What I'm confirming" disclosure ────────────────────────────────────── */
+.rcb-disclosure {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin: 8px 0 0 26px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12.5px;
+  color: var(--color-foreground-secondary, #5C564A);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.rcb-disclosure-icon {
+  width: 13px;
+  height: 13px;
+  transition: transform 0.2s ease;
+}
+
+.rcb-disclosure[aria-expanded="true"] .rcb-disclosure-icon {
+  transform: rotate(180deg);
+}
+
+.rcb-details {
+  margin: 8px 0 2px 26px;
+  padding: 12px 14px;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border, #E8E3D8);
+  border-radius: 3px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--color-foreground, #1A1814);
+}
+
+.rcb-details[hidden] {
+  display: none;
+}
+
+.rcb-details > :first-child { margin-top: 0; }
+.rcb-details > :last-child  { margin-bottom: 0; }
+
+.rcb-details a {
+  color: var(--color-foreground, #1A1814);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 /* Gate the ATC button via body class — mirrors cfu--design-needed pattern,
    immune to theme JS that may re-enable the button after cfu:design-loaded */
 body.rcb--needs-confirm form[action*="/cart/add"] button[type="submit"],
