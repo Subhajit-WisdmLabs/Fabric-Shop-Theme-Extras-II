@@ -77,6 +77,18 @@
 {% if has_tagged or has_bestfor %}
 <div class="fp-tag-section">
 
+  {% if has_bestfor %}
+  <div class="fp-tag-row">
+    <span class="fp-tag-row-label">Best for</span>
+
+    {% for t in use_arr %}
+      {% if t != '' %}
+        <span class="fp-tag-pill fp-tag-pill--use">{{ t }}</span>
+      {% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
+
   {% if has_tagged %}
   <div class="fp-tag-row">
     <span class="fp-tag-row-label">Tagged</span>
@@ -102,18 +114,6 @@
     {% for t in occ_arr %}
       {% if t != '' %}
         <span class="fp-tag-pill fp-tag-pill--occ">{{ t }}</span>
-      {% endif %}
-    {% endfor %}
-  </div>
-  {% endif %}
-
-  {% if has_bestfor %}
-  <div class="fp-tag-row">
-    <span class="fp-tag-row-label">Best for</span>
-
-    {% for t in use_arr %}
-      {% if t != '' %}
-        <span class="fp-tag-pill fp-tag-pill--use">{{ t }}</span>
       {% endif %}
     {% endfor %}
   </div>
