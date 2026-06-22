@@ -110,4 +110,5 @@
   .sb-title { font-size: 36px; }
   .sb-ctas { flex-direction: column; align-items: center; }
   .sb-btn { width: 100%; max-width: 320px; text-align: center; }
+  .sb-link { display: block; text-align: center; }
 }
