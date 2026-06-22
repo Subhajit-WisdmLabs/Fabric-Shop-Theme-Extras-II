@@ -79,13 +79,26 @@
         var thumbHtml = p.imageUrl
           ? '<img src="' + escHtml(p.imageUrl) + '" alt="' + escHtml(p.title) + '" loading="lazy">'
           : '';
+        // Colour options — replaces the old scale/repeat meta. Shown only when
+        // a design has more than one colourway; opens an anchored popover whose
+        // swatches deep-link to the PDP with the colour preselected.
+        var colours = Array.isArray(p.colours) ? p.colours : [];
         var metaHtml = '';
-        if (p.scale || p.repeatSize) {
-          metaHtml = '<div class="poc-card-meta">';
-          if (p.scale) metaHtml += '<span class="poc-card-scale">' + escHtml(p.scale) + '</span>';
-          if (p.scale && p.repeatSize) metaHtml += '<span class="poc-card-meta-sep">·</span>';
-          if (p.repeatSize) metaHtml += '<span class="poc-card-repeat-size">' + escHtml(p.repeatSize) + '</span>';
-          metaHtml += '</div>';
+        if (colours.length > 1) {
+          var dotsHtml = colours.slice(0, 3).map(function (c) {
+            return '<span class="poc-colours-dot"' +
+              (c.image ? ' style="background-image:url(\'' + escHtml(c.image) + '\')"' : '') + '></span>';
+          }).join('');
+          metaHtml =
+            '<div class="poc-card-colours">' +
+              '<button class="poc-colours-toggle" type="button"' +
+                ' data-handle="' + escHtml(p.handle) + '"' +
+                ' data-colours="' + escHtml(JSON.stringify(colours)) + '">' +
+                '<span class="poc-colours-dots">' + dotsHtml + '</span>' +
+                '<span class="poc-colours-count">' + colours.length + ' Colors</span>' +
+                '<svg class="poc-colours-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>' +
+              '</button>' +
+            '</div>';
         }
         gridHtml +=
           '<a class="cg-card poc-card" href="/products/' + escHtml(p.handle) + '"' +
@@ -118,9 +131,83 @@
         '</div>' +
       '</section>';
 
+    // Bind colour-option popovers
+    root.querySelectorAll('.poc-colours-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var cols;
+        try { cols = JSON.parse(btn.getAttribute('data-colours') || '[]'); } catch (err) { cols = []; }
+        openColoursPopover(btn.getAttribute('data-handle'), cols, btn);
+      });
+    });
+
     if (typeof window.__fpReinjectCards === 'function') {
       window.__fpReinjectCards();
     }
+  }
+
+  // Colour picker popover — appended to <body>, fixed-positioned under the
+  // toggle and sized to the card so it floats over content without reflowing
+  // (and fits within narrow mobile cards). Swatches deep-link to the PDP.
+  function closeColoursPopover() {
+    var pop = document.querySelector('.poc-colours-pop');
+    if (pop) {
+      if (typeof pop.cleanup === 'function') pop.cleanup();
+      if (pop.parentNode) pop.parentNode.removeChild(pop);
+    }
+  }
+
+  function openColoursPopover(handle, colours, toggleEl) {
+    var existing = document.querySelector('.poc-colours-pop');
+    var wasForThis = existing && existing.owner === toggleEl;
+    closeColoursPopover();
+    if (wasForThis) return;
+
+    var swatchesHtml = colours.map(function (c) {
+      return '<a class="poc-colour-swatch" href="/products/' + escHtml(handle) +
+        '?colour=' + encodeURIComponent(c.value) + '"' +
+        ' title="' + escHtml(c.name || '') + '"' +
+        (c.image ? ' style="background-image:url(\'' + escHtml(c.image) + '\')"' : '') + '></a>';
+    }).join('');
+
+    var pop = document.createElement('div');
+    pop.className = 'poc-colours-pop';
+    pop.innerHTML = '<div class="poc-colours-pop-grid">' + swatchesHtml + '</div>';
+    pop.owner = toggleEl;
+    document.body.appendChild(pop);
+    toggleEl.classList.add('poc-colours-toggle--open');
+
+    var r = toggleEl.getBoundingClientRect();
+    var card = toggleEl.closest('.poc-card');
+    var cardRect = card ? card.getBoundingClientRect() : r;
+    var margin = 8;
+    var width = Math.min(280, cardRect.width);
+    pop.style.width = width + 'px';
+    var left = cardRect.left;
+    if (left + width > window.innerWidth - margin) left = window.innerWidth - width - margin;
+    if (left < margin) left = margin;
+    var top = r.bottom + 6;
+    var maxH = window.innerHeight - top - margin;
+    if (maxH < pop.offsetHeight) pop.style.maxHeight = Math.max(140, maxH) + 'px';
+    pop.style.left = left + 'px';
+    pop.style.top = top + 'px';
+
+    function onDocDown(e) {
+      if (!pop.contains(e.target) && !toggleEl.contains(e.target)) closeColoursPopover();
+    }
+    function onKey(e) { if (e.key === 'Escape') closeColoursPopover(); }
+    pop.cleanup = function () {
+      document.removeEventListener('mousedown', onDocDown, true);
+      document.removeEventListener('keydown', onKey);
+      window.removeEventListener('scroll', closeColoursPopover, true);
+      window.removeEventListener('resize', closeColoursPopover);
+      toggleEl.classList.remove('poc-colours-toggle--open');
+    };
+    document.addEventListener('mousedown', onDocDown, true);
+    document.addEventListener('keydown', onKey);
+    window.addEventListener('scroll', closeColoursPopover, true);
+    window.addEventListener('resize', closeColoursPopover);
   }
 
   // Check browser cache first

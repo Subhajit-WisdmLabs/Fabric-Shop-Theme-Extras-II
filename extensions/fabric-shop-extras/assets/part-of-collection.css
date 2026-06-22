@@ -242,6 +242,98 @@
   opacity: 0.5;
 }
 
+/* ── Colour options (replaces the scale/repeat meta) ─────────────────────── */
+.poc-card-colours {
+  margin-top: 7px;
+}
+
+.poc-colours-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: var(--color-foreground, #5C564A);
+}
+
+.poc-colours-dots {
+  display: inline-flex;
+}
+
+.poc-colours-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #d9d4cb;
+  background-size: cover;
+  background-position: center;
+  border: 1.5px solid #fff;
+  box-shadow: 0 0 0 1px rgba(26, 24, 20, 0.12);
+}
+
+.poc-colours-dot + .poc-colours-dot {
+  margin-left: -7px;
+}
+
+.poc-colours-count {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.poc-colours-chevron {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+
+.poc-colours-toggle--open .poc-colours-chevron {
+  transform: rotate(180deg);
+}
+
+/* Colour picker popover — appended to <body>, fixed-positioned, sized to the
+   card so it floats over content without reflowing and fits mobile cards. */
+.poc-colours-pop {
+  position: fixed;
+  z-index: 9999;
+  width: 280px;
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid rgba(26, 24, 20, 0.12);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+}
+
+.poc-colours-pop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+  gap: 8px;
+}
+
+.poc-colour-swatch {
+  display: block;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background-color: #d9d4cb;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 0 0 1px rgba(26, 24, 20, 0.12);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.poc-colour-swatch:hover,
+.poc-colour-swatch:focus-visible {
+  transform: scale(1.08);
+  box-shadow: 0 0 0 2px var(--color-foreground, #1A1814);
+  outline: none;
+}
+
 /* ── Responsive ──────────────────────────────────────────────────────────── */
 
 @media (max-width: 1024px) {
