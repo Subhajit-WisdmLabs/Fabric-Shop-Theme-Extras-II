@@ -18,8 +18,7 @@
   margin-bottom: 32px;
 }
 .sgb-mod-eyebrow {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 14px;
+  font-size: var(--hfd-eyebrow-size, 14px);
   font-weight: 500;
   color: var(--color-foreground-muted, #9A9285);
   letter-spacing: 0.16em;

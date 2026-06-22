@@ -8,8 +8,7 @@
 }
 
 .ych-eyebrow {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 14px;
+  font-size: var(--hfd-eyebrow-size, 14px);
   font-weight: 500;
   color: #A87A2E;
   letter-spacing: 0.16em;
