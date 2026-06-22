@@ -88,15 +88,6 @@
         ? '<div class="ymal-card-vendor">by <a href="/pages/partners?handle=' + encodeURIComponent(p.vendorSlug) + '" class="ymal-vendor-link">' + escHtml(p.vendor) + '</a></div>'
         : (p.vendor ? '<div class="ymal-card-vendor">by ' + escHtml(p.vendor) + '</div>' : '');
 
-      var metaHtml = '';
-      if (p.scale || p.repeatSize) {
-        metaHtml = '<div class="ymal-card-meta">';
-        if (p.scale) metaHtml += '<span class="ymal-card-scale">' + escHtml(p.scale) + '</span>';
-        if (p.scale && p.repeatSize) metaHtml += '<span class="ymal-card-meta-sep">&middot;</span>';
-        if (p.repeatSize) metaHtml += '<span class="ymal-card-repeat-size">' + escHtml(p.repeatSize) + '</span>';
-        metaHtml += '</div>';
-      }
-
       gridHtml +=
         '<div class="ymal-card-wrap">' +
           '<a class="cg-card ymal-card" href="/products/' + escHtml(p.handle) + '"' +
@@ -109,7 +100,6 @@
               '<h2 class="ymal-card-title">' + escHtml(p.title) + '</h2>' +
             '</a>' +
             vendorHtml +
-            metaHtml +
           '</div>' +
         '</div>';
     });
