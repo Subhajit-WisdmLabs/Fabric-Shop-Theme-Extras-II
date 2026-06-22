@@ -84,7 +84,7 @@
 .ymal-title {
   font-family: var(--font-heading-family, Georgia, serif);
   font-weight: 500;
-  font-size: 36px;
+  font-size: 32px;
   line-height: 1.08;
   letter-spacing: -0.02em;
   color: var(--color-foreground, #1A1814);
@@ -93,6 +93,7 @@
 
 .ymal-title em {
   font-style: italic;
+  color: #5C7355;
 }
 
 .ymal-head-link {
@@ -206,6 +207,57 @@
 
 .ymal-card-meta-sep {
   opacity: 0.5;
+}
+
+/* ── Colour options (popover itself lives in fp-colour-popover.css) ──────── */
+.ymal-card-colours {
+  margin-top: 7px;
+}
+
+.ymal-colours-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: var(--color-foreground, #5C564A);
+}
+
+.ymal-colours-dots {
+  display: inline-flex;
+}
+
+.ymal-colours-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #d9d4cb;
+  background-size: cover;
+  background-position: center;
+  border: 1.5px solid #fff;
+  box-shadow: 0 0 0 1px rgba(26, 24, 20, 0.12);
+}
+
+.ymal-colours-dot + .ymal-colours-dot {
+  margin-left: -7px;
+}
+
+.ymal-colours-count {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.ymal-colours-chevron {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+
+.ymal-colours-toggle.is-open .ymal-colours-chevron {
+  transform: rotate(180deg);
 }
 
 /* ── Responsive ──────────────────────────────────────────────────────────── */

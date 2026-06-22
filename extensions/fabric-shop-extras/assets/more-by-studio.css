@@ -188,6 +188,57 @@
   color: var(--color-foreground-secondary, #9A9285);
 }
 
+/* ── Colour options ──────────────────────────────────────────────────────── */
+.mbs-card-colours {
+  margin-top: 2px;
+}
+
+.mbs-colours-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: var(--color-foreground, #5C564A);
+}
+
+.mbs-colours-dots {
+  display: inline-flex;
+}
+
+.mbs-colours-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #d9d4cb;
+  background-size: cover;
+  background-position: center;
+  border: 1.5px solid #fff;
+  box-shadow: 0 0 0 1px rgba(26, 24, 20, 0.12);
+}
+
+.mbs-colours-dot + .mbs-colours-dot {
+  margin-left: -7px;
+}
+
+.mbs-colours-count {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.mbs-colours-chevron {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+
+.mbs-colours-toggle.is-open .mbs-colours-chevron {
+  transform: rotate(180deg);
+}
+
 /* ── Responsive ──────────────────────────────────────────────────────────── */
 
 @media (max-width: 1024px) {

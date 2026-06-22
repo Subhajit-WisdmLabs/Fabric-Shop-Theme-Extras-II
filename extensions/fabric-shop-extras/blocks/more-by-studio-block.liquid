@@ -1,4 +1,6 @@
 {{ 'more-by-studio.css' | asset_url | stylesheet_tag }}
+{{ 'fp-colour-popover.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'fp-colour-popover.js' | asset_url }}" defer></script>
 
 <div id="mbs-root"
      style="--eyebrow-size: {{ block.settings.eyebrow_font_size }}px;"
@@ -68,6 +70,27 @@
         ? '<img src="' + escHtml(p.imageUrl) + '" alt="' + escHtml(p.title) + '" loading="lazy">'
         : '';
 
+      // Colour options — shown only when a design has more than one colourway;
+      // opens an anchored popover whose swatches deep-link to the PDP.
+      var colours = Array.isArray(p.colours) ? p.colours : [];
+      var coloursHtml = '';
+      if (colours.length > 1) {
+        var dotsHtml = colours.slice(0, 3).map(function (c) {
+          return '<span class="mbs-colours-dot"' +
+            (c.image ? ' style="background-image:url(\'' + escHtml(c.image) + '\')"' : '') + '></span>';
+        }).join('');
+        coloursHtml =
+          '<div class="mbs-card-colours">' +
+            '<button class="mbs-colours-toggle" type="button"' +
+              ' data-handle="' + escHtml(p.handle) + '"' +
+              ' data-colours="' + escHtml(JSON.stringify(colours)) + '">' +
+              '<span class="mbs-colours-dots">' + dotsHtml + '</span>' +
+              '<span class="mbs-colours-count">' + colours.length + ' Colors</span>' +
+              '<svg class="mbs-colours-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>' +
+            '</button>' +
+          '</div>';
+      }
+
       gridHtml +=
         '<div class="mbs-card-wrap">' +
           '<a class="cg-card mbs-card" href="/products/' + escHtml(p.handle) + '"' +
@@ -80,6 +103,7 @@
               '<div class="mbs-card-name">' + escHtml(p.title) + '</div>' +
             '</a>' +
             '<div class="mbs-card-studio">' + escHtml(studioName) + '</div>' +
+            coloursHtml +
           '</div>' +
         '</div>';
     });
@@ -92,6 +116,19 @@
           gridHtml +
         '</div>' +
       '</section>';
+
+    // Bind colour-option popovers
+    root.querySelectorAll('.mbs-colours-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var cols;
+        try { cols = JSON.parse(btn.getAttribute('data-colours') || '[]'); } catch (err) { cols = []; }
+        if (window.FPColourPopover) {
+          window.FPColourPopover.open(btn.getAttribute('data-handle'), cols, btn, btn.closest('.mbs-card-wrap'));
+        }
+      });
+    });
 
     if (typeof window.__fpReinjectCards === 'function') {
       window.__fpReinjectCards();

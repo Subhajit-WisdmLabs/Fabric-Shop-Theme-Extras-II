@@ -1,4 +1,6 @@
 {{ 'you-might-also-like.css' | asset_url | stylesheet_tag }}
+{{ 'fp-colour-popover.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'fp-colour-popover.js' | asset_url }}" defer></script>
 
 <div id="ymal-root"
      style="--eyebrow-size: {{ block.settings.eyebrow_font_size }}px;"
@@ -88,6 +90,27 @@
         ? '<div class="ymal-card-vendor">by <a href="/pages/partners?handle=' + encodeURIComponent(p.vendorSlug) + '" class="ymal-vendor-link">' + escHtml(p.vendor) + '</a></div>'
         : (p.vendor ? '<div class="ymal-card-vendor">by ' + escHtml(p.vendor) + '</div>' : '');
 
+      // Colour options — shown only when a design has more than one colourway;
+      // opens the shared anchored popover whose swatches deep-link to the PDP.
+      var colours = Array.isArray(p.colours) ? p.colours : [];
+      var coloursHtml = '';
+      if (colours.length > 1) {
+        var dotsHtml = colours.slice(0, 3).map(function (c) {
+          return '<span class="ymal-colours-dot"' +
+            (c.image ? ' style="background-image:url(\'' + escHtml(c.image) + '\')"' : '') + '></span>';
+        }).join('');
+        coloursHtml =
+          '<div class="ymal-card-colours">' +
+            '<button class="ymal-colours-toggle" type="button"' +
+              ' data-handle="' + escHtml(p.handle) + '"' +
+              ' data-colours="' + escHtml(JSON.stringify(colours)) + '">' +
+              '<span class="ymal-colours-dots">' + dotsHtml + '</span>' +
+              '<span class="ymal-colours-count">' + colours.length + ' Colors</span>' +
+              '<svg class="ymal-colours-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>' +
+            '</button>' +
+          '</div>';
+      }
+
       gridHtml +=
         '<div class="ymal-card-wrap">' +
           '<a class="cg-card ymal-card" href="/products/' + escHtml(p.handle) + '"' +
@@ -100,6 +123,7 @@
               '<h2 class="ymal-card-title">' + escHtml(p.title) + '</h2>' +
             '</a>' +
             vendorHtml +
+            coloursHtml +
           '</div>' +
         '</div>';
     });
@@ -112,6 +136,19 @@
           gridHtml +
         '</div>' +
       '</section>';
+
+    // Bind colour-option popovers
+    root.querySelectorAll('.ymal-colours-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var cols;
+        try { cols = JSON.parse(btn.getAttribute('data-colours') || '[]'); } catch (err) { cols = []; }
+        if (window.FPColourPopover) {
+          window.FPColourPopover.open(btn.getAttribute('data-handle'), cols, btn, btn.closest('.ymal-card-wrap'));
+        }
+      });
+    });
 
     if (typeof window.__fpReinjectCards === 'function') {
       window.__fpReinjectCards();
