@@ -12,7 +12,7 @@
 {%- if adp_slug_4 != blank -%}{%- assign adp_slugs_list = adp_slugs_list | append: ',' | append: adp_slug_4 -%}{%- endif -%}
 {%- if adp_slug_5 != blank -%}{%- assign adp_slugs_list = adp_slugs_list | append: ',' | append: adp_slug_5 -%}{%- endif -%}
 
-<section class="adp-section">
+<section class="adp-section" style="--eyebrow-size: {{ block.settings.eyebrow_font_size }}px;">
   <div class="adp-inner">
 
     {%- if block.settings.eyebrow != blank -%}
@@ -99,6 +99,16 @@
       "id": "eyebrow",
       "label": "Eyebrow",
       "default": "PrintLab · the Design Partner Programme"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_font_size",
+      "label": "Eyebrow font size",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
     },
     {
       "type": "richtext",

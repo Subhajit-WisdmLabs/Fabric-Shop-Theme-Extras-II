@@ -1,7 +1,7 @@
 {{ 'studios-grid.css' | asset_url | stylesheet_tag }}
 {%- assign sgb_profile = block.settings.profile_page_url | default: '/pages/partners' -%}
 {%- assign sgb_per_page = block.settings.per_page | default: 9 -%}
-<div class="sgb-wrap" id="sgb-{{ block.id }}" data-sgb-block="{{ block.id }}" data-proxy-base="/apps/fabric-shop/api" data-profile-url="{{ sgb_profile | escape }}" data-per-page="{{ sgb_per_page }}">
+<div class="sgb-wrap" id="sgb-{{ block.id }}" style="--eyebrow-size: {{ block.settings.eyebrow_font_size }}px;" data-sgb-block="{{ block.id }}" data-proxy-base="/apps/fabric-shop/api" data-profile-url="{{ sgb_profile | escape }}" data-per-page="{{ sgb_per_page }}">
   <div class="sgb-mod-head"><div class="sgb-mod-head-row"><div><div class="sgb-mod-eyebrow">All studios</div><h2 class="sgb-mod-title">The <em>studios</em>.</h2><p class="sgb-mod-sub">Independent designers from ten countries. Click through to a studio to see its full body of work.</p></div><div class="sgb-mod-count" id="sgb-mod-count-{{ block.id }}"></div></div></div>
   <div class="sgb-filter-bar" id="sgb-filter-bar-{{ block.id }}">
     <span class="sgb-filter-label">Discipline</span>
@@ -16,4 +16,4 @@
   </div>
 </div>
 <script src="{{ 'studios-grid.js' | asset_url }}" defer></script>
-{% schema %}{"name":"Studios Grid","target":"section","settings":[{"type":"url","id":"profile_page_url","label":"Studio profile page URL","info":"Handle query param appended automatically"},{"type":"range","id":"per_page","label":"Studios per load","min":3,"max":24,"step":3,"default":9}]}{% endschema %}
+{% schema %}{"name":"Studios Grid","target":"section","settings":[{"type":"url","id":"profile_page_url","label":"Studio profile page URL","info":"Handle query param appended automatically"},{"type":"range","id":"per_page","label":"Studios per load","min":3,"max":24,"step":3,"default":9},{"type":"range","id":"eyebrow_font_size","label":"Eyebrow font size","min":8,"max":20,"step":1,"unit":"px","default":13}]}{% endschema %}

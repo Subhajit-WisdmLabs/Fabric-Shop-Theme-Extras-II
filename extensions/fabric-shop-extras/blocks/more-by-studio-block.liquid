@@ -1,6 +1,7 @@
 {{ 'more-by-studio.css' | asset_url | stylesheet_tag }}
 
 <div id="mbs-root"
+     style="--eyebrow-size: {{ block.settings.eyebrow_font_size }}px;"
      data-product-gid="{{ product.id | prepend: 'gid://shopify/Product/' }}"
      data-product-vendor="{{ product.vendor | escape }}"
      data-proxy-base="/apps/fabric-shop/api">
@@ -148,6 +149,17 @@
 {
   "name": "More by the Same Studio",
   "target": "section",
-  "settings": []
+  "settings": [
+    {
+      "type": "range",
+      "id": "eyebrow_font_size",
+      "label": "Eyebrow font size",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    }
+  ]
 }
 {% endschema %}

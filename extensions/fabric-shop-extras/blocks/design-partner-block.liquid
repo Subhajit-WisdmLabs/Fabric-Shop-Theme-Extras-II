@@ -8,6 +8,7 @@
        --dp-cta-bg: {{ block.settings.cta_bg_color }};
        --dp-cta-hover-text: {{ block.settings.cta_hover_text_color }};
        --dp-cta-hover-bg: {{ block.settings.cta_hover_bg_color }};
+       --eyebrow-size: {{ block.settings.eyebrow_font_size }}px;
      ">
 
   {%- comment -%}Skeleton — visible while fetch is in-flight{%- endcomment -%}
@@ -100,6 +101,16 @@
       "id": "eyebrow_label",
       "label": "Eyebrow label",
       "default": "Design Partner"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_font_size",
+      "label": "Eyebrow font size",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
     },
     {
       "type": "text",

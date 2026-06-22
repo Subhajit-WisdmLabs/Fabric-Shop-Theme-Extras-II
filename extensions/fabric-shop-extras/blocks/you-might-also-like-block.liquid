@@ -1,6 +1,7 @@
 {{ 'you-might-also-like.css' | asset_url | stylesheet_tag }}
 
 <div id="ymal-root"
+     style="--eyebrow-size: {{ block.settings.eyebrow_font_size }}px;"
      data-product-gid="{{ product.id | prepend: 'gid://shopify/Product/' }}"
      data-product-title="{{ product.title | escape }}"
      data-product-vendor="{{ product.vendor | escape }}"
@@ -175,6 +176,16 @@
       "id": "browse_base_url",
       "label": "Browse link base URL",
       "info": "The topic or theme is appended as ?topic=Florals. Leave blank to fall back to the default collection URL."
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_font_size",
+      "label": "Eyebrow font size",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
     }
   ]
 }

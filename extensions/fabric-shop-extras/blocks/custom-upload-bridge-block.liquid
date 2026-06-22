@@ -1,6 +1,6 @@
 {{ 'custom-upload-bridge.css' | asset_url | stylesheet_tag }}
 
-<div class="cub-wrap" style="background:{{ block.settings.bg_color }};">
+<div class="cub-wrap" style="background:{{ block.settings.bg_color }};--eyebrow-size: {{ block.settings.eyebrow_font_size }}px;">
   <div class="cub-inner">
 
     <!-- Left: copy + CTA -->
@@ -81,6 +81,16 @@
       "id": "eyebrow",
       "label": "Eyebrow",
       "default": "Don't see your idea?"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_font_size",
+      "label": "Eyebrow font size",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
     },
     {
       "type": "text",

@@ -1,6 +1,6 @@
 {{ 'yard-catalogue-header.css' | asset_url | stylesheet_tag }}
 
-<div class="ych-head">
+<div class="ych-head" style="--eyebrow-size: {{ block.settings.eyebrow_font_size }}px;">
 
   {%- if block.settings.eyebrow != blank -%}
     <div class="ych-eyebrow">{{- block.settings.eyebrow | escape -}}</div>
@@ -73,6 +73,16 @@
       "id": "eyebrow",
       "label": "Eyebrow",
       "default": "The Yard · the catalogue"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_font_size",
+      "label": "Eyebrow font size",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
     },
     {
       "type": "text",

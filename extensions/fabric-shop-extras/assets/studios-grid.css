@@ -18,7 +18,7 @@
   margin-bottom: 32px;
 }
 .sgb-mod-eyebrow {
-  font-size: var(--hfd-eyebrow-size, 14px);
+  font-size: var(--eyebrow-size, 14px);
   font-weight: 500;
   color: var(--color-foreground-muted, #9A9285);
   letter-spacing: 0.16em;

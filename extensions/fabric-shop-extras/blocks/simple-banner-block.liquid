@@ -1,7 +1,7 @@
 {{ 'simple-banner.css' | asset_url | stylesheet_tag }}
 
 <section class="sb-section"
-         style="background:{{ block.settings.background_color }};color:{{ block.settings.text_color }};">
+         style="background:{{ block.settings.background_color }};color:{{ block.settings.text_color }};--eyebrow-size: {{ block.settings.eyebrow_font_size }}px;">
   <div class="sb-inner">
 
     {%- if block.settings.eyebrow != blank -%}
@@ -60,6 +60,16 @@
       "id": "eyebrow",
       "label": "Eyebrow",
       "default": "Before you commit"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_font_size",
+      "label": "Eyebrow font size",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
     },
     {
       "type": "text",

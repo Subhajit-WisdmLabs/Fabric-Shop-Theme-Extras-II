@@ -8,7 +8,7 @@
 }
 
 .ych-eyebrow {
-  font-size: var(--hfd-eyebrow-size, 14px);
+  font-size: var(--eyebrow-size, 14px);
   font-weight: 500;
   color: #A87A2E;
   letter-spacing: 0.16em;

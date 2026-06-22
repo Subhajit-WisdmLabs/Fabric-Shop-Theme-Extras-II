@@ -1,6 +1,7 @@
 {{ 'part-of-collection.css' | asset_url | stylesheet_tag }}
 
 <div id="poc-root"
+     style="--eyebrow-size: {{ block.settings.eyebrow_font_size }}px;"
      data-product-gid="{{ product.id | prepend: 'gid://shopify/Product/' }}"
      data-proxy-base="/apps/fabric-shop/api">
   <section class="poc-section poc-skeleton">
@@ -160,6 +161,17 @@
 {
   "name": "Part of a Collection",
   "target": "section",
-  "settings": []
+  "settings": [
+    {
+      "type": "range",
+      "id": "eyebrow_font_size",
+      "label": "Eyebrow font size",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    }
+  ]
 }
 {% endschema %}
