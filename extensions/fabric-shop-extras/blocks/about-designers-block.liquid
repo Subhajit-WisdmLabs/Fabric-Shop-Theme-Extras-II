@@ -20,7 +20,7 @@
     {%- endif -%}
 
     {%- if block.settings.heading != blank -%}
-      <h2 class="adp-heading">{{- block.settings.heading -}}</h2>
+      <h2 class="adp-heading">{{- block.settings.heading | remove: '<p>' | remove: '</p>' -}}</h2>
     {%- endif -%}
 
     {%- if block.settings.lead != blank -%}

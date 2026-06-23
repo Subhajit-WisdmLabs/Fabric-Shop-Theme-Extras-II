@@ -47,7 +47,8 @@
   max-width: 820px;
 }
 
-.amto-heading em {
+.amto-heading em,
+.amto-heading i {
   font-style: italic;
   color: var(--color-sage, #5C7355);
 }

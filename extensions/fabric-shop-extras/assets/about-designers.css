@@ -46,7 +46,8 @@
   max-width: 820px;
 }
 
-.adp-heading em {
+.adp-heading em,
+.adp-heading i {
   font-style: italic;
   color: var(--color-sage, #5C7355);
 }
