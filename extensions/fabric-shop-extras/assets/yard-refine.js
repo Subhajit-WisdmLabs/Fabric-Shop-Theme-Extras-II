@@ -2,6 +2,19 @@
   var root = document.getElementById('yrf-root');
   if (!root) return;
 
+  // Keep sidebar top offset in sync with the sticky site header
+  (function () {
+    var chrome = document.querySelector('.fs-chrome');
+    function applyNavOffset() {
+      var h = chrome ? chrome.getBoundingClientRect().height : 72;
+      root.style.setProperty('--yrf-nav-h', (h + 16) + 'px');
+    }
+    applyNavOffset();
+    if (chrome && window.ResizeObserver) {
+      new ResizeObserver(applyNavOffset).observe(chrome);
+    }
+  })();
+
   var PAGE_SIZE = 30;
 
   function trim(s) { return s.trim(); }

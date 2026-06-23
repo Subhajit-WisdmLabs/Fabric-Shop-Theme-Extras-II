@@ -25,9 +25,9 @@
 /* ── Sidebar ── */
 .yrf-filters {
   position: sticky;
-  top: 22px;
+  top: var(--yrf-nav-h, 22px);
   align-self: start;
-  max-height: calc(100vh - 44px);
+  max-height: calc(100vh - var(--yrf-nav-h, 22px) - 16px);
   overflow-y: auto;
   padding-right: 4px;
 }
