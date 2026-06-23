@@ -110,6 +110,37 @@
         {%- assign yrf_weight        = product.metafields.fabric.weight.value -%}
         {%- assign yrf_print_ready   = product.metafields.fabric.print_ready.value -%}
 
+        {%- comment -%}— Colour variants JSON for swatch UI —{%- endcomment -%}
+        {%- assign yrf_c_idx = nil -%}
+        {%- for yrf_opt in product.options -%}
+          {%- assign yrf_opt_lc = yrf_opt | downcase -%}
+          {%- if yrf_opt_lc == 'color' or yrf_opt_lc == 'colour' -%}
+            {%- assign yrf_c_idx = forloop.index0 -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- assign yrf_cols_arr = '' -%}
+        {%- assign yrf_seen_col = '' -%}
+        {%- if yrf_c_idx != nil -%}
+          {%- for yrf_v in product.variants -%}
+            {%- assign yrf_ck = yrf_v.options[yrf_c_idx] | handleize -%}
+            {%- unless yrf_seen_col contains yrf_ck -%}
+              {%- assign yrf_seen_col = yrf_seen_col | append: yrf_ck | append: ',' -%}
+              {%- if yrf_v.featured_image -%}
+                {%- assign yrf_v_img = yrf_v.featured_image | image_url: width: 480 -%}
+              {%- else -%}
+                {%- assign yrf_v_img = '' -%}
+              {%- endif -%}
+              {%- assign yrf_n_json   = yrf_v.options[yrf_c_idx] | json -%}
+              {%- assign yrf_img_json = yrf_v_img | json -%}
+              {%- assign yrf_col_entry = '{"n":' | append: yrf_n_json | append: ',"id":' | append: yrf_v.id | append: ',"img":' | append: yrf_img_json | append: '}' -%}
+              {%- if yrf_cols_arr != '' -%}{%- assign yrf_cols_arr = yrf_cols_arr | append: ',' -%}{%- endif -%}
+              {%- assign yrf_cols_arr = yrf_cols_arr | append: yrf_col_entry -%}
+            {%- endunless -%}
+          {%- endfor -%}
+        {%- endif -%}
+        {%- assign yrf_colours_json = '[' | append: yrf_cols_arr | append: ']' -%}
+
         {%- comment -%}— Data attributes for JS filtering —{%- endcomment -%}
         {%- assign yrf_type_key  = product.type | downcase | replace: ' ', '-' -%}
         {%- assign yrf_tags_str  = product.tags | join: ',' | downcase -%}
@@ -168,6 +199,7 @@
           data-price="{{ product.price_min }}"
           data-title="{{ product.title | escape }}"
           data-print-ready="{{ yrf_print_ready }}"
+          data-colours="{{ yrf_colours_json | escape }}"
         >
           <div class="yrf-thumb">
             <a href="{{ product.url }}" class="yrf-card-link">

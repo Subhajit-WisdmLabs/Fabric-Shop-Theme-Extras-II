@@ -44,6 +44,80 @@
     });
   }
 
+  // ── Colour swatches ──
+  function buildColoursUI(card) {
+    var colours = [];
+    try { colours = JSON.parse(card.dataset.colours || '[]'); } catch(e) {}
+    if (colours.length <= 1) return;
+    var meta = card.querySelector('.yrf-meta');
+    if (!meta) return;
+    var dots = colours.slice(0, 3).map(function(c) {
+      return '<span class="yrf-colours-dot"' + (c.img ? ' style="background-image:url(\'' + esc(c.img) + '\')"' : '') + '></span>';
+    }).join('');
+    var div = document.createElement('div');
+    div.className = 'yrf-card-colours';
+    div.innerHTML =
+      '<button class="yrf-colours-toggle" type="button">' +
+        '<span class="yrf-colours-dots">' + dots + '</span>' +
+        '<span class="yrf-colours-count">' + colours.length + ' Colors</span>' +
+        '<svg class="yrf-colours-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>' +
+      '</button>';
+    meta.appendChild(div);
+    div.querySelector('.yrf-colours-toggle').addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      openColoursPopover(card, colours, this);
+    });
+  }
+
+  function closeColoursPopover() {
+    var pop = document.querySelector('.yrf-colours-pop');
+    if (pop) {
+      if (typeof pop.cleanup === 'function') pop.cleanup();
+      pop.remove();
+    }
+  }
+
+  function openColoursPopover(card, colours, toggleEl) {
+    var existing = document.querySelector('.yrf-colours-pop');
+    var wasForThis = existing && existing.owner === toggleEl;
+    closeColoursPopover();
+    if (wasForThis) return;
+    var productHref = (card.querySelector('.yrf-name-link') || {}).getAttribute('href') || '#';
+    var swatchesHtml = colours.map(function(c) {
+      return '<a class="yrf-colour-swatch" href="' + esc(productHref) + '?variant=' + esc(String(c.id)) + '"' +
+        ' title="' + escHtml(c.n) + '"' +
+        (c.img ? ' style="background-image:url(\'' + esc(c.img) + '\')"' : '') + '></a>';
+    }).join('');
+    var pop = document.createElement('div');
+    pop.className = 'yrf-colours-pop';
+    pop.innerHTML = '<div class="yrf-colours-pop-grid">' + swatchesHtml + '</div>';
+    pop.owner = toggleEl;
+    document.body.appendChild(pop);
+    toggleEl.classList.add('yrf-colours-toggle--open');
+    var r = toggleEl.getBoundingClientRect();
+    var pw = 240;
+    pop.style.top  = (r.bottom + 6) + 'px';
+    pop.style.left = Math.max(8, Math.min(r.left, window.innerWidth - pw - 8)) + 'px';
+    pop.cleanup = function() {
+      document.removeEventListener('mousedown', onDocDown, true);
+      window.removeEventListener('scroll', closeColoursPopover, true);
+      window.removeEventListener('resize', closeColoursPopover);
+      toggleEl.classList.remove('yrf-colours-toggle--open');
+    };
+    function onDocDown(e) {
+      if (!pop.contains(e.target) && e.target !== toggleEl && !toggleEl.contains(e.target)) {
+        closeColoursPopover();
+      }
+    }
+    document.addEventListener('mousedown', onDocDown, true);
+    window.addEventListener('scroll', closeColoursPopover, true);
+    window.addEventListener('resize', closeColoursPopover);
+  }
+
+  // Inject colours UI into all server-rendered cards
+  allCards.forEach(buildColoursUI);
+
   // ── Build fabric.type sub-category chips (single-select), preserving the active one ──
   function buildSubchips() {
     if (!subchipsEl || !subchipType) return;
@@ -449,6 +523,7 @@
         (results[pageNum] || []).forEach(function (card) {
           grid.appendChild(card);
           allCards.push(card);
+          buildColoursUI(card);
         });
       });
       buildSubchips();
