@@ -45,9 +45,16 @@
   }
 
   // ── Colour swatches ──
+  function parseColours(str) {
+    if (!str) return [];
+    return str.split('~').map(function(e) {
+      var p = e.split('^');
+      return { n: p[0] || '', id: p[1] || '', img: p[2] || '' };
+    }).filter(function(c) { return c.n; });
+  }
+
   function buildColoursUI(card) {
-    var colours = [];
-    try { colours = JSON.parse(card.dataset.colours || '[]'); } catch(e) {}
+    var colours = parseColours(card.dataset.colours);
     if (colours.length <= 1) return;
     var meta = card.querySelector('.yrf-meta');
     if (!meta) return;
