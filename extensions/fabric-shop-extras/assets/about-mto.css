@@ -58,9 +58,9 @@
 /* ── Lead ────────────────────────────────────────────────────────────────── */
 
 .amto-lead {
-  font-size: 18px;
+  font-size: 17px;
   line-height: 1.7;
-  color: var(--color-foreground, #1A1814);
+  color: var(--color-foreground-secondary, #5C564A);
   max-width: 720px;
   margin: 0 0 48px;
 }
