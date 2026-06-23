@@ -96,7 +96,8 @@
   color: var(--color-foreground, #1A1814);
 }
 
-.afnd-names em {
+.afnd-names em,
+.afnd-names i {
   font-style: italic;
   color: var(--color-sage, #5C7355);
 }

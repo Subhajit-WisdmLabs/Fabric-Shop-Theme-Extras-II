@@ -46,7 +46,8 @@
   margin: 0 0 18px;
 }
 
-.ac-heading em {
+.ac-heading em,
+.ac-heading i {
   font-style: italic;
   color: var(--color-sage, #5C7355);
 }
