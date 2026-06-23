@@ -57,7 +57,7 @@
 /* ── Lead ────────────────────────────────────────────────────────────────── */
 
 .adp-lead {
-  font-size: 17px;
+  font-size: 15px;
   line-height: 1.7;
   color: var(--color-foreground-secondary, #5C564A);
   max-width: 700px;
@@ -231,13 +231,11 @@
 @media (max-width: 768px) {
   .adp-inner { padding: 64px 24px; }
   .adp-heading { font-size: 28px; }
-  .adp-lead { font-size: 16px; }
   .adp-tiles { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 479px) {
   .adp-inner { padding: 48px 20px; }
   .adp-heading { font-size: 22px; }
-  .adp-lead { font-size: 15px; }
   .adp-tiles { gap: 10px; }
 }
