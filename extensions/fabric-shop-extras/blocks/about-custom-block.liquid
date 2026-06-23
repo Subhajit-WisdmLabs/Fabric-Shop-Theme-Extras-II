@@ -10,7 +10,7 @@
 
       {%- if block.settings.heading != blank -%}
         <h2 class="ac-heading">
-          {{- block.settings.heading -}}
+          {{- block.settings.heading | strip_html -}}
           {%- if block.settings.heading_emphasis != blank -%}
             <em style="color:{{ block.settings.emphasis_color }};">{{ block.settings.heading_emphasis }}</em>
           {%- endif -%}
