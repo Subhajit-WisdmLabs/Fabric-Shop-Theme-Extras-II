@@ -58,7 +58,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 14px;
+  gap: 14px 28px;
 }
 
 .sb-btn {
