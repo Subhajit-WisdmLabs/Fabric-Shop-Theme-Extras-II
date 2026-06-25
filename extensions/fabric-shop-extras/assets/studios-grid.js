@@ -101,6 +101,7 @@
 
     var modCountEl  = document.getElementById('sgb-mod-count-' + blockId);
     var pillsEl     = document.getElementById('sgb-pills-'     + blockId);
+    var sortEl      = document.getElementById('sgb-sort-'      + blockId);
     var gridEl      = document.getElementById('sgb-grid-'         + blockId);
     var paginationEl = document.getElementById('sgb-pagination-'  + blockId);
     var prevBtn     = document.getElementById('sgb-pag-prev-'     + blockId);
@@ -112,7 +113,7 @@
 
     var state = {
       discipline:     '',
-      sort:           'recent_active',
+      sort:           'name_asc',
       page:           1,
       total:          0,
       totalPages:     0,
@@ -267,6 +268,15 @@
         if (!target) return;
         state.discipline = target.getAttribute('data-discipline') || '';
         syncActivePill();
+        fetchPage(1);
+      });
+    }
+
+    if (sortEl) {
+      sortEl.addEventListener('change', function () {
+        state.sort = sortEl.value;
+        state.page = 1;
+        pageCache = {};
         fetchPage(1);
       });
     }

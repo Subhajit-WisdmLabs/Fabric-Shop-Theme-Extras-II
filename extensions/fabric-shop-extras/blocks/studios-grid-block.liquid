@@ -8,6 +8,13 @@
     <div class="sgb-pills" id="sgb-pills-{{ block.id }}">
       <button type="button" class="sgb-pill active" data-discipline="">All</button>
     </div>
+    <div class="sgb-sort-wrap">
+      <span class="sgb-filter-label">Sort</span>
+      <select class="sgb-sort-select" id="sgb-sort-{{ block.id }}">
+        <option value="name_asc">Studio name A–Z</option>
+        <option value="owner_asc">Owner name A–Z</option>
+      </select>
+    </div>
   </div>
   <div class="sgb-grid" id="sgb-grid-{{ block.id }}"></div>
   <div class="sgb-pagination" id="sgb-pagination-{{ block.id }}" hidden>
