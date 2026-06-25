@@ -11,17 +11,9 @@
 
   var VARIANTS = 8;
 
-  function bannerVariant(idx) {
-    return 'sgb-banner-' + ((idx % VARIANTS) + 1);
-  }
-
-  function portraitVariant(idx) {
-    return 'sgb-portrait-' + ((idx % VARIANTS) + 1);
-  }
-
-  function tileVariant(idx) {
-    return 'v' + ((idx % VARIANTS) + 1);
-  }
+  function bannerVariant(idx)  { return 'sgb-banner-'   + ((idx % VARIANTS) + 1); }
+  function portraitVariant(idx){ return 'sgb-portrait-' + ((idx % VARIANTS) + 1); }
+  function tileVariant(idx)    { return 'v'             + ((idx % VARIANTS) + 1); }
 
   function renderCard(studio, idx, profileUrl) {
     var v = tileVariant(idx);
@@ -31,7 +23,7 @@
       : '';
     var portraitEl = '<div class="sgb-portrait ' + portraitVariant(idx) + '">' + portraitInner + '</div>';
 
-    var sep = profileUrl.indexOf('?') >= 0 ? '&' : '?';
+    var sep  = profileUrl.indexOf('?') >= 0 ? '&' : '?';
     var href = profileUrl + sep + 'handle=' + encodeURIComponent(studio.slug || '');
 
     var bannerEl;
@@ -51,13 +43,13 @@
     }
 
     var locationParts = [];
-    if (studio.city) locationParts.push(studio.city);
+    if (studio.city)    locationParts.push(studio.city);
     if (studio.country) locationParts.push(studio.country);
     var locationStr = locationParts.map(esc).join(' &middot; ');
     var byline = 'by ' + esc(studio.fullName) + (locationStr ? ' &middot; ' + locationStr : '');
 
     var meta = [];
-    if (studio.designCount > 0) meta.push(studio.designCount + ' design' + (studio.designCount === 1 ? '' : 's'));
+    if (studio.designCount    > 0) meta.push(studio.designCount    + ' design'     + (studio.designCount    === 1 ? '' : 's'));
     if (studio.collectionCount > 0) meta.push(studio.collectionCount + ' collection' + (studio.collectionCount === 1 ? '' : 's'));
 
     var tiles = [0, 1, 2].map(function (t) {
@@ -89,28 +81,33 @@
   }
 
   function initBlock(root) {
-    var blockId   = root.getAttribute('data-sgb-block');
-    var proxyBase = root.getAttribute('data-proxy-base') || '/apps/fabric-shop/api';
+    var blockId    = root.getAttribute('data-sgb-block');
+    var proxyBase  = root.getAttribute('data-proxy-base') || '/apps/fabric-shop/api';
     var profileUrl = root.getAttribute('data-profile-url') || '/pages/partners';
-    var perPage   = parseInt(root.getAttribute('data-per-page') || '9', 10);
+    var perPage    = parseInt(root.getAttribute('data-per-page') || '3', 10);
 
-    var modCountEl   = document.getElementById('sgb-mod-count-' + blockId);
-    var pillsEl      = document.getElementById('sgb-pills-' + blockId);
-    var gridEl       = document.getElementById('sgb-grid-' + blockId);
-    var loadMoreWrap = document.getElementById('sgb-load-more-' + blockId);
-    var loadBtn      = document.getElementById('sgb-load-btn-' + blockId);
-    var loadCountEl  = document.getElementById('sgb-load-count-' + blockId);
+    var modCountEl  = document.getElementById('sgb-mod-count-'   + blockId);
+    var pillsEl     = document.getElementById('sgb-pills-'        + blockId);
+    var gridEl      = document.getElementById('sgb-grid-'         + blockId);
+    var paginationEl = document.getElementById('sgb-pagination-'  + blockId);
+    var prevBtn     = document.getElementById('sgb-pag-prev-'     + blockId);
+    var nextBtn     = document.getElementById('sgb-pag-next-'     + blockId);
+    var pageInfoEl  = document.getElementById('sgb-pag-info-'     + blockId);
+
+    // Page cache: keyed by "discipline|sort|page" — avoids re-fetching already-seen pages
+    var pageCache = {};
 
     var state = {
-      discipline:      '',
-      sort:            'recent_active',
-      page:            1,
-      total:           0,
-      hasMore:         false,
-      renderedCount:   0,
-      loading:         false,
-      pillsPopulated:  false,
+      discipline:     '',
+      sort:           'recent_active',
+      page:           1,
+      total:          0,
+      totalPages:     0,
+      loading:        false,
+      pillsPopulated: false,
     };
+
+    function cacheKey(d, s, p) { return d + '|' + s + '|' + p; }
 
     function buildUrl(page) {
       var u = proxyBase + '/studios?per_page=' + perPage + '&page=' + page + '&sort=' + encodeURIComponent(state.sort);
@@ -120,7 +117,8 @@
 
     function setLoading(on) {
       state.loading = on;
-      if (loadBtn) loadBtn.disabled = on;
+      if (prevBtn) prevBtn.disabled = on || state.page <= 1;
+      if (nextBtn) nextBtn.disabled = on || state.page >= state.totalPages;
     }
 
     var MAX_PILLS = 4;
@@ -162,10 +160,71 @@
       });
     }
 
-    function fetch(page, append) {
-      if (state.loading) return;
-      setLoading(true);
+    function applyData(data, page) {
+      state.page       = page;
+      state.total      = data.total || 0;
+      state.totalPages = Math.ceil(state.total / perPage);
 
+      if (page === 1 && data.disciplines) populatePills(data.disciplines);
+
+      if (page === 1 && modCountEl) {
+        var ct = state.total + ' Studio' + (state.total === 1 ? '' : 's');
+        modCountEl.textContent = state.discipline ? ct : ct + ' · Updated weekly';
+      }
+
+      var studios = data.studios || [];
+      if (studios.length === 0) {
+        gridEl.innerHTML = '<p class="sgb-empty">No studios match this discipline — try a different filter.</p>';
+      } else {
+        var offset = (page - 1) * perPage;
+        gridEl.innerHTML = studios.map(function (s, i) {
+          return renderCard(s, offset + i, profileUrl);
+        }).join('');
+      }
+
+      if (paginationEl) {
+        paginationEl.hidden = state.totalPages <= 1;
+        if (state.totalPages > 1) {
+          if (pageInfoEl) {
+            var from = (page - 1) * perPage + 1;
+            var to   = Math.min(page * perPage, state.total);
+            pageInfoEl.textContent = from + '–' + to + ' of ' + state.total;
+          }
+          if (prevBtn) prevBtn.disabled = page <= 1;
+          if (nextBtn) nextBtn.disabled = page >= state.totalPages;
+        }
+      }
+    }
+
+    // Silent background pre-fetch — stores result in cache without touching the UI
+    function prefetch(page) {
+      if (page < 1) return;
+      if (state.totalPages > 0 && page > state.totalPages) return;
+      var key = cacheKey(state.discipline, state.sort, page);
+      if (pageCache[key]) return;
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', buildUrl(page));
+      xhr.onload = function () {
+        if (xhr.status !== 200) return;
+        var data;
+        try { data = JSON.parse(xhr.responseText); } catch (e) { return; }
+        pageCache[key] = data;
+      };
+      xhr.send();
+    }
+
+    function fetchPage(page) {
+      if (state.loading) return;
+      var key = cacheKey(state.discipline, state.sort, page);
+
+      if (pageCache[key]) {
+        applyData(pageCache[key], page);
+        prefetch(page + 1);
+        prefetch(page - 1);
+        return;
+      }
+
+      setLoading(true);
       var xhr = new XMLHttpRequest();
       xhr.open('GET', buildUrl(page));
       xhr.onload = function () {
@@ -173,47 +232,10 @@
         if (xhr.status !== 200) return;
         var data;
         try { data = JSON.parse(xhr.responseText); } catch (e) { return; }
-
-        if (page === 1 && !append && data.disciplines) {
-          populatePills(data.disciplines);
-        }
-
-        state.page    = page;
-        state.total   = data.total || 0;
-        state.hasMore = !!data.hasMore;
-
-        if (page === 1 && !append && modCountEl) {
-          var ct = state.total + ' Studio' + (state.total === 1 ? '' : 's');
-          modCountEl.textContent = state.discipline ? ct : ct + ' · Updated weekly';
-        }
-
-        var studios = data.studios || [];
-
-        if (!append) {
-          state.renderedCount = 0;
-          if (studios.length === 0) {
-            gridEl.innerHTML = '<p class="sgb-empty">No studios match this discipline — try a different filter.</p>';
-          } else {
-            gridEl.innerHTML = studios.map(function (s, i) {
-              return renderCard(s, i, profileUrl);
-            }).join('');
-            state.renderedCount = studios.length;
-          }
-        } else {
-          var offset = state.renderedCount;
-          gridEl.insertAdjacentHTML('beforeend', studios.map(function (s, i) {
-            return renderCard(s, offset + i, profileUrl);
-          }).join(''));
-          state.renderedCount += studios.length;
-        }
-
-        if (loadMoreWrap) {
-          loadMoreWrap.hidden = !state.hasMore;
-          if (state.hasMore && loadCountEl) {
-            loadCountEl.textContent = 'Showing ' + state.renderedCount + ' of ' + state.total;
-          }
-        }
-
+        pageCache[key] = data;
+        applyData(data, page);
+        prefetch(page + 1);
+        prefetch(page - 1);
       };
       xhr.onerror = function () { setLoading(false); };
       xhr.send();
@@ -225,21 +247,27 @@
         if (!target) return;
         state.discipline = target.getAttribute('data-discipline') || '';
         syncActivePill();
-        fetch(1, false);
+        fetchPage(1);
       });
     }
 
-    if (loadBtn) {
-      loadBtn.addEventListener('click', function () {
-        fetch(state.page + 1, true);
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function () {
+        if (state.page > 1) fetchPage(state.page - 1);
       });
     }
 
-    fetch(1, false);
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function () {
+        if (state.page < state.totalPages) fetchPage(state.page + 1);
+      });
+    }
+
+    fetchPage(1);
   }
 
   document.querySelectorAll('[data-sgb-block]').forEach(function (root) {
     initBlock(root);
   });
 
-})();
+}());

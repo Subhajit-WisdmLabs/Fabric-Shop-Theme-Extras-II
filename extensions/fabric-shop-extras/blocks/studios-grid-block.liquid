@@ -10,16 +10,17 @@
     </div>
   </div>
   <div class="sgb-grid" id="sgb-grid-{{ block.id }}"></div>
-  <div class="sgb-load-more" id="sgb-load-more-{{ block.id }}" hidden>
-    <button type="button" class="sgb-load-btn" id="sgb-load-btn-{{ block.id }}">Show more studios</button>
-    <p class="sgb-load-count" id="sgb-load-count-{{ block.id }}"></p>
+  <div class="sgb-pagination" id="sgb-pagination-{{ block.id }}" hidden>
+    <button type="button" class="sgb-pag-btn sgb-pag-prev" id="sgb-pag-prev-{{ block.id }}" aria-label="Previous page">&#8592; Previous</button>
+    <span class="sgb-pag-info" id="sgb-pag-info-{{ block.id }}"></span>
+    <button type="button" class="sgb-pag-btn sgb-pag-next" id="sgb-pag-next-{{ block.id }}" aria-label="Next page">Next &#8594;</button>
   </div>
 </div>
 <script src="{{ 'studios-grid.js' | asset_url }}" defer></script>
 {% schema %}
 {"name":"Studios Grid","target":"section","settings":[
   {"type":"url","id":"profile_page_url","label":"Studio profile page URL","info":"Handle query param appended automatically"},
-  {"type":"range","id":"per_page","label":"Studios per load","min":3,"max":24,"step":3,"default":9},
+  {"type":"range","id":"per_page","label":"Studios per page","min":3,"max":24,"step":3,"default":3},
   {"type":"range","id":"eyebrow_font_size","label":"Eyebrow font size","min":8,"max":20,"step":1,"unit":"px","default":13}
 ]}
 {% endschema %}

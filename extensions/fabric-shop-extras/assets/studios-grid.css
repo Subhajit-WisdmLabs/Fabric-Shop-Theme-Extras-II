@@ -358,43 +358,47 @@
   transform: translateX(3px);
 }
 
-/* ── Load more ── */
-.sgb-load-more {
+/* ── Pagination ── */
+.sgb-pagination {
   max-width: var(--page-width, 1320px);
   margin: 36px auto 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
+  gap: 16px;
 }
 
-.sgb-load-btn {
-  padding: 13px 26px;
-  font-size: 12.5px;
+.sgb-pag-btn {
+  padding: 11px 24px;
+  font-size: 13px;
   background: transparent;
-  border: 1px solid var(--sgb-ink, #1A1814);
+  border: 1px solid var(--sgb-rule, #E8E3D8);
   color: var(--sgb-ink, #1A1814);
   cursor: pointer;
   border-radius: 3px;
   font-family: inherit;
-  transition: background 0.15s, color 0.15s;
+  letter-spacing: 0.02em;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
 }
 
-.sgb-load-btn:hover {
+.sgb-pag-btn:hover:not(:disabled) {
   background: var(--sgb-ink, #1A1814);
   color: #FAF8F3;
+  border-color: var(--sgb-ink, #1A1814);
 }
 
-.sgb-load-btn:disabled {
-  opacity: 0.5;
-  cursor: wait;
+.sgb-pag-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
 }
 
-.sgb-load-count {
+.sgb-pag-info {
   font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 10.5px;
+  font-size: 11px;
   color: var(--sgb-ink-mute, #9A9285);
-  margin: 0;
+  letter-spacing: 0.05em;
+  text-align: center;
 }
 
 /* ── Empty state ── */
