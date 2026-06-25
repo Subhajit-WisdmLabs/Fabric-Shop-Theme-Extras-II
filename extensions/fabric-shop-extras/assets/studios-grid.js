@@ -99,9 +99,8 @@
     var profileUrl = root.getAttribute('data-profile-url') || '/pages/partners';
     var perPage    = parseInt(root.getAttribute('data-per-page') || '3', 10);
 
-    var modCountEl      = document.getElementById('sgb-mod-count-'    + blockId);
-    var filterCountEl   = document.getElementById('sgb-filter-count-' + blockId);
-    var pillsEl         = document.getElementById('sgb-pills-'        + blockId);
+    var modCountEl  = document.getElementById('sgb-mod-count-' + blockId);
+    var pillsEl     = document.getElementById('sgb-pills-'     + blockId);
     var gridEl      = document.getElementById('sgb-grid-'         + blockId);
     var paginationEl = document.getElementById('sgb-pagination-'  + blockId);
     var prevBtn     = document.getElementById('sgb-pag-prev-'     + blockId);
@@ -193,10 +192,6 @@
         var ct = state.total + ' Studio' + (state.total === 1 ? '' : 's');
         modCountEl.textContent = state.discipline ? ct : ct + ' · Updated weekly';
       }
-      if (page === 1 && filterCountEl) {
-        filterCountEl.textContent = state.total + ' Studio' + (state.total === 1 ? '' : 's');
-      }
-
       var studios = data.studios || [];
       if (studios.length === 0) {
         gridEl.innerHTML = '<p class="sgb-empty">No studios match this discipline — try a different filter.</p>';

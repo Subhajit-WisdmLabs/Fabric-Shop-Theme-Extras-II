@@ -75,25 +75,13 @@
   margin: 0 auto 20px;
 }
 
-.sgb-filter-label-wrap {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding-top: 7px;
-  white-space: nowrap;
-}
-
 .sgb-filter-label {
   font-size: 10px;
   color: var(--sgb-ink-mute, #9A9285);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-}
-
-.sgb-filter-count {
-  font-size: 10px;
-  color: var(--sgb-ink-mute, #9A9285);
-  letter-spacing: 0.06em;
+  white-space: nowrap;
+  padding-top: 7px;
 }
 
 .sgb-pills {

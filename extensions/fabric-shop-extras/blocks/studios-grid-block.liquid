@@ -4,10 +4,7 @@
 <div class="sgb-wrap" id="sgb-{{ block.id }}" style="--eyebrow-size: {{ block.settings.eyebrow_font_size }}px;" data-sgb-block="{{ block.id }}" data-proxy-base="/apps/fabric-shop/api" data-profile-url="{{ sgb_profile | escape }}" data-per-page="{{ sgb_per_page }}">
   <div class="sgb-mod-head"><div class="sgb-mod-head-row"><div><div class="sgb-mod-eyebrow">All studios</div><h2 class="sgb-mod-title">The <em>studios</em>.</h2><p class="sgb-mod-sub">Independent designers from ten countries. Click through to a studio to see its full body of work.</p></div><div class="sgb-mod-count" id="sgb-mod-count-{{ block.id }}"></div></div></div>
   <div class="sgb-filter-bar" id="sgb-filter-bar-{{ block.id }}">
-    <div class="sgb-filter-label-wrap">
-      <span class="sgb-filter-label">Discipline</span>
-      <span class="sgb-filter-count" id="sgb-filter-count-{{ block.id }}"></span>
-    </div>
+    <span class="sgb-filter-label">Discipline</span>
     <div class="sgb-pills" id="sgb-pills-{{ block.id }}">
       <button type="button" class="sgb-pill active" data-discipline="">All</button>
     </div>
