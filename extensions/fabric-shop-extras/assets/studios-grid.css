@@ -2,12 +2,12 @@
 
 .sgb-wrap {
   background: var(--sgb-bg, #FAF8F3);
-  padding: 64px 36px;
+  padding: 64px var(--gutter, 64px);
 }
 
 /* ── Module header ── */
 .sgb-mod-head {
-  max-width: 1280px;
+  max-width: var(--page-width, 1320px);
   margin: 0 auto 32px;
 }
 .sgb-mod-head-row {
@@ -71,7 +71,7 @@
   border-top: 1px solid #D4CCBC;
   border-bottom: 1px solid #D4CCBC;
   flex-wrap: wrap;
-  max-width: 1280px;
+  max-width: var(--page-width, 1320px);
   margin: 0 auto 20px;
 }
 
@@ -139,7 +139,7 @@
 
 /* ── Grid ── */
 .sgb-grid {
-  max-width: 1280px;
+  max-width: var(--page-width, 1320px);
   margin: 36px auto 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -360,7 +360,7 @@
 
 /* ── Load more ── */
 .sgb-load-more {
-  max-width: 1280px;
+  max-width: var(--page-width, 1320px);
   margin: 36px auto 0;
   display: flex;
   flex-direction: column;
@@ -399,7 +399,7 @@
 
 /* ── Empty state ── */
 .sgb-empty {
-  max-width: 1280px;
+  max-width: var(--page-width, 1320px);
   margin: 48px auto;
   text-align: center;
   font-size: 14px;
@@ -414,6 +414,7 @@
 
 @media (max-width: 700px) {
   .sgb-wrap { padding: 40px 20px; }
+  .sgb-mod-head-row { flex-direction: column; align-items: flex-start; gap: 10px; }
   .sgb-grid { grid-template-columns: 1fr; }
-  .sgb-filter-bar { gap: 10px; }
+  .sgb-filter-bar { flex-direction: column; align-items: flex-start; gap: 10px; }
 }
