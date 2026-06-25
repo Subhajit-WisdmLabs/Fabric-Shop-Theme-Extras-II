@@ -137,17 +137,25 @@
 
     var MAX_PILLS = 4;
 
-    function populatePills(disciplines) {
+    function populatePills(disciplines, disciplineCounts, allTotal) {
       if (!pillsEl || state.pillsPopulated) return;
       state.pillsPopulated = true;
 
-      pillsEl.innerHTML = '<button type="button" class="sgb-pill active" data-discipline="">All</button>';
+      var allBtn = document.createElement('button');
+      allBtn.type = 'button';
+      allBtn.className = 'sgb-pill active';
+      allBtn.setAttribute('data-discipline', '');
+      allBtn.innerHTML = 'All' + (allTotal ? ' <span class="sgb-pill-count">' + allTotal + '</span>' : '');
+      pillsEl.innerHTML = '';
+      pillsEl.appendChild(allBtn);
+
       disciplines.forEach(function (d, i) {
         var btn = document.createElement('button');
         btn.type = 'button';
         btn.className = i >= MAX_PILLS ? 'sgb-pill sgb-pill--overflow' : 'sgb-pill';
         btn.setAttribute('data-discipline', d);
-        btn.textContent = d;
+        var cnt = disciplineCounts && disciplineCounts[d];
+        btn.innerHTML = esc(d) + (cnt ? ' <span class="sgb-pill-count">' + cnt + '</span>' : '');
         btn.title = d;
         pillsEl.appendChild(btn);
       });
@@ -179,7 +187,7 @@
       state.total      = data.total || 0;
       state.totalPages = Math.ceil(state.total / perPage);
 
-      if (page === 1 && data.disciplines) populatePills(data.disciplines);
+      if (page === 1 && data.disciplines) populatePills(data.disciplines, data.disciplineCounts, data.allTotal);
 
       if (page === 1 && modCountEl) {
         var ct = state.total + ' Studio' + (state.total === 1 ? '' : 's');
@@ -274,14 +282,48 @@
         if (!btn) return;
         var p = btn.closest('.sgb-desc');
         if (!p) return;
-        var expanded = p.classList.toggle('sgb-desc--expanded');
+        var expanding = !p.classList.contains('sgb-desc--expanded');
         var full  = p.getAttribute('data-bio-full');
         var short = p.getAttribute('data-bio-short');
-        if (expanded) {
+
+        // Snapshot current height as start point
+        p.style.maxHeight = p.scrollHeight + 'px';
+
+        if (expanding) {
           p.innerHTML = esc(full) + '&nbsp;<button type="button" class="sgb-see-less">See less</button>';
+          p.classList.add('sgb-desc--expanded');
+          // Force reflow, then animate to new natural height
+          requestAnimationFrame(function () {
+            p.style.maxHeight = p.scrollHeight + 'px';
+          });
         } else {
-          p.innerHTML = esc(short) + '&hellip;&nbsp;<button type="button" class="sgb-see-more">See more</button>';
+          p.classList.remove('sgb-desc--expanded');
+          // Animate back to collapsed height before swapping text
+          p.style.maxHeight = p.scrollHeight + 'px';
+          requestAnimationFrame(function () {
+            // Measure collapsed text height temporarily
+            var dummy = document.createElement('p');
+            dummy.className = 'sgb-desc';
+            dummy.style.cssText = 'position:absolute;visibility:hidden;width:' + p.offsetWidth + 'px';
+            dummy.innerHTML = esc(short) + '&hellip;&nbsp;X';
+            document.body.appendChild(dummy);
+            var collapsedH = dummy.scrollHeight;
+            document.body.removeChild(dummy);
+            p.style.maxHeight = collapsedH + 'px';
+          });
+          var dur = parseFloat(getComputedStyle(p).transitionDuration) * 1000 || 300;
+          setTimeout(function () {
+            p.innerHTML = esc(short) + '&hellip;&nbsp;<button type="button" class="sgb-see-more">See more</button>';
+            p.style.maxHeight = '';
+          }, dur);
+          return;
         }
+
+        // Clear max-height after expand transition ends
+        p.addEventListener('transitionend', function onEnd() {
+          p.removeEventListener('transitionend', onEnd);
+          p.style.maxHeight = '';
+        });
       });
     }
 

@@ -142,6 +142,13 @@
   color: var(--sgb-ink-mute, #9A9285);
 }
 
+.sgb-pill-count {
+  font-size: 10px;
+  font-weight: 400;
+  opacity: 0.6;
+  letter-spacing: 0;
+}
+
 .sgb-pill-toggle:hover {
   color: var(--sgb-ink, #1A1814);
   border-color: var(--sgb-ink-mute, #9A9285);
@@ -272,6 +279,8 @@
   line-height: 1.55;
   margin: 0 0 20px;
   flex: 1;
+  overflow: hidden;
+  transition: max-height 0.32s ease;
 }
 
 .sgb-see-more,
