@@ -199,20 +199,6 @@
   display: flex;
 }
 
-.sgb-spinner {
-  display: block;
-  width: 36px;
-  height: 36px;
-  border: 3px solid var(--sgb-rule, #E8E3D8);
-  border-top-color: var(--sgb-ink, #1A1814);
-  border-radius: 50%;
-  animation: sgb-spin 0.7s linear infinite;
-}
-
-@keyframes sgb-spin {
-  to { transform: rotate(360deg); }
-}
-
 /* ── Grid ── */
 .sgb-grid {
   max-width: var(--page-width, 1320px);
@@ -223,6 +209,11 @@
 }
 
 /* ── Studio card ── */
+@keyframes sgb-card-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .sgb-card {
   background: var(--sgb-card-bg, #FFFFFF);
   border: 1px solid var(--sgb-rule, #E8E3D8);
@@ -233,6 +224,7 @@
   flex-direction: column;
   color: inherit;
   transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  animation: sgb-card-in 0.32s ease both;
 }
 
 .sgb-card:hover {
@@ -490,17 +482,6 @@
 }
 
 /* ── Loading spinner ── */
-.sgb-loading {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  min-height: 220px;
-  padding: 48px 0;
-}
-
 .sgb-spinner {
   width: 36px;
   height: 36px;
@@ -510,20 +491,13 @@
   animation: sgb-spin 0.7s linear infinite;
 }
 
-.sgb-loading-text {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 10.5px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--sgb-ink-mute, #9A9285);
-}
-
 @keyframes sgb-spin {
   to { transform: rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .sgb-spinner { animation-duration: 1.4s; }
+  .sgb-card { animation: none; }
 }
 
 /* ── Empty state ── */

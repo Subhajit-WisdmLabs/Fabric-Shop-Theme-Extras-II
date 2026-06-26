@@ -16,7 +16,8 @@
   function portraitVariant(idx){ return 'sgb-portrait-' + ((idx % VARIANTS) + 1); }
   function tileVariant(idx)    { return 'v'             + ((idx % VARIANTS) + 1); }
 
-  function renderCard(studio, idx, profileUrl) {
+  function renderCard(studio, idx, profileUrl, localIdx) {
+    var delay = (Math.min(localIdx || 0, 5) * 0.07).toFixed(2);
     var v = tileVariant(idx);
 
     var portraitInner = studio.profileImageUrl
@@ -63,7 +64,7 @@
     }).join('');
 
     return (
-      '<article class="sgb-card">' +
+      '<article class="sgb-card" style="animation-delay:' + delay + 's">' +
         bannerEl +
         '<div class="sgb-body">' +
           '<a class="sgb-name-link" href="' + esc(href) + '">' +
@@ -185,11 +186,6 @@
       });
     }
 
-    var SPINNER_HTML = '<div class="sgb-loading" role="status" aria-live="polite">' +
-      '<span class="sgb-spinner" aria-hidden="true"></span>' +
-      '<span class="sgb-loading-text">Loading studios&hellip;</span>' +
-      '</div>';
-
     function applyData(data, page) {
       state.page       = page;
       state.total      = data.total || 0;
@@ -208,7 +204,7 @@
       } else {
         var offset = (page - 1) * perPage;
         gridEl.innerHTML = studios.map(function (s, i) {
-          return renderCard(s, offset + i, profileUrl);
+          return renderCard(s, offset + i, profileUrl, i);
         }).join('');
       }
 
@@ -255,8 +251,6 @@
       }
 
       setLoading(true);
-      if (gridEl) gridEl.innerHTML = SPINNER_HTML;
-
       var xhr = new XMLHttpRequest();
       xhr.open('GET', buildUrl(page));
       xhr.onload = function () {
