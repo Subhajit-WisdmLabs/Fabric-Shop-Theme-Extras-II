@@ -397,6 +397,43 @@
   margin: 0;
 }
 
+/* ── Loading spinner ── */
+.sgb-loading {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 220px;
+  padding: 48px 0;
+}
+
+.sgb-spinner {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid var(--sgb-rule, #E8E3D8);
+  border-top-color: var(--sgb-sage, #5C7355);
+  animation: sgb-spin 0.7s linear infinite;
+}
+
+.sgb-loading-text {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sgb-ink-mute, #9A9285);
+}
+
+@keyframes sgb-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sgb-spinner { animation-duration: 1.4s; }
+}
+
 /* ── Empty state ── */
 .sgb-empty {
   max-width: 1280px;

@@ -162,17 +162,31 @@
       });
     }
 
+    var SPINNER_HTML = '<div class="sgb-loading" role="status" aria-live="polite">' +
+      '<span class="sgb-spinner" aria-hidden="true"></span>' +
+      '<span class="sgb-loading-text">Loading studios&hellip;</span>' +
+      '</div>';
+
     function fetch(page, append) {
       if (state.loading) return;
       setLoading(true);
+
+      if (!append && gridEl) gridEl.innerHTML = SPINNER_HTML;
 
       var xhr = new XMLHttpRequest();
       xhr.open('GET', buildUrl(page));
       xhr.onload = function () {
         setLoading(false);
-        if (xhr.status !== 200) return;
+        if (xhr.status !== 200) {
+          if (!append && gridEl) gridEl.innerHTML = '<p class="sgb-empty">Couldn’t load studios — please try again.</p>';
+          return;
+        }
         var data;
-        try { data = JSON.parse(xhr.responseText); } catch (e) { return; }
+        try { data = JSON.parse(xhr.responseText); }
+        catch (e) {
+          if (!append && gridEl) gridEl.innerHTML = '<p class="sgb-empty">Couldn’t load studios — please try again.</p>';
+          return;
+        }
 
         if (page === 1 && !append && data.disciplines) {
           populatePills(data.disciplines);
@@ -215,7 +229,10 @@
         }
 
       };
-      xhr.onerror = function () { setLoading(false); };
+      xhr.onerror = function () {
+        setLoading(false);
+        if (!append && gridEl) gridEl.innerHTML = '<p class="sgb-empty">Couldn’t load studios — please try again.</p>';
+      };
       xhr.send();
     }
 
