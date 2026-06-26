@@ -102,6 +102,7 @@
     var modCountEl  = document.getElementById('sgb-mod-count-' + blockId);
     var pillsEl     = document.getElementById('sgb-pills-'     + blockId);
     var sortEl      = document.getElementById('sgb-sort-'      + blockId);
+    var overlayEl   = document.getElementById('sgb-overlay-'   + blockId);
     var gridEl      = document.getElementById('sgb-grid-'         + blockId);
     var paginationEl = document.getElementById('sgb-pagination-'  + blockId);
     var prevBtn     = document.getElementById('sgb-pag-prev-'     + blockId);
@@ -131,6 +132,7 @@
 
     function setLoading(on) {
       state.loading = on;
+      if (overlayEl) overlayEl.hidden = !on;
       if (prevBtn) prevBtn.disabled = on || state.page <= 1;
       if (nextBtn) nextBtn.disabled = on || state.page >= state.totalPages;
     }

@@ -12,11 +12,18 @@
       <span class="sgb-filter-label">Sort</span>
       <select class="sgb-sort-select" id="sgb-sort-{{ block.id }}">
         <option value="name_asc">Studio name A–Z</option>
-        <option value="owner_asc">Owner name A–Z</option>
+        <option value="name_desc">Studio name Z–A</option>
+        <option value="owner_asc">Designer name A–Z</option>
+        <option value="owner_desc">Designer name Z–A</option>
       </select>
     </div>
   </div>
-  <div class="sgb-grid" id="sgb-grid-{{ block.id }}"></div>
+  <div class="sgb-grid-wrap">
+    <div class="sgb-overlay" id="sgb-overlay-{{ block.id }}" hidden aria-label="Loading" role="status">
+      <span class="sgb-spinner"></span>
+    </div>
+    <div class="sgb-grid" id="sgb-grid-{{ block.id }}"></div>
+  </div>
   <div class="sgb-pagination" id="sgb-pagination-{{ block.id }}" hidden>
     <button type="button" class="sgb-pag-btn sgb-pag-prev" id="sgb-pag-prev-{{ block.id }}" aria-label="Previous page">&#8592; Previous</button>
     <span class="sgb-pag-info" id="sgb-pag-info-{{ block.id }}"></span>
