@@ -6,7 +6,6 @@
 
 <div class="yrf-root" id="yrf-root">
 
-  <!-- ── FILTER SIDEBAR ── -->
   <aside class="yrf-filters" id="yrf-sidebar">
 
     <div class="yrf-filters-head">
@@ -19,7 +18,6 @@
       <span class="yrf-helper-note">*Orders combined with a PrintLab print follow PrintLab's lead times.</span>
     </div>
 
-    <!-- 1. Product Type — radio (options come from block settings) -->
     <div class="yrf-group collapsed" id="yrf-type-group">
       <div class="yrf-group-head">
         <span class="yrf-group-name">{{ block.settings.type_group_label | default: 'Product type' }}</span>
@@ -48,7 +46,6 @@
       {%- endfor -%}
     </div>
 
-    <!-- 2. Fibre — checkboxes (built by JS from product data) -->
     <div class="yrf-group collapsed" id="yrf-fibre-group">
       <div class="yrf-group-head">
         <span class="yrf-group-name">Fibre</span>
@@ -57,7 +54,6 @@
       <div id="yrf-fibre-opts"></div>
     </div>
 
-    <!-- 3. Weight — chips -->
     <div class="yrf-group collapsed" id="yrf-weight-group">
       <div class="yrf-group-head">
         <span class="yrf-group-name">Weight</span>
@@ -68,10 +64,7 @@
 
   </aside>
 
-  <!-- ── GRID AREA ── -->
   <div class="yrf-grid-area">
-
-    <!-- Toolbar -->
     <div class="yrf-toolbar">
       <div class="yrf-count">
         Showing <strong id="yrf-count-range">–</strong> of <strong id="yrf-count-total">–</strong>
@@ -90,10 +83,7 @@
       </div>
     </div>
 
-    <!-- Active filter chips -->
     <div class="yrf-active-chips" id="yrf-active-chips"></div>
-
-    <!-- Grid -->
     <div class="yrf-grid" id="yrf-grid">
 
       {%- paginate collections[yrf_handle].products by 50 -%}
@@ -102,7 +92,6 @@
       {%- assign yrf_card_index = 0 -%}
       {%- for product in collections[yrf_handle].products -%}
 
-        {%- comment -%}— Metafields —{%- endcomment -%}
         {%- assign yrf_gsm           = product.metafields.fabric.gsm.value -%}
         {%- assign yrf_width         = product.metafields.fabric.width_cm.value -%}
         {%- assign yrf_fibre_content = product.metafields.fabric.fibre_content.value -%}
@@ -110,13 +99,14 @@
         {%- assign yrf_weight        = product.metafields.fabric.weight.value -%}
         {%- assign yrf_print_ready   = product.metafields.fabric.print_ready.value -%}
 
-        {%- comment -%}— Data attributes for JS filtering —{%- endcomment -%}
+        {%- assign yrf_c_idx = nil -%}{%- for o in product.options -%}{%- assign ol = o | downcase -%}{%- if ol == 'color' or ol == 'colour' -%}{%- assign yrf_c_idx = forloop.index0 -%}{%- break -%}{%- endif -%}{%- endfor -%}
+        {%- assign yrf_cs = '' -%}{%- assign yrf_sc = '' -%}{%- if yrf_c_idx != nil -%}{%- for v in product.variants -%}{%- assign ck = v.options[yrf_c_idx] | handleize -%}{%- unless yrf_sc contains ck -%}{%- assign yrf_sc = yrf_sc | append: ck | append: ',' -%}{%- assign vi = '' -%}{%- if v.featured_image -%}{%- assign vi = v.featured_image | image_url: width: 480 -%}{%- endif -%}{%- if yrf_cs != '' -%}{%- assign yrf_cs = yrf_cs | append: '~' -%}{%- endif -%}{%- assign yrf_cs = yrf_cs | append: v.options[yrf_c_idx] | append: '^' | append: v.id | append: '^' | append: vi -%}{%- endunless -%}{%- endfor -%}{%- endif -%}
+
         {%- assign yrf_type_key  = product.type | downcase | replace: ' ', '-' -%}
         {%- assign yrf_tags_str  = product.tags | join: ',' | downcase -%}
         {%- assign yrf_fibre_str = yrf_fibre | downcase -%}
         {%- assign yrf_weight_lc = yrf_weight | downcase -%}
 
-        {%- comment -%}— Spec line: three free-text slots (Weight/Material · Composition/Colour · Width/Size), printed exactly as entered —{%- endcomment -%}
         {%- assign yrf_spec = '' -%}
         {%- if yrf_gsm != blank -%}
           {%- assign yrf_spec = yrf_gsm -%}
@@ -130,7 +120,6 @@
           {%- assign yrf_spec = yrf_spec | append: yrf_width -%}
         {%- endif -%}
 
-        {%- comment -%}— Status badge from product tags —{%- endcomment -%}
         {%- assign yrf_badge = '' -%}
         {%- if yrf_tags_str contains 'new' -%}
           {%- assign yrf_badge = 'new' -%}
@@ -142,7 +131,6 @@
           {%- assign yrf_badge = 'unique' -%}
         {%- endif -%}
 
-        {%- comment -%}— Editorial break card inserted before the 9th product card (page 1 only) —{%- endcomment -%}
         {%- if paginate.current_page == 1 and yrf_card_index == 8 -%}
           <div class="yrf-editorial" id="yrf-editorial">
             <div>
@@ -168,6 +156,7 @@
           data-price="{{ product.price_min }}"
           data-title="{{ product.title | escape }}"
           data-print-ready="{{ yrf_print_ready }}"
+          data-colours="{{ yrf_cs | escape }}"
         >
           <div class="yrf-thumb">
             <a href="{{ product.url }}" class="yrf-card-link">
@@ -226,7 +215,6 @@
 
       {%- endfor -%}
 
-      {%- comment -%}If fewer than 9 products, still render editorial at the end (page 1 only){%- endcomment -%}
       {%- if paginate.current_page == 1 and yrf_card_index > 0 and yrf_card_index < 9 -%}
         <div class="yrf-editorial" id="yrf-editorial">
           <div>
@@ -243,7 +231,6 @@
 
     </div>
 
-    <!-- Footer -->
     <div class="yrf-footer">
       <button class="yrf-load-more" id="yrf-load-more" hidden>Load more</button>
       <div class="yrf-footer-meta" id="yrf-footer-meta"></div>

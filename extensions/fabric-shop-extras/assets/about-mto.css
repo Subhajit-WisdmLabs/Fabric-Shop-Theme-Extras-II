@@ -47,7 +47,8 @@
   max-width: 820px;
 }
 
-.amto-heading em {
+.amto-heading em,
+.amto-heading i {
   font-style: italic;
   color: var(--color-sage, #5C7355);
 }
@@ -57,9 +58,9 @@
 /* ── Lead ────────────────────────────────────────────────────────────────── */
 
 .amto-lead {
-  font-size: 18px;
+  font-size: 15px;
   line-height: 1.7;
-  color: var(--color-foreground, #1A1814);
+  color: var(--color-foreground-secondary, #5C564A);
   max-width: 720px;
   margin: 0 0 48px;
 }
@@ -178,14 +179,12 @@
 @media (max-width: 768px) {
   .amto-inner { padding: 64px 24px; }
   .amto-heading { font-size: 28px; }
-  .amto-lead { font-size: 16px; }
   .amto-figure { max-width: 100%; }
 }
 
 @media (max-width: 479px) {
   .amto-inner { padding: 48px 20px; }
   .amto-heading { font-size: 22px; }
-  .amto-lead { font-size: 15px; }
   .amto-figure { max-width: 100%; }
   .amto-beats { gap: 24px; }
 }

@@ -96,7 +96,8 @@
   color: var(--color-foreground, #1A1814);
 }
 
-.afnd-names em {
+.afnd-names em,
+.afnd-names i {
   font-style: italic;
   color: var(--color-sage, #5C7355);
 }
@@ -113,9 +114,9 @@
 }
 
 .afnd-body {
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.7;
-  color: var(--color-foreground, #1A1814);
+  color: var(--color-foreground-secondary, #5C564A);
   max-width: 600px;
 }
 
@@ -139,7 +140,6 @@
 @media (max-width: 768px) {
   .afnd-inner { padding: 64px 24px; }
   .afnd-names { font-size: 32px; }
-  .afnd-body { font-size: 15px; }
   .afnd-portrait { max-width: 100%; }
 }
 
@@ -147,5 +147,4 @@
   .afnd-inner { padding: 48px 20px; gap: 24px; }
   .afnd-names { font-size: 26px; }
   .afnd-portrait { max-width: 100%; }
-  .afnd-body { font-size: 14px; }
 }
