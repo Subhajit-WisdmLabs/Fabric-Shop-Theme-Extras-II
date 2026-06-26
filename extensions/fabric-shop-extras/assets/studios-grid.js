@@ -125,7 +125,8 @@
     function cacheKey(d, s, p) { return d + '|' + s + '|' + p; }
 
     function buildUrl(page) {
-      var u = proxyBase + '/studios?per_page=' + perPage + '&page=' + page + '&sort=' + encodeURIComponent(state.sort);
+      var apiSort = state.sort.replace(/_desc$/, '_asc');
+      var u = proxyBase + '/studios?per_page=' + perPage + '&page=' + page + '&sort=' + encodeURIComponent(apiSort);
       if (state.discipline) u += '&discipline=' + encodeURIComponent(state.discipline);
       return u;
     }
@@ -201,6 +202,7 @@
         modCountEl.textContent = state.discipline ? ct : ct + ' · Updated weekly';
       }
       var studios = data.studios || [];
+      if (state.sort.slice(-5) === '_desc') studios = studios.slice().reverse();
       if (studios.length === 0) {
         gridEl.innerHTML = '<p class="sgb-empty">No studios match this discipline — try a different filter.</p>';
       } else {
