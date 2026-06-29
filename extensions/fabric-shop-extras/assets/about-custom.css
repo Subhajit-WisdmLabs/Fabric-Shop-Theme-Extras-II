@@ -85,11 +85,11 @@
 
 @media (max-width: 768px) {
   .ac-inner { padding-left: 24px; padding-right: 24px; }
-  .ac-heading { font-size: 26px; }
+  .ac-heading { font-size: min(var(--heading-size, 32px), 26px); }
 }
 
 @media (max-width: 479px) {
   .ac-inner { padding-left: 20px; padding-right: 20px; }
-  .ac-heading { font-size: 21px; }
+  .ac-heading { font-size: min(var(--heading-size, 32px), 21px); }
   .ac-body { font-size: 14px; }
 }
