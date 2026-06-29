@@ -39,7 +39,7 @@
 .ac-heading {
   font-family: 'Fabric-Shop-Heading', var(--font-heading-family, Georgia, serif);
   font-weight: 500;
-  font-size: 32px;
+  font-size: var(--heading-size, 32px);
   line-height: 1.1;
   letter-spacing: -0.018em;
   color: var(--color-foreground, #1A1814);

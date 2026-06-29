@@ -1,7 +1,7 @@
 {{ 'about-custom.css' | asset_url | stylesheet_tag }}
 
 <section class="ac-section">
-  <div class="ac-inner" style="--ac-pad-y: {{ block.settings.padding_y | default: 88 }}px; --eyebrow-size: {{ block.settings.eyebrow_font_size }}px;">
+  <div class="ac-inner" style="--ac-pad-y: {{ block.settings.padding_y | default: 88 }}px; --eyebrow-size: {{ block.settings.eyebrow_font_size }}px; --heading-size: {{ block.settings.heading_font_size }}px;">
     <div class="ac-content">
 
       {%- if block.settings.eyebrow != blank -%}
@@ -27,6 +27,7 @@
   {"type":"text","id":"eyebrow","label":"Eyebrow text","default":"About Custom"},
   {"type":"range","id":"eyebrow_font_size","label":"Eyebrow font size","min":8,"max":20,"step":1,"unit":"px","default":13},
   {"type":"richtext","id":"heading","label":"Heading","default":"<p>Your design, printed by the metre.</p>"},
+  {"type":"range","id":"heading_font_size","label":"Heading font size","min":16,"max":72,"step":1,"unit":"px","default":32},
   {"type":"range","id":"padding_y","label":"Vertical padding","min":24,"max":120,"step":8,"unit":"px","default":88},
   {"type":"richtext","id":"body","label":"Body text","default":"<p>Custom is for the design you've already made — a brand pattern, a wedding motif, a one-off print, a repeat you've drawn and want to see on cotton. Bring the file. We handle the rest.</p><p>Most designs upload right here — drop the file in for a live tile-test at your fabric's print width, and an automatic print-quality check before you commit. Larger or print-ready files don't go through the site — <strong>email them to us</strong> and we set the order up by hand. Either way — the same twenty base fabrics, the same 7–10 day print window, and the QC we built supplying the trade.</p>"}
 ]}
