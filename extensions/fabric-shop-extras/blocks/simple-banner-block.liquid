@@ -1,7 +1,7 @@
 {{ 'simple-banner.css' | asset_url | stylesheet_tag }}
 
 <section class="sb-section"
-         style="background:{{ block.settings.background_color }};color:{{ block.settings.text_color }};--eyebrow-size: {{ block.settings.eyebrow_font_size }}px;">
+         style="background:{{ block.settings.background_color }};color:{{ block.settings.text_color }};--eyebrow-size: {{ block.settings.eyebrow_font_size }}px;--heading-size: {{ block.settings.heading_font_size }}px;">
   <div class="sb-inner">
 
     {%- if block.settings.eyebrow != blank -%}
@@ -62,6 +62,16 @@
     </div>
     {%- endif -%}
 
+    {%- if block.settings.fallback_label != blank -%}
+    <div class="sb-fallback">
+      <a href="{{ block.settings.fallback_url | default: '#' }}"
+         class="sb-fallback-link"
+         style="--sb-fl-text:{{ block.settings.fallback_text_color }};--sb-fl-hover:{{ block.settings.fallback_hover_color }};">
+        {{- block.settings.fallback_label | escape -}}
+      </a>
+    </div>
+    {%- endif -%}
+
   </div>
 </section>
 
@@ -71,6 +81,7 @@
   {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Before you commit"},
   {"type":"range","id":"eyebrow_font_size","label":"Eyebrow font size","min":8,"max":20,"step":1,"unit":"px","default":13},
   {"type":"text","id":"heading","label":"Heading","default":"See it. Feel it."},
+  {"type":"range","id":"heading_font_size","label":"Heading font size","min":20,"max":80,"step":1,"unit":"px","default":56},
   {"type":"text","id":"heading_emphasis","label":"Heading emphasis (italic)","default":"Then order metres."},
   {"type":"richtext","id":"subtext","label":"Subtext","default":"<p>A 25 × 25 cm swatch of your chosen design, shipped worldwide. The best test of fabric is the fabric itself.</p>"},
   {"type":"header","content":"Colours"},
@@ -78,6 +89,11 @@
   {"type":"color","id":"text_color","label":"Text","default":"#1A1814"},
   {"type":"color","id":"eyebrow_color","label":"Eyebrow","default":"#B85C38"},
   {"type":"color","id":"emphasis_color","label":"Heading emphasis","default":"#6B8F71"},
+  {"type":"header","content":"Fallback link"},
+  {"type":"text","id":"fallback_label","label":"Label"},
+  {"type":"url","id":"fallback_url","label":"URL"},
+  {"type":"color","id":"fallback_text_color","label":"Text color","default":"#B85C38"},
+  {"type":"color","id":"fallback_hover_color","label":"Hover color","default":"#1A1814"},
   {"type":"header","content":"CTA 1"},
   {"type":"select","id":"btn1_type","label":"Style","options":[{"value":"button","label":"Button"},{"value":"link","label":"Text link"}],"default":"button"},
   {"type":"text","id":"btn1_label","label":"Label","default":"Print a swatch of this design →"},
